@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .page, .full-page {
+        @apply min-h-screen p-8 bg-[#fdfdfd];
+    }
+
+	.dashboard .page {
+		@apply w-full mx-auto max-w-5xl px-4 py-8 xs:px-8 bg-[#fdfdfd];
+	}
+
+    .form-control {
+        @apply pb-5 relative;
+    }
+
+    .form-control .error {
+        @apply text-2xs absolute left-2 bottom-[6px] w-full clear-both text-red-400 leading-none pt-1 truncate;
+    }
+
+    .dialog {
+		@apply fixed inset-0 z-10 overflow-y-auto grid;
+	}
+
+	.dialog .overlay {
+		@apply fixed inset-0 bg-black opacity-20;
+	}
+
+	.dialog .content {
+		@apply z-30;
+	}
+
+	/* custom table */
+    .table.custom > * {
+        @apply !z-0 bg-base-100 rounded-lg;
+    }
+
+    .table.custom thead {
+        @apply bg-base-100 rounded-md mb-2;
+    }
+
+    .table.custom tbody {
+        @apply text-base-content/80 text-xs;
+    }
+
+    .table.custom th:first-child {
+        @apply relative z-0 pl-8 bg-transparent rounded-tl-lg;
+    }
+
+    .table.custom th:last-child {
+        @apply rounded-tr-lg;
+    }
+
+    .table.custom td:first-child {
+        @apply pl-8;
+    }
+
+    .table.no-pl th:first-child, .table.no-pl td:first-child {
+        @apply pl-0;
+    }
+
+	.table.custom tr td {
+        @apply py-4;
+    }
+
+    .table.custom tr > td > div {
+        @apply overflow-hidden overflow-ellipsis break-normal box-border;
+    }
+
+    .table.custom th {
+        @apply bg-transparent text-gray-600 font-medium text-xs py-3;
+    }
+
+    .table.custom :where(thead, tfoot) :where(th, td) {
+        @apply capitalize font-normal text-sm;
+    }
+    .tdbreak {
+        word-break: break-all
+    }
+
+    /* Paginator */
+    .gwx-paginator > .pagination-nav {
+		@apply flex items-center gap-2;
+	}
+	
+	.gwx-paginator .option {
+		@apply text-xs transition-all w-7 h-7 grid place-content-center rounded-md cursor-pointer;
+	}
+	
+	.gwx-paginator .option.active {
+		@apply bg-primary text-base-100;
+	}
+
+	.gwx-paginator .option.number {
+		@apply cursor-pointer;
+	}
+
+	.gwx-paginator .option.prev {
+		@apply cursor-pointer rotate-90;
+	}
+
+	.gwx-paginator .option.next {
+		@apply cursor-pointer -rotate-90;
+	}
+
+	.gwx-paginator .option.disabled {
+		@apply cursor-default;
+	}
+
+    .dot {
+        @apply flex-none w-1 h-1 bg-base-content rounded-full;
+    }
+
+    .btn {
+        @apply font-medium;
+    }
+    .select option {
+        @apply font-medium;
+    }
+
+    .breadcrumbs {
+        @apply max-w-min mb-4 px-8;
+    }
+    .breadcrumbs li a {
+        @apply text-primary font-medium bg-primary/5 px-2 py-1 rounded-md text-xs !no-underline transition-all;
+    }
+    .breadcrumbs li a:hover {
+        @apply no-underline bg-primary/10 text-primary/60;
+    }
+
+    .ink-well {
+        @apply relative;
+    }
+    .ink-well:hover button {
+        @apply absolute left-0 right-0 top-0 bottom-0;
+    }
+
+    .gwx-breadcrumb {
+        @apply mt-8 w-full mx-auto max-w-5xl px-4 xs:px-8;
+    }
+}
+
+input.input-bordered:focus, select.select-bordered:focus, textarea.textarea-bordered:focus, input:focus {
+    outline: none !important;
+    border: 0.5px solid var(--input-border-color) !important;
+    background: none;
+	font-weight: normal;
+    --tw-ring-color: transparent;
+    --tw-ring-shadow: none;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+body {
+	font-family: 'Poppins', sans-serif;
+	min-height: 100vh;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	font-size: 16px;
+	font-weight: 400;
+	background-color: #fdfdfd;
+}
+
+._toastBar { 
+    display: none;
+}
+._toastMsg {
+    font-size: 13px;
+}

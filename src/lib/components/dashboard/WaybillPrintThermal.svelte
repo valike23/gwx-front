@@ -1,0 +1,104 @@
+<script>
+    import { formatPhoneNumber } from '$lib/client/helpers';
+    import { getJSON, truncate } from '$lib/utils/helpers';
+    import dayjs from 'dayjs';
+    import Barcode from 'svelte-barcode';
+
+    export let node; 
+    export let items = [];
+</script>
+
+<div bind:this={node} class="overflow-hidden bg-[#f8f8f8] flex flex-col items-center justify-center" {...$$restProps}>
+    {#each items as item }
+    <div class="text-sm bg-base-100 flex flex-col p-8 divide-y divide-dashed" style="width:10cm;height:15cm;break-after: always;">
+        <div class="flex w-full pb-4">
+            <div class="w-[60px]">
+                <img src="/images/logo.png" alt="GWX logo" class="w-full object-cover"/>
+            </div>
+            <div class="flex-1"/>
+            <div class="text-xs space-y-0.5">
+                <div>
+                    <span>DOS: </span>
+                    <span class="font-semibold">{dayjs(item.created_at).format("DD/MM/YYYY hh:mm A")}</span>
+                </div>
+                <div>
+                    <span>Waybill: </span>
+                    <span class="font-semibold">{item.waybill_number}</span>
+                </div>
+                <div>
+                    <span>Hub: </span>
+                    {#if item.delivery}
+                    <span class="font-semibold uppercase">{getJSON(item.delivery?.hub)?.name}</span>
+                    {/if}
+                </div>
+            </div>
+        </div>
+
+        <div class="flex-1 grid grid-cols-2 gap-2 text-xs py-4">
+            <div class="space-y-1">
+                <div>
+                    <span>FROM: </span>
+                    <span class="font-semibold uppercase">{item.sender.name }</span>
+                </div>
+                <div class="font-semibold uppercase">{formatPhoneNumber(item.sender.phone) }</div>
+                <div class="font-semibold uppercase">{ item.sender.address || "" }</div>
+            </div>
+            <div class="space-y-1 text-right">
+                <div>
+                    <span>TO: </span>
+                    <span class="font-semibold uppercase">{item.recipient.name }</span>
+                </div>
+                <div class="font-semibold uppercase">{formatPhoneNumber(item.recipient.phone) }</div>
+                <div class="font-semibold uppercase">{ item.sender.address || ""}</div>
+            </div>
+        </div>
+
+        <div class="py-2">
+            <table class="table border-separate">
+                <thead>
+                    <tr class="uppercase">
+                        <th>Description</th>
+                        <th>Origin</th>
+                        <th>Weight</th>
+                        <th>Qty</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="text-xs">
+                        <td>{truncate(item.description || "", 15)}</td>
+                        <td>
+                            {#if item.delivery}
+                            {getJSON(item.delivery.hub).code}
+                            {/if}
+                        </td>
+                        <td>{ item.weight } KG</td>
+                        <td>{ item.quantity || 1 }</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="flex pt-4 items-center justify-center">
+            <div class="">
+                <Barcode
+                    value={item.waybill_number}
+                    elementTag='svg'
+                    options={{
+                        format: 'CODE128',
+                        width: 2,
+                        height: 80,
+                        text: '',
+                        textAlign: 'center',
+                        textPosition: 'bottom',
+                        textMargin: 2,
+                        fontSize: 12,
+                        background: '#ffffff',
+                        lineColor: '#000000',
+                    }}
+                />
+            </div>
+        </div>
+    </div>
+    {/each}
+</div>
