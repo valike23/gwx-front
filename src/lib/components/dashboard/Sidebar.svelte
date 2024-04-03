@@ -33,14 +33,14 @@
             active: $page.url.pathname.startsWith("/dashboard/manifests"),
             to: "/dashboard/manifests",
             divide: user.role === "user",
-            show: user.role === "admin",
+            show: user.role === "admin" || user.role === 'superadmin',
         },
         {
             name: "Offices",
             icon: UilBuilding,
             active: $page.url.pathname.startsWith("/dashboard/offices"),
             to: "/dashboard/offices",
-            show: user.role === "admin",
+            show: user.role === "admin" || user.role === 'superadmin',
         },
         {
             name: "Rates",
@@ -48,14 +48,14 @@
             active: $page.url.pathname.startsWith("/dashboard/rates"),
             to: "/dashboard/rates",
             divide: true,
-            show: user.role === "admin",
+            show: user.role === "admin" || user.role === 'superadmin',
         },
         {
             name: "Terminals",
             icon: UilTruckLoading,
             active: $page.url.pathname.startsWith("/dashboard/terminals"),
             to: "/dashboard/terminals",
-            show: user.role == "admin",
+            show: user.role === "admin" || user.role === 'superadmin',
         },
         {
             name: "Customers",
@@ -63,7 +63,7 @@
             active: $page.url.pathname.startsWith("/dashboard/customers"),
             to: "/dashboard/customers",
             divide: true,
-            show: user.role === "admin",
+            show: user.role === "admin" || user.role === 'superadmin',
         },
         {
             name: "Sign Out",
