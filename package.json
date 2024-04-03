@@ -6,7 +6,8 @@
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
-		"network": "vite dev --host"
+		"network": "vite dev --host",
+		"start": "./build/index"
 	},
 	"devDependencies": {
 		"@rgossiaux/svelte-headlessui": "^2.0.0",
