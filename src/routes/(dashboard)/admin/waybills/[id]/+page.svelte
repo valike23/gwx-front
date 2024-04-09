@@ -569,6 +569,7 @@
             showBackButton={true}
             on:index={(e) => {
                 hideSender = true;
+                editPackage();
                 if (e.detail == 1) return;
             }}
         />
