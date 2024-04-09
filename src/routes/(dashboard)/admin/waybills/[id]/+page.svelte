@@ -147,7 +147,7 @@
 
     async function editPackage(){
         alert("the world");
-        console.log(item);
+        console.log($item);
         try {
             const res = await clientFetch({
                 path: `/packages/${$item.id}`,
