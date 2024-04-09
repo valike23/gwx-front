@@ -147,6 +147,7 @@
 
     async function editPackage(){
         alert("the world");
+        console.log(item);
         try {
             const res = await clientFetch({
                 path: `/packages/${$item.id}`,
@@ -158,7 +159,7 @@
             success("Package has been updated");
 
             // reload the page
-            setTimeout(() => ( window.location.reload()), 10000);
+           // setTimeout(() => ( window.location.reload()), 10000);
         } catch (error) {
             failure(error);
         } finally {
