@@ -146,7 +146,7 @@
     }
 
     async function editPackage(){
-        alert("the world");
+       
         console.log($item);
         try {
             const res = await clientFetch({
@@ -593,6 +593,7 @@
             formData={item}
             showBackButton={true}
             on:index={(e) => {
+                editPackage();
                 hideRecipient = true;
                 if (e.detail == 0) return;
             }}
@@ -616,6 +617,7 @@
             formData={item}
             showBackButton={true}
             on:index={(e) => {
+                editPackage();
                 hideBilling = true;
                 if (e.detail == 2) return;
             }}
