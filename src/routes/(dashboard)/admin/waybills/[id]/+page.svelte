@@ -146,6 +146,7 @@
     }
 
     async function editPackage(){
+        alert("the world");
         try {
             const res = await clientFetch({
                 path: `/packages/${$item.id}`,
@@ -164,6 +165,8 @@
             isLoading = false;
         }
     }
+
+    $: editPackage()
 
     async function cancelDelivery() {
 
