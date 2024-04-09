@@ -152,7 +152,7 @@
             const res = await clientFetch({
                 path: `/packages/${$item.id}`,
                 method: "PUT",
-                body: item
+                body: $item
             })
             const json = await res.json();
             if (!res.ok) throw json;
