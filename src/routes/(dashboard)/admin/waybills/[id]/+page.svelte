@@ -166,7 +166,7 @@
         }
     }
 
-    $: editPackage()
+  
 
     async function cancelDelivery() {
 
@@ -543,7 +543,9 @@
             formData={item}
             showBackButton={true}
             on:index={(e) => {
+               
                 hidePackageInfo = true;
+                editPackage();
                 if (e.detail == 1) return;
             }}
         />
