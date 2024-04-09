@@ -11,6 +11,7 @@
     import { computeStatus } from "$lib/client/helpers";
 
     export let item;
+    console.log("the items here", item);
 
     let hubs = [];
     let users = [];
@@ -142,7 +143,7 @@
         </div>
     {/if}
     
-   {#if !item.delivery}
+   {#if !item.delivery || item.delivery.status != 'delivered'}
     <div 
         class="absolute inset-0 bg-black/50 flex flex-col items-center justify-center"
         class:hidden={allowedStatuses.includes(item?.delivery?.status)}>

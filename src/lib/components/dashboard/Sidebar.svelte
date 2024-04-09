@@ -21,7 +21,7 @@
             show: true,
         },
         {
-            name: "Shipments",
+            name: "Shipment",
             icon: UilTruck,
             active: $page.url.pathname.startsWith("/dashboard/shipments"),
             to: "/dashboard/shipments",

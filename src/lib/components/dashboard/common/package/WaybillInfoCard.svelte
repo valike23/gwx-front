@@ -10,6 +10,7 @@
 
     let showTrack = false;
 
+
     function statusStyle(val) {
         switch (val) {
             case "new": 
@@ -65,17 +66,7 @@
         </div>
     </div>
     
-    <div class="flex justify-between items-center mt-4">
-        <span class="{statusStyle(item.status)} text-xs px-2 py-1 rounded-md uppercase">
-            { item.status }
-        </span>
-        <div>
-            <Button size="xs" class="uppercase" on:click={() => (showTrack = true)}>
-                Track
-            </Button>
-        </div>
-        
-    </div>
+   
 </div>
 
 <Modal title="Track Waybill" bind:open={showTrack} autoclose outsideclose>

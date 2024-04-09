@@ -55,18 +55,21 @@
             </span>
             <span slot="value">{ data.items.find(e => e.status == "picked")?.total_packages || 0}</span>
         </StatCard>
-        <StatCard class="bg-info" href="/admin/waybills/applications?status=out-for-delivery">
+        <StatCard class="bg-info" href="/admin/waybills/applications?status=in-transit">
             <span slot="title">
                 In Transit
             </span>
             <span slot="value">{ data.items.find(e => e.status == "out-for-delivery")?.total_packages || 0}</span>
         </StatCard>
+
+        
         <StatCard class="bg-warning" href="/admin/waybills/applications?status=delivered"> 
             <span slot="title">
                 Delivered
             </span>
             <span slot="value">{ data.items.find(e => e.status == "delivered")?.total_packages || 0}</span>
         </StatCard>
+        
         <StatCard class="bg-error" href="/admin/waybills/applications?status=canceled">
             <span slot="title">
                 Returned

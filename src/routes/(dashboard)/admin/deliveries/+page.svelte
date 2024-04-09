@@ -23,6 +23,7 @@
         getData();
     })
 
+  
     const statuses = {
         "": "All",
         "pending": "Sorted",
@@ -73,6 +74,10 @@
     }
 
 </script>
+
+<svelte:head>
+    <title>GWX:: Admin Delivery Page</title>
+</svelte:head>
 
 <div class="gwx-breadcrumb">
     <Breadcrumb aria-label="GWX breadcrumb">

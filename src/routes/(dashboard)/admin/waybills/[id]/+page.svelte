@@ -145,6 +145,26 @@
         }
     }
 
+    async function editPackage(){
+        try {
+            const res = await clientFetch({
+                path: `/packages/${$item.id}`,
+                method: "PUT",
+                body: item
+            })
+            const json = await res.json();
+            if (!res.ok) throw json;
+            success("Package has been updated");
+
+            // reload the page
+            setTimeout(() => ( window.location.reload()), 1000);
+        } catch (error) {
+            failure(error);
+        } finally {
+            isLoading = false;
+        }
+    }
+
     async function cancelDelivery() {
 
         const yes = confirm("Do you really want to continue? This action can not be reversed. You can always reassign the delivery.")

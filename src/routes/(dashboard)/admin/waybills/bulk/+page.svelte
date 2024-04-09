@@ -45,9 +45,7 @@
             }
         }
     };
-
-    const errors = writable({});
-    const store = writable([{
+    let storeInit ={
         checked: false,
         name: "",
         quantity: 1,
@@ -64,7 +62,10 @@
                 id: ""
             }
         }
-    }]);
+    }
+
+    const errors = writable({});
+    const store = writable([]);
 
     const schema = yup.array().of(yup.object().shape({
         "checked": yup.bool().default(true),
@@ -130,6 +131,7 @@
         axiosFetch.get("/states?" + q)
         .then(res => {
             states = res.data.data;
+            console.log("the states here", states);
         });
     }
 
@@ -208,6 +210,8 @@
         }
     }
 
+    $: console.log(`the store has been updated ${JSON.stringify($store)}`);
+
     function downloadCSV() {
         const a = document.createElement("a");
         a.setAttribute("href", "/waybill.csv");
@@ -258,6 +262,7 @@
         const content = await value.arrayBuffer();
         const wb = read(content);
         const data = utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+        console.log("the data value is...", data);
         store.update(items => [
             ...items, 
             ...jsonToWaybills(data).map(e => JSON.parse(JSON.stringify(Object.assign({}, tpl, e))))
@@ -288,34 +293,18 @@
         </div>
     </div>
 
-    <div class="flex">
-        <div 
-            class:border-primary-800={!customer}
-            class="my-4 max-w-xs bg-base-100 rounded-md shadow-sm p-4 border {!customer ? 'border-primary-600' : ''} hidden">
-            <div class="flex gap-4">
-                <Avatar />
-                <div class="flex-1 text-left text-sm">
-                    <div>{ customer?.name || "Select customer" }</div>
-                    <div class="text-gray-400 text-xs">{ customer?.email || customer?.phone || "Not set" }</div>
-                </div>
-                <UilAngleDown size="20" />
+    <div 
+        class:border-primary-800={!customer}
+        class="my-4 max-w-xs bg-base-100 rounded-md shadow-sm p-4 border {!customer ? 'border-primary-600' : ''} hidden">
+        <div class="flex gap-4">
+            <Avatar />
+            <div class="flex-1 text-left text-sm">
+                <div>{ customer?.name || "Select customer" }</div>
+                <div class="text-gray-400 text-xs">{ customer?.email || customer?.phone || "Not set" }</div>
             </div>
-        </div>
-        <div 
-            class:border-primary-800={!customer}
-            class="my-4 max-w-xs bg-base-100 rounded-md shadow-sm p-4 border {!customer ? 'border-primary-600' : ''} hidden">
-            <div class="flex gap-4">
-                <Avatar />
-                <div class="flex-1 text-left text-sm">
-                    <div>{ customer?.name || "Select customer" }</div>
-                    <div class="text-gray-400 text-xs">{ customer?.email || customer?.phone || "Not set" }</div>
-                </div>
-                <UilAngleDown size="20" />
-            </div>
+            <UilAngleDown size="20" />
         </div>
     </div>
-
-    
 
     <div class="w-full max-w-xs my-4">
         <Button color="none" class="w-full gap-4 items-center p-4 border {customer ? 'border-gray-200' : 'border-primary-600'}">
@@ -428,8 +417,8 @@
                         <input
                             type="date"
                             inputmode="numeric"
-                            placeholder="DD/MM/YYYY"
-                            min='{dayjs().format('YYYY-MM-DD')}'
+                            placeholder="MM/DD/YYYY"
+                            min='{dayjs().format('MM/DD/YYYY')}'
                             value={item.pickup_at}
                             pattern="(1[0-2]|0[1-9])\/\d\d"
                             class="input input-bordered input-xs h-9 w-full"
@@ -589,7 +578,7 @@
                         />
                     </td>
                     <td>
-                        <select 
+                        <!-- <select 
                             value={item.recipient.state.id}
                             class="select select-bordered select-xs w-full font-normal " style="height: 36px; margin-top: -3px;"
                             class:select-error={$errors[`[${index}].recipient.state.id`]}
@@ -600,11 +589,27 @@
                                     return updatedItems;
                                 })
                             }}>
-                            <option disabled selected>Select State:</option>
+                            <option disabled >Select State:</option>
                             {#each states as state}
-                            <option value="{state.id}">{ state.name }</option> 
+                            <option  value="{state.id}">{ state.name }</option> 
+                            
                             {/each}
-                        </select>
+                        </select> -->
+
+                        <input
+                        type="text"
+                        inputmode="text"
+                        value={item.recipient.state.id}
+                        class="input input-bordered input-xs h-9 w-full"
+                        class:input-error={$errors[`[${index}].recipient.state.id`]}
+                        on:change={(e) => {
+                            store.update((items) => {
+                                const updatedItems = [...items];
+                                updatedItems[index].recipient.state.id  = e.target.value;
+                                return updatedItems;
+                            })
+                        }}
+                    />
                     </td>
                     <!-- <td>
                         <Button color="none" class="text-primary bg-primary-100" size="xs" on:click={() => deleteRow(index)}>

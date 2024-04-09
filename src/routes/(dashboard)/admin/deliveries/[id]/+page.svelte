@@ -3,10 +3,23 @@
     import DeliveryPrint from "$lib/components/dashboard/DeliveryPrint.svelte";
     import { getJSON } from "$lib/utils/helpers";
     import dayjs from "dayjs";
-    import { Breadcrumb, BreadcrumbItem } from "flowbite-svelte";
+    import { Breadcrumb, BreadcrumbItem, Alert } from "flowbite-svelte";
     import { UilParcel, UilPrint, UilUser } from "svelte-unicons";
 
     const data = $page.data.data;
+
+    function statusStyle(val) {
+        switch (val) {
+            case "created": 
+            case "queued": return "bg-slate-100";
+            case "in-transit": return "bg-secondary/5 text-secondary";
+            case "delivered":
+            case "completed": return "bg-success/5 text-success";
+            case "returned":
+            case "canceled": return "bg-error/5 text-error";
+            default: return "bg-slate-200";
+        }
+    }
 </script>
 
 <div class="gwx-breadcrumb print:hidden">
@@ -18,6 +31,15 @@
 </div>
 
 <div class="page print:hidden">
+    <div class="flex justify-between items-center mt-4">
+        <span class="{statusStyle(data.status)} text-xs px-2 py-1 rounded-md uppercase">
+            { data.status }
+        </span>
+        <div>
+          
+        </div>
+        
+    </div>
     <div class="flex justify-end items-center my-4">
         <button 
             class="btn btn-outline btn-primary btn-circle btn-sm" 
@@ -53,6 +75,15 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div>
+       {#if data.reason}
+       <Alert>
+        <p><strong>Reason:</strong></p>
+        {data.reason}
+      </Alert>
+       {/if}
     </div>
     
     <div class="bg-base-100 rounded-sm shadow-sm">

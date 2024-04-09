@@ -10,6 +10,7 @@ if (browser) {
         try {
             let p = localStorage.getItem("gwx.user");
             const value = scrypt.decrypt(p);
+            console.log("the json value", value);
             _user.set(getJSON(value));
         } catch (error) {}
     })();

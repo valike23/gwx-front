@@ -324,6 +324,7 @@
                 return e;
             })
             .filter((e) => e.application_id?.length);
+            console.log('the app', apps);
         // store.update(items => [
         //     ...items,
         //     ...data.map(e => {
