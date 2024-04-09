@@ -158,7 +158,7 @@
             success("Package has been updated");
 
             // reload the page
-            setTimeout(() => ( window.location.reload()), 1000);
+            setTimeout(() => ( window.location.reload()), 10000);
         } catch (error) {
             failure(error);
         } finally {
