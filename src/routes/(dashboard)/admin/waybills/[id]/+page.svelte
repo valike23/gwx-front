@@ -25,6 +25,7 @@
     import { computeStatus } from "$lib/client/helpers";
 
     let item = writable($page.data.waybill); 
+    console.log('the item details', $item);
     let hideBilling = true;
     let hidePackageInfo = true;
     let hideSender = true;

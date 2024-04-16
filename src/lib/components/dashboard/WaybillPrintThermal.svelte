@@ -6,6 +6,7 @@
 
     export let node; 
     export let items = [];
+    console.log('thermal print waybill: ',items)
 </script>
 
 <div bind:this={node} class="overflow-hidden bg-[#f8f8f8] flex flex-col items-center justify-center" {...$$restProps}>
@@ -38,18 +39,18 @@
             <div class="space-y-1">
                 <div>
                     <span>FROM: </span>
-                    <span class="font-semibold uppercase">{item.sender.name }</span>
+                    <span class="font-semibold uppercase">Name: {item.sender.name }</span>
                 </div>
-                <div class="font-semibold uppercase">{formatPhoneNumber(item.sender.phone) }</div>
-                <div class="font-semibold uppercase">{ item.sender.address || "" }</div>
+                <div class="font-semibold uppercase">Phone: {formatPhoneNumber(item.sender.phone) }</div>
+                <div class="font-semibold uppercase">Address: { item.sender.address || "" }</div>
             </div>
             <div class="space-y-1 text-right">
                 <div>
                     <span>TO: </span>
-                    <span class="font-semibold uppercase">{item.recipient.name }</span>
+                    <span class="font-semibold uppercase">Name: {item.recipient.name }</span>
                 </div>
-                <div class="font-semibold uppercase">{formatPhoneNumber(item.recipient.phone) }</div>
-                <div class="font-semibold uppercase">{ item.sender.address || ""}</div>
+                <div class="font-semibold uppercase">Phone:{formatPhoneNumber(item.recipient.phone) }</div>
+                <div class="font-semibold uppercase">Address:{ item.recipient.address || ""}</div>
             </div>
         </div>
 

@@ -2,11 +2,29 @@
     import { page } from "$app/stores";
     import DeliveryPrint from "$lib/components/dashboard/DeliveryPrint.svelte";
     import { getJSON } from "$lib/utils/helpers";
+    import { clientFetch } from "$lib/client/api";
+    import { failure, success } from "$lib/utils/toast";
     import dayjs from "dayjs";
-    import { Breadcrumb, BreadcrumbItem, Alert } from "flowbite-svelte";
-    import { UilParcel, UilPrint, UilUser } from "svelte-unicons";
-
+    import { Breadcrumb, BreadcrumbItem, Alert, Button,Modal, Input, Label  } from "flowbite-svelte";
+    import { UilParcel, UilPrint, UilUser, UilEdit } from "svelte-unicons";
+    let editReasonModal = false;
     const data = $page.data.data;
+    console.log('my data', data);
+
+    const updateReason = async ()=>{
+        try {
+            const res = await clientFetch({
+                path: `/deliveries/${data.id}/edit-reason`,
+                method: "POST",
+                body: {reason: data.reason}
+            });
+            if (!res.ok) throw json;
+            success("Reason updated successfully");
+        } catch (error) {
+            console.log(error);
+            failure("something went wrong")
+        }
+    }
 
     function statusStyle(val) {
         switch (val) {
@@ -79,7 +97,8 @@
 
     <div>
        {#if data.reason}
-       <Alert>
+       <Alert color="red">
+        <p><Button  on:click={() => (editReasonModal = true)} style="float: right"><UilEdit></UilEdit>Edit</Button></p>
         <p><strong>Reason:</strong></p>
         {data.reason}
       </Alert>
@@ -250,7 +269,17 @@
 </div>
 
 <DeliveryPrint items={[data]} class="hidden print:block"/>
+<Modal title="Edit Reason" bind:open={editReasonModal} autoclose>
+    <div class="mb-6">
+        <Label for="large-input" class="block mb-2">Edit Reason</Label>
+        <Input bind:value={data.reason} id="large-input" size="lg" placeholder="edit reason" />
+      </div>
 
+     <svelte:fragment slot="footer">
+      <Button on:click={updateReason}>Update Reason</Button>
+      <Button color="alternative">Close</Button>
+    </svelte:fragment>
+  </Modal>
 <style lang="postcss" scoped>
     .info-item {
         @apply flex py-2 border-b border-b-slate-50;

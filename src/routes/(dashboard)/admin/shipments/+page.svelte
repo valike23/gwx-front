@@ -75,19 +75,19 @@
 <div class="gwx-breadcrumb">
     <Breadcrumb aria-label="GWX breadcrumb">
         <BreadcrumbItem href="/admin" home>Dashboard</BreadcrumbItem>
-        <BreadcrumbItem>Shipments</BreadcrumbItem>
+        <BreadcrumbItem>Manifest</BreadcrumbItem>
     </Breadcrumb>
 </div>
 
 <div class="page">
     <div class="flex gap-3 justify-between items-center mb-3">
-        <h2 class="font-bold text-md">Shipments</h2>
+        <h2 class="font-bold text-md">Manifest</h2>
     </div>
 
     <div class="flex flex-1 justify-between items-end mt-6">
         <div class="relative md:max-w-xs">
             <SearchBox 
-                placeholder="Search shipments" 
+                placeholder="Search Manifest" 
                 on:search={onSearch} />
         </div>
 

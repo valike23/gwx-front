@@ -22,18 +22,18 @@
             to: "/admin/waybills",
             show: true,
             items: [
-                {
-                    name: "Manage Waybills",
-                    href: "/admin/waybills",
-                    show: true,
-                    active: $page.url.pathname == ("/admin/waybills"),
-                },
-                {
-                    name: "Bulk Upload",
-                    href: "/admin/waybills/bulk",
-                    show: true,
-                    active: $page.url.pathname == ("/admin/waybills/bulk"),
-                },
+                // {
+                //     name: "Manage Waybills",
+                //     href: "/admin/waybills",
+                //     show: true,
+                //     active: $page.url.pathname == ("/admin/waybills"),
+                // },
+                // {
+                //     name: "Bulk Upload",
+                //     href: "/admin/waybills/bulk",
+                //     show: true,
+                //     active: $page.url.pathname == ("/admin/waybills/bulk"),
+                // },
                 {
                     name: "NIS Applications",
                     href: "/admin/waybills/applications",
@@ -117,6 +117,13 @@
                     href: "/admin/reports/customers",
                     show: true,
                     active: activeUrl == ("/admin/reports/customers"),
+                    show: ["admin"].includes(user.role)
+                },
+                {
+                    name: "Audit Trail",
+                    href: "/admin/reports/audit",
+                    show: true,
+                    active: activeUrl == ("/admin/reports/audit"),
                     show: ["admin"].includes(user.role)
                 }
             ]

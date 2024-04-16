@@ -62,7 +62,7 @@
 
     <div class="flex gap-x-4 sticky bg-base-100 shadow-sm w-full top-0 px-4 items-center h-14">
         <div><CloseButton on:click={() => (dispatch('close'))} /></div>
-        <h3 class="font-medium text-error">Cancel Delivery</h3>
+        <h3 class="font-medium text-error">Return Delivery</h3>
     </div>
 
     <div class="px-8">

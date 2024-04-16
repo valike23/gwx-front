@@ -3,7 +3,8 @@
     import printJS from "print-js";
     import html2pdf from "html2pdf.js";
     import dayjs from 'dayjs';
-    import { Breadcrumb, BreadcrumbItem, Checkbox, Button, Dropdown, DropdownItem, Drawer, Modal, Dropzone } from "flowbite-svelte";
+    import { Breadcrumb, BreadcrumbItem, Checkbox, Button, Dropdown, DropdownItem,
+         Drawer, Modal, Dropzone, Badge } from "flowbite-svelte";
     import { clientFetch } from "$lib/client/api";
     import { onMount } from 'svelte';
     import ListShimmer from '$lib/components/ListShimmer.svelte';
@@ -73,6 +74,7 @@
             case "in-transit": return "bg-warning/5 text-warning";
             case "out-for-delivery": return "bg-accent/5 text-accent";
             case "delivered": return "bg-success/5 text-success";
+            case "returned": return "bg-error/5 text-error";
             case "canceled": return "bg-error/5 text-error";
             default: return "bg-slate-200";
         }
@@ -186,6 +188,7 @@
     }
 
     function onFilter(e) {
+        console.log("the meta is here", e);
         meta = Object.assign({}, meta, e.detail);
         hideFilter = true;
         getData();
@@ -306,6 +309,23 @@
         <div class="flex flex-1 justify-end">
         </div>
     </div>
+    <div class="filter">
+        {#if meta.status}
+        <Badge  rounded border large dismissable color="yellow">{meta.status}</Badge> 
+        {/if}
+
+        {#if meta.hub_id}
+        <Badge  rounded border large dismissable color="green">hub ID:{meta.hub_id}</Badge> 
+        {/if}
+        {#if meta.date_max}
+        <Badge  rounded border large dismissable color="pink">Date Min:{meta.date_min}</Badge> 
+        {/if}
+
+        {#if meta.date_max}
+        <Badge  rounded border large dismissable color="purple">Date Max:{meta.date_max}</Badge> 
+        {/if}
+       
+    </div>
 
     <div class="flex flex-col md:flex-row gap-y-4 gap-x-6 justify-between">
         <div class="flex items-center gap-4 mt-2">
@@ -334,7 +354,7 @@
             <div class="relative w-full md:max-w-xs">
                 <SearchBox placeholder="Search application" on:search={onSearch} />
             </div>
-            <div class="tooltip tooltip-top" data-tip="Upload Applications">
+            <div class="tooltip tooltip-top" data-tip="Update Filter">
                 <Button color="light" size="sm" class="space-x-1" on:click={() => (hideFilter = false)} outline>
                     <span><UilSlidersVAlt size="18"/></span>
                     <span>Filter</span>
@@ -505,3 +525,15 @@
             debounce(() => getData(), 500);
         }} />
 </Modal>
+
+<style>
+         .filter {
+            display: flex;
+            flex-direction: row;
+            padding: 5px;
+        }
+ 
+        .filter div {
+          margin-left: 5px;
+        } 
+</style>
