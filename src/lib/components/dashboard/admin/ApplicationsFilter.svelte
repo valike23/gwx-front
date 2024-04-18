@@ -24,6 +24,7 @@
         "out-for-delivery": "Out for delivery",
         "delivered": "Delivered",
         "canceled": "Canceled",
+        "returned": "returned"
     }
 
     onMount(() => {
