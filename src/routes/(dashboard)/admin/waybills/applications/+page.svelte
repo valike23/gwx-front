@@ -394,6 +394,7 @@
                     <th class="min-w-[140px]">ID</th>
                     <th class="min-w-[200px]">Applicant</th>
                     <th class="min-w-[130px]">Phone</th>
+                    <th class="min-w-[130px]">Creator</th>
                     <th class="min-w-[100px]">State</th>
                     <th class="min-w-[130px]">Status</th>
                     <th class="min-w-[100px]">Date</th>
@@ -422,6 +423,9 @@
                     </td>
                     <td>
                         <span>{ item.recipient.phone || "" }</span>
+                    </td>
+                    <td>
+                        <span>{ item.recipient.creator || "" }</span>
                     </td>
                     <td>
                         <span>{ item.recipient.state.name || "" }</span>
