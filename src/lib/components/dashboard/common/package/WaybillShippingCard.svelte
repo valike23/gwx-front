@@ -17,7 +17,7 @@
     let users = [];
     let formModal = false;
 
-    let allowedStatuses = ["en-route", "pending"];
+    let allowedStatuses = ["en-route", "pending", "delivered"];
 
     const { form, errors, handleSubmit, handleReset } = createForm({
         initialValues: {
@@ -143,7 +143,7 @@
         </div>
     {/if}
     
-   {#if !item.delivery || item.delivery.status != 'delivered'}
+   {#if !item.delivery || item.delivery.status != 'completed'}
     <div 
         class="absolute inset-0 bg-black/50 flex flex-col items-center justify-center"
         class:hidden={allowedStatuses.includes(item?.delivery?.status)}>

@@ -42,6 +42,7 @@
             });
             const json = await res.json();
             items = json.data;
+            console.log('deliveries', items);
             meta = Object.assign(meta, json.meta);  
         } catch (error) {
             

@@ -132,9 +132,9 @@
 
             const json = await res.json();
             if (!res.ok) throw json;
-
+            console.log('the json file here',json)
             // generate the xlxs
-            const headers = ["Application ID", "Ref Number", "Applicant Name", "Mobile Number", "Contact Address", "Contact City", "Contact State", "Status", "Delivery Date"];
+            const headers = ["Application ID", "Ref Number", "Applicant Name", "Mobile Number", "Contact Address", "Contact City", "Contact State", "Status","Hub", "Delivery Date"];
             const aoa = [headers];
 
             for (let index = 0; index < json.data.length; index++) {
@@ -164,9 +164,9 @@
 
                 // status
                 a[7] = el.status.replaceAll("-", " ").toUpperCase();
-
+                a[8] = el.hub.name;
                 // Date Created
-                a[8] = dayjs(el.created_at).format('DD-MM-YYYY');
+                a[9] = dayjs(el.created_at).format('DD-MM-YYYY');
 
                 // Delivery Date
                 const dd = (el.milestones || []).find(e => e.status == "delivered")?.timestamp;
@@ -397,6 +397,7 @@
                     <th class="min-w-[130px]">Creator</th>
                     <th class="min-w-[100px]">State</th>
                     <th class="min-w-[130px]">Status</th>
+                    <th class="min-w-[130px]">Hub</th>
                     <th class="min-w-[100px]">Date</th>
                     <th></th>
                 </tr>
@@ -425,13 +426,16 @@
                         <span>{ item.recipient.phone || "" }</span>
                     </td>
                     <td>
-                        <span>{ item.recipient.creator || "" }</span>
+                        <span>{ item.creator || "" }</span>
                     </td>
                     <td>
                         <span>{ item.recipient.state.name || "" }</span>
                     </td>
                     <td>
                         <span class="{statusStyle(item.status)} text-2xs px-2 py-1 rounded-md uppercase font-medium">{ computeStatus(item.status) }</span>
+                    </td>
+                    <td>
+                        <span>{ item.hub.name || "" }</span>
                     </td>
                     <td>
                         <span class="text-xs">{ dayjs(item.created_at).format('DD-MM-YYYY') }</span>

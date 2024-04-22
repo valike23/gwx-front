@@ -1,6 +1,6 @@
 <script>
     import SignaturePad from 'signature_pad';
-    import { Alert, CloseButton, Input, Label } from "flowbite-svelte";
+    import { Alert, CloseButton, Input, Label, Textarea } from "flowbite-svelte";
     import { createEventDispatcher, onDestroy, onMount } from "svelte";
     import { UilEditAlt, UilHouseUser, UilLock } from 'svelte-unicons';
     import { failure, success } from '$lib/utils/toast';
@@ -10,7 +10,7 @@
 
     export let id;
     export let consignee;
-
+    let signed = true;
     let canvas;
     let isLoading = false;
     let disableInput = true;
@@ -19,7 +19,8 @@
     let signaturePad;
 
     let body = {
-        consignee
+        consignee,
+        note : ''
     }
 
     onMount(() => {
@@ -61,6 +62,8 @@
         body.signature = signaturePad.toDataURL("image/png", {
             includeBackgroundColor: false
         });
+        success("Signature saved successfully");
+        signed = false;
     }
 
 </script>
@@ -106,11 +109,16 @@
                 Clear
             </button>
         </div>
+        <div class="mt-3 form-control ">
+            <Label class="mb-2">Note (optional)</Label>
+            <Textarea bind:value="{body.note}" rows="3"></Textarea>
+        </div>
 
         <div class="mt-8">
             <button 
                 class="btn w-full btn-primary"
                 type="submit" 
+                disabled="{signed}"
                 class:btn-disabled={isLoading}
                 on:click={doSubmit}
             >

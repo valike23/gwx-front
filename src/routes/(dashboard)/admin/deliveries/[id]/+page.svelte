@@ -103,6 +103,13 @@
         {data.reason}
       </Alert>
        {/if}
+       {#if data.note}
+       <Alert color="green">
+     
+        <p><strong>Rider's Note:</strong></p>
+        {data.note}
+      </Alert>
+       {/if}
     </div>
     
     <div class="bg-base-100 rounded-sm shadow-sm">
