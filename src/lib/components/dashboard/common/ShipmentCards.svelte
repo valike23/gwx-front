@@ -59,7 +59,7 @@
             <span slot="title">
                 In Transit
             </span>
-            <span slot="value">{ data.items.find(e => e.status == "out-for-delivery")?.total_packages || 0}</span>
+            <span slot="value">{ data.items.find(e => e.status == "in-transit")?.total_packages || 0}</span>
         </StatCard>
 
         
