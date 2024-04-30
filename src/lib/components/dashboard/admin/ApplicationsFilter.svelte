@@ -23,6 +23,7 @@
         "new": "New",
         "out-for-delivery": "Out for delivery",
         "delivered": "Delivered",
+        "recieved": "Recieved",
         "canceled": "Canceled",
         "returned": "returned"
     }

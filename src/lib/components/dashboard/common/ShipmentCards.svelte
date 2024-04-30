@@ -51,7 +51,7 @@
         </StatCard>
         <StatCard class="bg-success" href="/admin/waybills/applications?status=picked">
             <span slot="title">
-                Ready For Shipping
+                Waybill Generated
             </span>
             <span slot="value">{ data.items.find(e => e.status == "picked")?.total_packages || 0}</span>
         </StatCard>

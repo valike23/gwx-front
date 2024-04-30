@@ -349,6 +349,17 @@
                             <span class="bg-slate-100 rounded-xl px-2 py-1 text-xs">{ids.length}</span>
                         </div>
                     </DropdownItem>
+                    <DropdownItem
+                    disabled={!ids.length} 
+                    on:click={() => {
+                        if (!ids.length) return;
+                        showDelivery = true;
+                    }}>
+                    <div class="flex items-center space-x-2">
+                        <span>Recieved</span>
+                        <span class="bg-slate-100 rounded-xl px-2 py-1 text-xs">{ids.length}</span>
+                    </div>
+                </DropdownItem>
                 </Dropdown>
             </div>
             <div class="relative w-full md:max-w-xs">
