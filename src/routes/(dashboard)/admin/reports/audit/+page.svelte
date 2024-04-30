@@ -111,11 +111,8 @@
                 <tr>
                     <th>ID</th>
                     <th class="min-w-[100px]">Name</th>
-                    <th class="min-w-[150px]">Email</th>
-                    <th class="min-w-[100px]">Phone</th>
-                    <th class="min-w-[100px]">Type</th>
-                    <th class="min-w-[120px]">No of Waybills</th>
-                    <th class="min-w-[100px]">Status</th>
+                    <th class="min-w-[150px]">Action</th>
+                    <th class="min-w-[100px]">entity</th>
                     <th class="min-w-[100px]">Date</th>
                 </tr>
             </thead>
@@ -128,21 +125,11 @@
                     <td>
                         <span>{ item.name || '' }</span>
                     </td>
-                    <td>
-                        <span>{ item.email || "" }</span>
-                    </td>
-                    <td>
-                        <span>{ item.phone || "" }</span>
-                    </td>
+                  
                     <td>
                         <span class="capitalize">{ item.scope }</span>
                     </td>
-                    <td>
-                        <span>{ item.waybill_count || 0 }</span>
-                    </td>
-                    <td>
-                        <span class="capitalize">{ item.status?.replaceAll("-", " ") }</span>
-                    </td>
+                  
                     <td>
                         <span>
                             {dayjs(item.created_at).format('DD-MM-YYYY')}
