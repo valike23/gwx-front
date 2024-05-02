@@ -91,7 +91,7 @@
         const body = {
             update: items.filter(e => ids.includes(e.id) && e.status == "draft").map(e => ({
                 id: e.id,
-                status: "new"
+                status: "waybill-generated"
             }))
         }
 
