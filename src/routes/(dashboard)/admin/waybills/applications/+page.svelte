@@ -239,6 +239,7 @@
             });
             if(res){
                 success("update success");
+                location.reload();
             }
     }
 
