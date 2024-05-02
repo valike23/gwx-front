@@ -12,7 +12,7 @@
     import SearchBox from '$lib/components/dashboard/SearchBox.svelte';
     import { UilAngleDown, UilFileAlt, UilFileCheckAlt, UilPlus, UilSlidersVAlt, UilTable } from 'svelte-unicons';
     import { closeModal, showModal } from '$lib/stores/app';
-    import { failure, success } from '$lib/utils/toast';
+    import { failure, info, success } from '$lib/utils/toast';
     import { sineIn } from 'svelte/easing';
     import ApplicationsFilter from '$lib/components/dashboard/admin/ApplicationsFilter.svelte';
     import { debounce } from '$lib/utils/helpers';
@@ -230,6 +230,18 @@
         }
     };
 
+    const uploadRecieved =async ()=>{
+        console.log(id);
+        info("updating packages ")
+        const res = await clientFetch({
+                path: "/packages/generate",
+                body: {update:ids},
+            });
+            if(res){
+                success("update success");
+            }
+    }
+
     async function submitUpload() {
         if (!value || !value?.text) return;
         const content = await value.arrayBuffer();
@@ -353,7 +365,7 @@
                     disabled={!ids.length} 
                     on:click={() => {
                         if (!ids.length) return;
-                        showDelivery = true;
+                       uploadRecieved
                     }}>
                     <div class="flex items-center space-x-2">
                         <span>Recieved</span>
