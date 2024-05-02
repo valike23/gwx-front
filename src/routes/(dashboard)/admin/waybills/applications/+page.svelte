@@ -348,9 +348,7 @@
                     <span><UilAngleDown /></span>
                 </Button>
                 <Dropdown class="min-w-[120px]">
-                    <DropdownItem on:click={() => processApplications()}>
-                        Register
-                    </DropdownItem>
+                  
                     <DropdownItem
                         disabled={!ids.length} 
                         on:click={() => {
@@ -366,7 +364,7 @@
                     disabled={!ids.length} 
                     on:click={() => {
                         if (!ids.length) return;
-                       uploadRecieved
+                        processApplications()
                     }}>
                     <div class="flex items-center space-x-2">
                         <span>Recieved</span>
