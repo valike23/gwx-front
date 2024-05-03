@@ -10,7 +10,7 @@
     import ListShimmer from '$lib/components/ListShimmer.svelte';
     import { writable } from 'svelte/store';
     import SearchBox from '$lib/components/dashboard/SearchBox.svelte';
-    import { UilAngleDown, UilFileAlt, UilFileCheckAlt, UilPlus, UilSlidersVAlt, UilTable } from 'svelte-unicons';
+    import { UilAngleDown, UilFileAlt, UilFileCheckAlt, UilPlus, UilSlidersVAlt, UilTable, UilCancel } from 'svelte-unicons';
     import { closeModal, showModal } from '$lib/stores/app';
     import { failure, info, success } from '$lib/utils/toast';
     import { sineIn } from 'svelte/easing';
@@ -82,6 +82,12 @@
 
     function onSearch(e) {
         meta.search = e.detail;
+        getData();
+    }
+    const removeFilter = (met)=>{
+        delete(meta[met]);
+        meta = meta;
+        console.log("the world here", meta);
         getData();
     }
 
@@ -230,18 +236,7 @@
         }
     };
 
-    const uploadRecieved =async ()=>{
-        console.log(id);
-        info("updating packages ")
-        const res = await clientFetch({
-                path: "/packages/generate",
-                body: {update:ids},
-            });
-            if(res){
-                success("update success");
-                location.reload();
-            }
-    }
+ 
 
     async function submitUpload() {
         if (!value || !value?.text) return;
@@ -324,18 +319,20 @@
     </div>
     <div class="filter">
         {#if meta.status}
-        <Badge  rounded border large dismissable color="yellow">{meta.status}</Badge> 
+        <Button color="yellow" pill on:click={()=>{meta.status = ''}}>{meta.status} </Button>
+       
         {/if}
 
         {#if meta.hub_id}
-        <Badge  rounded border large dismissable color="green">hub ID:{meta.hub_id}</Badge> 
+        <Button color="green" pill on:click={()=>{meta.hub_id = ''}}>hub ID:{meta.hub_id} </Button>
+      
         {/if}
-        {#if meta.date_max}
-        <Badge  rounded border large dismissable color="pink">Date Min:{meta.date_min}</Badge> 
+        {#if meta.date_min}
+        <Button color="pink" pill on:click={()=>{meta.date_min = ''}}>Date Min:{meta.date_min} </Button>
         {/if}
 
         {#if meta.date_max}
-        <Badge  rounded border large dismissable color="purple">Date Max:{meta.date_max}</Badge> 
+        <Button color="purple" pill on:click={()=>{meta.date_max = ''}}>Date Min:{meta.date_max} </Button>
         {/if}
        
     </div>
