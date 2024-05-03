@@ -14,9 +14,12 @@
     let obscureText = true;
     let countries = [];
     let states = [];
+    let hubs = [];
+    let regions = [];
 
-    onMount(() => {
+    onMount(async () => {
         getCountries();
+       await loadContents();
     })
 
     const roles = {
@@ -106,6 +109,14 @@
         .then(res => {
             states = res.data.data;
         });
+    }
+   async function loadContents  (){
+        let res = await clientFetch({
+                    method: "GET",
+                    path: "/hubs"
+                });
+
+        console.log('the hubs are', res)
     }
 </script>
 
