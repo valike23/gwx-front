@@ -454,7 +454,7 @@
                         <span class="{statusStyle(item.status)} text-2xs px-2 py-1 rounded-md uppercase font-medium">{ computeStatus(item.status) }</span>
                     </td>
                     <td>
-                        <span>{ item.hub.name || "" }</span>
+                        <span>{ item.hub?.name || "" }</span>
                     </td>
                     <td>
                         <span class="text-xs">{ dayjs(item.created_at).format('DD-MM-YYYY') }</span>
