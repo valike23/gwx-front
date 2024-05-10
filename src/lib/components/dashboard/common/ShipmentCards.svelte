@@ -49,7 +49,7 @@
             </span>
             <span slot="value">{ data.items.reduce((a, c) => a + c.total_packages, 0)}</span>
         </StatCard>
-        <StatCard class="bg-success" href="/admin/waybills/applications?status=picked">
+        <StatCard class="bg-success" href="/admin/waybills/applications?status=waybill_generated">
             <span slot="title">
                 Waybill Generated
             </span>

@@ -13,8 +13,26 @@
     let isLoading = false;
     let submit = false;
     let countries = [];
+    let regions = [];
 
     const dispatch = createEventDispatcher();
+
+    const  loadRegion = async ()=>{
+        console.log("the rcountry ID", $form.country_id);
+        try {
+            const res = await clientFetch({
+                path: `/zone/${$form.country_id}`
+            });
+            const json = await res.json();
+            if (!res.ok) throw json;
+            const {data} = json
+            console.log('the country is working', data);
+            regions = data;
+            regions = regions;
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     onMount(() => {
         $form.country_id = $page.url.searchParams.get("country_id") || "";
@@ -143,22 +161,12 @@
             </Helper>
             {/if}
         </div>
-
-        <div class="form-control">
-            <Label for="region" class="mb-2 font-normal">Region</Label>
-            <Select 
-                id="region"
-                bind:value={$form.region}
-                items={gwxRegions.map(e => ({value: e, name: e}))}
-                placeholder="Select region"
-            />
-        </div>
-
         <div class="form-control" class:hidden={!!data}>
             <Label for="country" class="mb-2 font-normal">Country</Label>
             <Select 
                 id="region"
                 bind:value={$form.country_id}
+                on:change={loadRegion}
                 items={countries.map(e => ({value: e.id, name: e.name}))}
                 placeholder="Select country"
             />
@@ -169,6 +177,18 @@
             </Helper>
             {/if}
         </div>
+
+        <div class="form-control">
+            <Label for="region" class="mb-2 font-normal">Region</Label>
+            <Select 
+                id="region"
+                bind:value={$form.region}
+                items={regions.map(e => ({value: e.code, name: e.name}))}
+                placeholder="Select region"
+            />
+        </div>
+
+     
 
         <div class="form-control">
             <Label class="mb-2">Cities</Label>

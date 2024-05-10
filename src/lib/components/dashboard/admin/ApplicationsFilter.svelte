@@ -20,7 +20,7 @@
     const statuses = {
         "": "All",
         "draft": "Draft",
-        "new": "New",
+        "Waybill Generated": "waybill-generated",
         "out-for-delivery": "Out for delivery",
         "delivered": "Delivered",
         "recieved": "Recieved",
