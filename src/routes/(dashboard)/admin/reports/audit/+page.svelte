@@ -139,7 +139,7 @@
                   
                     <td>
                         <span>
-                            {dayjs(item.created_at).format('DD-MM-YYYY')}
+                            {dayjs(item.created_at).format('DD-MM-YYYY HH:MM A')}
                         </span>
                     </td>
                 </tr>

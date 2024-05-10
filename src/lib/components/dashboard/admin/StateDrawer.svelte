@@ -47,6 +47,12 @@
         }
 
         getCountries();
+        console.log("the regions here is", $form.country_id);
+        if($form.country_id){ 
+            console.log("loading regions here");
+            loadRegion();
+        
+        }
     })
 
     const { form, errors, handleReset, handleSubmit } = createForm({
