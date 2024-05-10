@@ -112,6 +112,7 @@
                     <th>ID</th>
                     <th class="min-w-[100px]">Name</th>
                     <th class="min-w-[150px]">Action</th>
+                    <th class="min-w-[150px]">Email</th>
                     <th class="min-w-[100px]">entity</th>
                     <th class="min-w-[100px]">Date</th>
                 </tr>
@@ -127,7 +128,13 @@
                     </td>
                   
                     <td>
-                        <span class="capitalize">{ item.scope }</span>
+                        <span class="capitalize">{ item.action }</span>
+                    </td>
+                    <td>
+                        <span>{ item.userEmail || '' }</span>
+                    </td>
+                    <td>
+                        <span>{ item.type || '' }</span>
                     </td>
                   
                     <td>
