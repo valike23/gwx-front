@@ -143,9 +143,9 @@
                     Login
                 </button>
             </div>
-            <div class="text-center my-4">
+            <!-- <div class="text-center my-4">
                 <span class="text-sm">Don’t have an account? <a href="/auth/register" class="text-primary font-semibold">Sign up</a></span>
-            </div>
+            </div> -->
         </form>
     </div>
 </div>

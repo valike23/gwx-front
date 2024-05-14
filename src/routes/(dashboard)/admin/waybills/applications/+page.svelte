@@ -29,9 +29,10 @@
     let showDelivery = false;
     $: {
         console.log(showDelivery);
-        items.find((item, index)=>{
-          //  if()
-        })  
+        console.log(items);
+        // items.find((item, index)=>{
+        //   //  if()
+        // })  
     }
     const waybills = writable([]);
     let meta = {
@@ -60,7 +61,7 @@
 
             const json = await res.json();
             if (!res.ok) throw json;
-            items = json
+            items = json.data
             meta = Object.assign(meta, json.meta);    
         } catch (error) {
             failure(error);
