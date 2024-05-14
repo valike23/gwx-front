@@ -26,6 +26,8 @@
     let hideFilter = true;
     let items = [], labelLayout;
     let ids = [];
+    let assignIds = [];
+    let recievedIds = [];
     let showDelivery = false;
     const checkBadRecords =()=>{
        
@@ -49,14 +51,16 @@
             
         }
     }
-    // $: {
-    //     console.log(showDelivery);
-        
-    //   checkBadRecords();
-    //     // items.find((item, index)=>{
-    //     //   //  if()
-    //     // })  
-    // }
+   $: {
+    console.log(ids);
+    ids.forEach((id)=>{
+    const myItem = items.find((item)=>{
+            return item.id == id
+        });
+        if(myItem.status == 'waybill-generated') assignIds.push(id);
+        if(myItem.status == 'draft') recievedIds.push(id);
+    })  
+   }
     const waybills = writable([]);
     let meta = {
         page: 1,
@@ -92,6 +96,8 @@
         } finally {
             isLoading = false;
             ids = [];
+            recievedIds = [];
+            assignIds = [];
         }
     }
 
@@ -123,10 +129,10 @@
     }
 
     function processApplications() {
-        if (!ids.length) return;
+        if (!recievedIds.length) return;
 
         const body = {
-            update: items.filter(e => ids.includes(e.id) && e.status == "draft").map(e => ({
+            update: items.filter(e => recievedIds.includes(e.id) && e.status == "draft").map(e => ({
                 id: e.id,
                 status: "waybill-generated"
             }))
@@ -382,20 +388,20 @@
                 <Dropdown class="min-w-[120px]">
                   
                     <DropdownItem
-                        disabled={!ids.length} 
+                        disabled={!assignIds.length} 
                         on:click={() => {
-                            if (!ids.length) return;
+                            if (!assignIds.length) return;
                             checkBadRecords()
                         }}>
                         <div class="flex items-center space-x-2">
                             <span>Assign</span>
-                            <span class="bg-slate-100 rounded-xl px-2 py-1 text-xs">{ids.length}</span>
+                            <span class="bg-slate-100 rounded-xl px-2 py-1 text-xs">{assignIds.length}</span>
                         </div>
                     </DropdownItem>
                     <DropdownItem
-                    disabled={!ids.length} 
+                    disabled={!recievedIds.length} 
                     on:click={() => {
-                        if (!ids.length) return;
+                        if (!recievedIds.length) return;
                         processApplications()
                     }}>
                     <div class="flex items-center space-x-2">
