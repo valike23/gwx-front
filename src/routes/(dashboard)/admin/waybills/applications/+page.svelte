@@ -74,7 +74,7 @@
 
     async function getData() {
         isLoading = true;
-
+        info('loading packages...');
         let query = new URLSearchParams(meta);
 
         try {
@@ -144,6 +144,10 @@
             if(!json.data) {
                 failure(json.data)
                 return;
+            }
+            else{
+                getData();
+                
             }
             success("Processing request");
         })
