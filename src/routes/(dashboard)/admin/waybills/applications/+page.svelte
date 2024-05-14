@@ -27,13 +27,36 @@
     let items = [], labelLayout;
     let ids = [];
     let showDelivery = false;
-    $: {
-        console.log(showDelivery);
-        console.log(items);
-        // items.find((item, index)=>{
-        //   //  if()
-        // })  
+    const checkBadRecords =()=>{
+       
+        if(ids.length){
+            ids.every((id)=>{
+             let it =   items.find((item)=>{
+                return item.id == id
+            });
+          if(it.status != 'waybill-generated'){
+            
+            failure('you selected a bad record');
+
+            showDelivery= false;
+            
+            return;
+          }
+          else{
+            showDelivery = true;
+          }
+            })
+            
+        }
     }
+    // $: {
+    //     console.log(showDelivery);
+        
+    //   checkBadRecords();
+    //     // items.find((item, index)=>{
+    //     //   //  if()
+    //     // })  
+    // }
     const waybills = writable([]);
     let meta = {
         page: 1,
@@ -44,7 +67,8 @@
     }
 
     onMount(() => {
-        meta.status = $page.url.searchParams.get("status") || ""
+        meta.status = $page.url.searchParams.get("status") || "";
+        info("loading data...");
         getData();
     });
 
@@ -357,7 +381,7 @@
                         disabled={!ids.length} 
                         on:click={() => {
                             if (!ids.length) return;
-                            showDelivery = true;
+                            checkBadRecords()
                         }}>
                         <div class="flex items-center space-x-2">
                             <span>Assign</span>
