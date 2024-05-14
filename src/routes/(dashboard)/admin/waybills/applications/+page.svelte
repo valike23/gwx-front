@@ -53,12 +53,14 @@
     }
    $: {
     console.log(ids);
+    assignIds = [];
+    recievedIds = [];
     ids.forEach((id)=>{
     const myItem = items.find((item)=>{
             return item.id == id
         });
         if(myItem.status == 'waybill-generated') assignIds.push(id);
-        if(myItem.status == 'draft') recievedIds.push(id);
+        if(myItem.status != 'waybill-generated') recievedIds.push(id);
     })  
    }
     const waybills = writable([]);
@@ -387,28 +389,32 @@
                 </Button>
                 <Dropdown class="min-w-[120px]">
                   
-                    <DropdownItem
-                        disabled={!assignIds.length} 
-                        on:click={() => {
-                            if (!assignIds.length) return;
-                            checkBadRecords()
-                        }}>
-                        <div class="flex items-center space-x-2">
-                            <span>Assign</span>
-                            <span class="bg-slate-100 rounded-xl px-2 py-1 text-xs">{assignIds.length}</span>
-                        </div>
-                    </DropdownItem>
-                    <DropdownItem
-                    disabled={!recievedIds.length} 
-                    on:click={() => {
-                        if (!recievedIds.length) return;
-                        processApplications()
-                    }}>
-                    <div class="flex items-center space-x-2">
-                        <span>Recieved</span>
-                        <span class="bg-slate-100 rounded-xl px-2 py-1 text-xs">{ids.length}</span>
-                    </div>
-                </DropdownItem>
+                   {#if assignIds.length}
+                   <DropdownItem
+                   disabled={!assignIds.length} 
+                   on:click={() => {
+                       if (!assignIds.length) return;
+                       checkBadRecords()
+                   }}>
+                   <div class="flex items-center space-x-2">
+                       <span>Assign</span>
+                       <span class="bg-slate-100 rounded-xl px-2 py-1 text-xs">{assignIds.length}</span>
+                   </div>
+               </DropdownItem>
+                   {/if}
+                   {#if recievedIds.length}
+                   <DropdownItem
+                   disabled={!recievedIds.length} 
+                   on:click={() => {
+                       if (!recievedIds.length) return;
+                       processApplications()
+                   }}>
+                   <div class="flex items-center space-x-2">
+                       <span>Recieved</span>
+                       <span class="bg-slate-100 rounded-xl px-2 py-1 text-xs">{recievedIds.length}</span>
+                   </div>
+               </DropdownItem>
+                   {/if}
                 </Dropdown>
             </div>
             <div class="relative w-full md:max-w-xs">

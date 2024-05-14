@@ -12,7 +12,7 @@
     const dispatch = createEventDispatcher();
 
     const roles = {
-        "admin,hub,rider": "All Users",
+        "admin,hub,manager,courier,rider": "All Users",
         "admin": "Admin",
         "manager": "Managers",
         "rider,courier": "Rider"

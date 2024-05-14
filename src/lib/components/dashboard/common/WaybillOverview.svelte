@@ -5,12 +5,12 @@
     import { onMount } from "svelte";
     import { UilAngleRight } from "svelte-unicons";
 
-    export let allLink = "/admin/waybills";
+    export let allLink = "/admin/waybills/applications/";
 
     let items = [];
 
     onMount(() => {
-        axiosFetch.get("/packages?status=new&limit=5")
+        axiosFetch.get("/packages?status=draft&limit=5")
             .then(res => {
                 items = res.data.data;;
             })
