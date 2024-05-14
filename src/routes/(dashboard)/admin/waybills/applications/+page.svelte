@@ -27,6 +27,12 @@
     let items = [], labelLayout;
     let ids = [];
     let showDelivery = false;
+    $: {
+        console.log(showDelivery);
+        items.find((item, index)=>{
+          //  if()
+        })  
+    }
     const waybills = writable([]);
     let meta = {
         page: 1,
@@ -54,7 +60,7 @@
 
             const json = await res.json();
             if (!res.ok) throw json;
-            items = json.data
+            items = json
             meta = Object.assign(meta, json.meta);    
         } catch (error) {
             failure(error);
