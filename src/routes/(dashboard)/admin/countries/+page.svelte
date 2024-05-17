@@ -6,7 +6,7 @@
     import { onMount } from "svelte";
     import { sineIn } from 'svelte/easing';
     import ListShimmer from "$lib/components/ListShimmer.svelte";
-    import { UilEditAlt, UilEye, UilInfoCircle, UilPlus } from "svelte-unicons";
+    import { UilEditAlt, UilEye, UilInfoCircle, UilPlus, UilTrashAlt } from "svelte-unicons";
     import { Breadcrumb, BreadcrumbItem, Button, Drawer, Popover } from 'flowbite-svelte';
     import SearchBox from '$lib/components/dashboard/SearchBox.svelte';
     import CountryDrawer from '$lib/components/dashboard/admin/CountryDrawer.svelte';
@@ -53,6 +53,13 @@
         } finally {
             isLoading = false;
         }
+    }
+    const  removeCountry = async (country)=>{
+      const res = await  clientFetch({path: `/countries/${country.id}`, method: 'DELETE'});
+      const json = await res.json();
+      if (!res.ok) throw json;
+      getData();
+
     }
 
     function setPage(val) {
@@ -151,6 +158,10 @@
                         >
                             <span><UilEditAlt size="12"/></span>
                             <span>Edit</span>
+                         </Button>
+                         <Button size="xs" color="red" on:click={()=>{removeCountry(item)}}
+                          class="space-x-1 text-primary uppercase text-2xs font-semibold">
+                            <span><UilTrashAlt size="12"/></span>
                          </Button>
                     </th>
                 </tr>
