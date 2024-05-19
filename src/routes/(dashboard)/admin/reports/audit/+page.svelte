@@ -131,7 +131,7 @@
                         <span class="capitalize">{ item.action }</span>
                     </td>
                     <td>
-                        <span>{ item.userEmail || '' }</span>
+                        <span>{ item.user_email || '' }</span>
                     </td>
                     <td>
                         <span>{ item.type || '' }</span>
