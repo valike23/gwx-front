@@ -11,7 +11,8 @@
     import { UilEditAlt, UilPlus, UilTrashAlt, UilUserPlus } from "svelte-unicons";
     import { sineIn } from 'svelte/easing';
 
-    const hub = $page.data.hub;
+    const hub = ($page.data.hub)[0];
+    console.log("the hub", hub);
     let users = [];
     let hideDrawer = true;
     let hideEdit = true;
