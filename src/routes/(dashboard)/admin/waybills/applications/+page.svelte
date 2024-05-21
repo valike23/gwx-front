@@ -499,7 +499,7 @@
                         <span>{ item.recipient.email || "" }</span>
                     </td>
                     <td>
-                        <span>{ item.recipient.state.name || "" }</span>
+                        <span>{ item.recipient.state?.name || "" }</span>
                     </td>
                     <td>
                         <span class="{statusStyle(item.status)} text-2xs px-2 py-1 rounded-md uppercase font-medium">{ computeStatus(item.status) }</span>
