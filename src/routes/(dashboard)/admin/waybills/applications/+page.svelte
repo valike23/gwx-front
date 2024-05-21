@@ -133,6 +133,7 @@
         if (!recievedIds.length) return;
 
         const body = {
+            notify: true,
             update: items.filter(e => recievedIds.includes(e.id) && e.status == "draft").map(e => ({
                 id: e.id,
                 status: "waybill-generated"
