@@ -33,6 +33,7 @@
         .then(res => res.json())
         .then(json => {
             data.items = json.data;
+            console.log(data.items);
             data.updated_at = dayjs().toISOString();
             // save item
             localStorage.setItem(`gwx.packages.totals`, JSON.stringify(data));
@@ -55,11 +56,11 @@
             </span>
             <span slot="value">{ data.items.find(e => e.status == "waybill-generated")?.total_packages || 0}</span>
         </StatCard>
-        <StatCard class="bg-info" href="/admin/waybills/applications?status=in-transit">
+        <StatCard class="bg-info" href="/admin/waybills/applications?status=out-for-delivery">
             <span slot="title">
                 In Transit
             </span>
-            <span slot="value">{ data.items.find(e => e.status == "in-transit")?.total_packages || 0}</span>
+            <span slot="value">{ data.items.find(e => e.status == "out-for-delivery")?.total_packages || 0}</span>
         </StatCard>
 
         
