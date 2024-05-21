@@ -49,11 +49,11 @@
             </span>
             <span slot="value">{ data.items.reduce((a, c) => a + c.total_packages, 0)}</span>
         </StatCard>
-        <StatCard class="bg-success" href="/admin/waybills/applications?status=waybill_generated">
+        <StatCard class="bg-success" href="/admin/waybills/applications?status=waybill-generated">
             <span slot="title">
                 Waybill Generated
             </span>
-            <span slot="value">{ data.items.find(e => e.status == "picked")?.total_packages || 0}</span>
+            <span slot="value">{ data.items.find(e => e.status == "waybill-generated")?.total_packages || 0}</span>
         </StatCard>
         <StatCard class="bg-info" href="/admin/waybills/applications?status=in-transit">
             <span slot="title">
