@@ -38,6 +38,7 @@
     import { page } from "$app/stores";
     import BulkDeliveryAssign from "$lib/components/dashboard/admin/BulkDeliveryAssign.svelte";
     import { computeStatus } from "$lib/client/helpers";
+    import {goto} from '$app/navigation';
 
     let isLoading = false;
     let bulkModal = false;
@@ -423,6 +424,9 @@
                 pill
                 on:click={() => {
                     meta.status = "";
+                    goto('/admin/waybills/applications');
+                    getData();
+                    
                 }}
                 >{meta.status}
             </Button>
