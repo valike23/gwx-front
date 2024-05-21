@@ -182,7 +182,7 @@
                         name: [e.first_name, e.middle_name, e.last_name]
                             .filter((e) => !!e)
                             .join(" "),
-                        email: "",
+                        email: e.recipient_email,
                         phone: e.mobile_number,
                         alternate_phone: "",
                         address: e.current_address_line1,
@@ -319,7 +319,7 @@
                     binarySearch(
                         states.map((e) => e.name),
                         e.current_address_state_name,
-                    ) || e.current_address_state_name;
+                    ) || e.current_address_state_name;  
                 e.checked = true;
                 return e;
             })

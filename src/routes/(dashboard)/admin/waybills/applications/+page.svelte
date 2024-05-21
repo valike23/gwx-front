@@ -69,7 +69,6 @@
         limit: 10,
         total: 0,
         status: "delivered",
-        tag: "nis-application"
     }
 
     onMount(() => {
