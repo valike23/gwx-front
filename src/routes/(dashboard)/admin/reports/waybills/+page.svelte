@@ -200,7 +200,9 @@
                         <span>{ item.name || '' }</span>
                     </td>
                     <td>
-                        <span>{ item.sender?.name }</span>
+                      {#if item.sender}
+                      <span>{ item.sender.name }</span>
+                      {/if}
                     </td>
                     <td>
                         <span>{ item.recipient?.name }</span>
