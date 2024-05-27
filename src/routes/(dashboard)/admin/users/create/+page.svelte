@@ -15,6 +15,7 @@
     import { axiosFetch, clientFetch } from "$lib/client/api";
     import { failure, success } from "$lib/utils/toast";
     import { UilEye, UilEyeSlash } from "svelte-unicons";
+    import Error from "../../../../+error.svelte";
 
     const dispatch = createEventDispatcher();
 
@@ -135,9 +136,9 @@
     }
     function getHubs() {
         axiosFetch.get(`hubs/${$form.state?.id}/state`).then((res) => {
-          //  hubs = res.data.data;
-          //  hubs = hubs;
-           // console.log('hubs: ',hubs)
+           hubs = res.data.results;
+           hubs = hubs;
+            console.log('hubs: ',hubs)
         });
     }
     function getRegions() {
@@ -161,6 +162,7 @@
             path: "/regions",
         });
         let data2 = await res2.json();
+        if(!Array.isArray(data2.data))throw new Error('no region');
         regions = data2.data;
         regions = regions;
         } catch (error) {
@@ -169,7 +171,7 @@
       
       
         let data = await res.json();
-        hubs = data.data;
+      //  hubs = data.data;
         console.log("the regions are", regions);
     }
 </script>
