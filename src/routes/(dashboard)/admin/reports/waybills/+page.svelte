@@ -94,7 +94,7 @@
                 a[0] = el.waybill_number;
 
                 // sender
-                a[1] = el.sender.name;
+                a[1] = el.sender?.name;
 
                 // status
                 a[2] = computeStatus(el.status).replaceAll("-", " ").toUpperCase();
@@ -200,10 +200,10 @@
                         <span>{ item.name || '' }</span>
                     </td>
                     <td>
-                        <span>{ item.sender.name }</span>
+                        <span>{ item.sender?.name }</span>
                     </td>
                     <td>
-                        <span>{ item.recipient.name }</span>
+                        <span>{ item.recipient?.name }</span>
                     </td>
                     <td>
                         <span>
