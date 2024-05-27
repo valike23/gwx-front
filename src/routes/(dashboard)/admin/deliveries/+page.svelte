@@ -157,7 +157,10 @@
                         <span>{item.package.name}</span>
                     </td>
                     <td>
+                        {#if item.package.sender}
                         <span>{ item.package.sender.name }</span>
+                        {/if}
+                       
                     </td>
                     <td>
                         <span>{ item.package.recipient.name }</span>
