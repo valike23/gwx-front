@@ -47,7 +47,7 @@
             hub: {},
             role: "admin",
         },
-        
+
         validationSchema: yup.object().shape({
             email: yup.string().email().required().label("Email"),
             name: yup.string().required().label("Name"),
@@ -305,10 +305,10 @@
                     <Select
                         id="country"
                         placeholder="Select country"
-                        bind:value={$form.country.id}
+                        bind:value={$form.country}
                         on:change={() => getStates()}
                         items={countries.map((e) => ({
-                            value: e.id,
+                            value: e,
                             name: e.name,
                         }))}
                         color={$errors.country.id ? "red" : "base"}
@@ -326,9 +326,9 @@
                         id="state"
                         placeholder="Select state"
                         on:change={() => getHubs()}
-                        bind:value={$form.state.id}
+                        bind:value={$form.state}
                         items={states.map((e) => ({
-                            value: e.id,
+                            value: e,
                             name: e.name,
                         }))}
                         color={$errors.state.id ? "red" : "base"}
