@@ -135,8 +135,9 @@
     }
     function getHubs() {
         axiosFetch.get(`hubs/${$form.state?.id}/state`).then((res) => {
-            hubs = res.data.data;
-            hubs = hubs;
+          //  hubs = res.data.data;
+          //  hubs = hubs;
+           // console.log('hubs: ',hubs)
         });
     }
     function getRegions() {
@@ -153,8 +154,9 @@
             method: "GET",
             path: "/hubs",
         });
-
-        console.log("the hubs are", res);
+        let data = await res.json();
+        hubs = data.data;
+        console.log("the hubs are", await res.json());
     }
 </script>
 
