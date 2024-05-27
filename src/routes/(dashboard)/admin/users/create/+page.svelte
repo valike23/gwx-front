@@ -154,9 +154,23 @@
             method: "GET",
             path: "/hubs",
         });
+       
+        try {
+            let res2 = await clientFetch({
+            method: "GET",
+            path: "/regions",
+        });
+        let data2 = await res2.json();
+        regions = data2.data;
+        regions = regions;
+        } catch (error) {
+            console.log(error);
+        }
+      
+      
         let data = await res.json();
         hubs = data.data;
-        console.log("the hubs are", await res.json());
+        console.log("the regions are", regions);
     }
 </script>
 
