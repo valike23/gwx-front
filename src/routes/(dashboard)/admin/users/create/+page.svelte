@@ -88,6 +88,9 @@
                 delete values.password;
                 delete values.checked;
             }
+            let sendData = JSON.parse(JSON.stringify(value)) ;
+            if(sendData.role == 'courier' || sendData.role == 'manager') delete(sendData.zone_id);
+            if(sendData.role == 'regionalmanager')delete(sendData.hub_id);
 
             try {
                 let res = await clientFetch({

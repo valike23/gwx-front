@@ -6,7 +6,7 @@
     import { Breadcrumb, BreadcrumbItem, Button, Select, Tooltip } from "flowbite-svelte";
     import { onMount } from "svelte";
     import { PaginationNav } from "svelte-paginate";
-    import { UilApps, UilEnvelopes, UilEye, UilFastMail, UilPlus } from "svelte-unicons";
+    import { UilApps, UilEnvelopes, UilEye, UilFastMail, UilPlus, UilSlidersVAlt } from "svelte-unicons";
 
     const user = $page.data.session.user;
 
@@ -23,7 +23,7 @@
         getData();
     })
 
-  
+  let hideFilter = true;
     const statuses = {
         "": "All",
         "pending": "Sorted",
@@ -130,6 +130,18 @@
             </Button>
             <Tooltip triggeredBy="#bulk">Create bulk deliveries</Tooltip>
             <Tooltip triggeredBy="#single">Create single delivery</Tooltip>
+            <div class="tooltip tooltip-top" data-tip="Update Filter">
+                <Button
+                    color="light"
+                    size="sm"
+                    class="space-x-1"
+                    on:click={() => (hideFilter = false)}
+                    outline
+                >
+                    <span><UilSlidersVAlt size="18" /></span>
+                    <span>Filter</span>
+                </Button>
+            </div>
         </div>
     </div>
 
