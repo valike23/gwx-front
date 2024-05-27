@@ -1,13 +1,17 @@
 <script>
     import * as yup from "yup";
     import { createForm } from "svelte-forms-lib";
-    import { Button, Checkbox, Helper, Input, Label, Spinner } from "flowbite-svelte";
-    import { clientFetch } from "$lib/client/api";
-    import { createEventDispatcher } from "svelte";
+    import { Button, Checkbox, Helper, Input, Label, Spinner, Select } from "flowbite-svelte";
+    import { clientFetch, axiosFetch } from "$lib/client/api";
+    import { createEventDispatcher, onMount } from "svelte";
     import { failure, success } from "$lib/utils/toast";
     
     export let data;
-
+    console.log("the actual data is", data);
+    let countries = [];
+    let states = [];
+    let hubs = [];
+    let regions = [];
     const dispatch = createEventDispatcher();
 
     let isLoading = false, obscureText = false;
@@ -49,6 +53,59 @@
                 isLoading = false
             }
         }
+
+        
+    })
+    function getStates() {
+        const country = $form.country?.id;
+        let q = new URLSearchParams({
+            country_id: $form.country?.id,
+            limit: 1000,
+        }).toString();
+        axiosFetch.get(`/countries/${country}/states`).then((res) => {
+            states = res.data.data;
+            console.log("the states", states);
+        });
+    }
+    function getHubs() {
+        axiosFetch.get(`hubs/${$form.state?.id}/state`).then((res) => {
+           hubs = res.data.results;
+           hubs = hubs;
+            console.log('hubs: ',hubs)
+        });
+    }
+
+    const  loadRegion = async ()=>{
+        console.log("the rcountry ID", $form.country.id);
+        try {
+            const res = await clientFetch({
+                path: `/zone/${$form.country.id}`
+            });
+            const json = await res.json();
+            if (!res.ok) throw json;
+            const {data} = json
+            console.log('the country is working', data);
+            regions = data;
+            regions = regions;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    function getCountries() {
+        axiosFetch
+            .get("/countries")
+            .then((res) => {
+                countries = res.data.data;
+            })
+            .finally(() => {
+                if ($form.country?.id && !states.length) {
+                    getStates();
+                }
+            });
+    }
+
+    onMount(async ()=>{
+      await  getCountries();
     })
 </script>
 
@@ -86,6 +143,48 @@
             </Helper>
             {/if}
         </div>
+        <div class="form-control">
+            <Label for="country" class="mb-2 font-normal">Country</Label>
+            <Select bind:value={$form.country} on:change={() =>{ getStates(); loadRegion();}} id="hub">
+                {#each countries as country}
+                <option value="{country}">{country.name}</option>
+                {/each}
+            </Select>
+        </div>
+
+        <div class="form-control">
+            <Label for="states" class="mb-2 font-normal">State</Label>
+            <Select bind:value={$form.state} on:change={() => getHubs()} id="states">
+                {#each states as state}
+                <option value="{state}">{state.name}</option>
+                {/each}
+            </Select>
+        </div>
+      
+        {#if data.role == 'courier' || data.role == 'manager'}
+        <div class="form-control">
+            <Label for="hub" class="mb-2 font-normal">Hub</Label>
+            <Select bind:value={$form.hub_id} id="hub">
+                {#each hubs as hub}
+                <option value="{hub.id}">{hub.name}</option>
+                {/each}
+            </Select>
+           
+        </div> 
+        {/if}
+
+        {#if data.role == 'regionalmanager' }
+        <div class="form-control">
+            <Label for="region" class="mb-2 font-normal">Region</Label>
+            <Select bind:value={$form.zone_id} id="region">
+                {#each regions as region}
+                <option value="{region.id}">{region.name}</option>
+                {/each}
+            </Select>
+           
+        </div>
+        {/if}
+       
         <div class="form-control">
             <Label for="phone" class="mb-2 font-normal">Phone number</Label>
             <Input 

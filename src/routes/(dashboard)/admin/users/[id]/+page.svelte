@@ -11,6 +11,7 @@
 
     const user = $page.data.profile;
     let modalOpen = true;
+    console.log('show more user details: ',user);
 
     async function doUpdate() {
         showModal();

@@ -47,6 +47,7 @@
             hub: {},
             role: "admin",
         },
+        
         validationSchema: yup.object().shape({
             email: yup.string().email().required().label("Email"),
             name: yup.string().required().label("Name"),
