@@ -12,9 +12,9 @@
     const dispatch = createEventDispatcher();
 
     const roles = {
-        "admin,hub,manager,courier,rider": "All Users",
+        "admin,hub,regionalmanager,courier,rider": "All Users",
         "admin": "Admin",
-        "manager": "Managers",
+        "regionalmanager": "Regional Manager",
         "rider,courier": "Rider"
     };
     const statuses = {
