@@ -83,15 +83,16 @@
         }),
         async onSubmit(values) {
             isLoading = true;
+            console.log("values", values);
 
             if (!values.checked) {
                 delete values.password;
                 delete values.checked;
             }
-            let sendData = JSON.parse(JSON.stringify(value)) ;
+            let sendData = JSON.parse(JSON.stringify(values)) ;
             if(sendData.role == 'courier' || sendData.role == 'manager') delete(sendData.zone_id);
             if(sendData.role == 'regionalmanager')delete(sendData.hub_id);
-
+console.log(sendData);
             try {
                 let res = await clientFetch({
                     method: "POST",
