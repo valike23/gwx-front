@@ -97,7 +97,7 @@ console.log(sendData);
                 let res = await clientFetch({
                     method: "POST",
                     path: "/users",
-                    body: values,
+                    body: sendData,
                 });
 
                 const json = await res.json();
