@@ -1,10 +1,13 @@
 <script>
     import { page } from "$app/stores";
     import { clientFetch } from "$lib/client/api";
+    
+    import DeliveryFilter from "$lib/components/dashboard/admin/DeliveryFilter.svelte";
     import GwxPagination from "$lib/components/dashboard/GWXPagination.svelte";
     import SearchBox from "$lib/components/dashboard/SearchBox.svelte";
-    import { Breadcrumb, BreadcrumbItem, Button, Select, Tooltip } from "flowbite-svelte";
+    import { Breadcrumb, BreadcrumbItem, Button, Select, Tooltip, Drawer } from "flowbite-svelte";
     import { onMount } from "svelte";
+    import { sineIn } from 'svelte/easing';
     import { PaginationNav } from "svelte-paginate";
     import { UilApps, UilEnvelopes, UilEye, UilFastMail, UilPlus, UilSlidersVAlt } from "svelte-unicons";
 
@@ -216,3 +219,15 @@
         class="w-full mt-8"
     />
 </div>
+<Drawer
+    bind:hidden={hideFilter}
+    placement="right"
+    transitionType="fly"
+    transitionParams={{ x: 320, duration: 200, easing: sineIn }}
+>
+    <DeliveryFilter
+        data={meta}
+        on:close={() => (hideFilter = true)}
+      
+    />
+</Drawer>

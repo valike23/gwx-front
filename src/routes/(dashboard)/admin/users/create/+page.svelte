@@ -146,12 +146,13 @@
         });
     }
     function getRegions() {
-        let q = new URLSearchParams({
-            country_id: $form.country?.id,
-            limit: 1000,
-        }).toString();
-        axiosFetch.get("/states?" + q).then((res) => {
-            states = res.data.data;
+        // let q = new URLSearchParams({
+        //     country_id: $form.country?.id,
+        //     limit: 1000,
+        // }).toString();
+        axiosFetch.get("/zone/" + $form.country?.id).then((res) => {
+
+            regions = res.data.data;
         });
     }
     async function loadContents() {
@@ -160,18 +161,7 @@
             path: "/hubs",
         });
        
-        try {
-            let res2 = await clientFetch({
-            method: "GET",
-            path: "/regions",
-        });
-        let data2 = await res2.json();
-        if(!Array.isArray(data2.data))throw new Error('no region');
-        regions = data2.data;
-        regions = regions;
-        } catch (error) {
-            console.log(error);
-        }
+    
       
       
         let data = await res.json();
@@ -309,7 +299,7 @@
                         id="country"
                         placeholder="Select country"
                         bind:value={$form.country}
-                        on:change={() => getStates()}
+                        on:change={() =>{ getStates(), getRegions()}}
                         items={countries.map((e) => ({
                             value: e,
                             name: e.name,
