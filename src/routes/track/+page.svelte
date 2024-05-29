@@ -88,7 +88,8 @@
                     <div class="flex-1 px-6 py-4 text-sm font-medium">
                         {#if  item.status_text == 'Out for Delivery'}
                             Package Recieved by Courier
-
+                            {:else if item.status_text == 'Assigned for delivery'}
+                                Out for Delivery
                             {:else}
                             {item.status_text}
                         {/if}
