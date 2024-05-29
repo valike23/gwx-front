@@ -5,6 +5,9 @@
     enableNotification,
         registerPushNotification,
     } from "$lib/client/helpers";
+    
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
     import { listenForMessages } from "$lib/client/listener";
     import { getPreferences, setPreference } from "$lib/stores/app";
     import { failure } from "$lib/utils/toast";
@@ -14,7 +17,24 @@
 
     let showModal = false;
     let isLoading = false;
+// Import the functions you need from the SDKs you need
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
 
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyAvDhawTShOOwOvsW9vCuH5lTOgec2SKIE",
+    authDomain: "gwxpro-cf273.firebaseapp.com",
+    projectId: "gwxpro-cf273",
+    storageBucket: "gwxpro-cf273.appspot.com",
+    messagingSenderId: "1030645756446",
+    appId: "1:1030645756446:web:b545609d7a60a76f84340f",
+    measurementId: "G-D04V7V1K3D"
+  };
+
+  // Initialize Firebase
+ 
     const user = $page.data.session.user;
 
     onMount(() => {
@@ -32,6 +52,8 @@
         }
 
         listenForMessages();
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
     })
 
     function checkPushNotification() {

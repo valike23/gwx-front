@@ -86,7 +86,12 @@
                         <div class="text-gray-500 text-xs">{ dayjs(item.timestamp).format('hh:mm A') }</div>
                     </div>
                     <div class="flex-1 px-6 py-4 text-sm font-medium">
-                        { item.status_text }
+                        {#if  item.status_text == 'Out for Delivery'}
+                            Package Recieved by Courier
+
+                            {:else}
+                            {item.status_text}
+                        {/if}
                     </div>
     
                     
