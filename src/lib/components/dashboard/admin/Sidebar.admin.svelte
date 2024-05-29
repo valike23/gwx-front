@@ -6,7 +6,6 @@
 
     $: user = $page.data.session.user;
     $: activeUrl = $page.url.pathname;
-    console.log("the users", user);
     $: items = [
         {
             name: "Dashboard",

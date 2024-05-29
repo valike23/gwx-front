@@ -4,7 +4,6 @@
     import { UilApps, UilArchive, UilBuilding, UilCoins, UilParcel, UilSetting, UilSignout, UilTruck, UilTruckLoading, UilUser } from "svelte-unicons";
 
     $: user = $page.data.session.user;
-    console.log("the user role is", user);
     $: items = [
         {
             name: "Dashboard",

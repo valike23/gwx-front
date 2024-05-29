@@ -65,7 +65,6 @@
                 dispatch('close', true);
             } catch (error) {
                 failure(error);
-                console.log(error);
             } finally {
                 isLoading = false;
                 return;

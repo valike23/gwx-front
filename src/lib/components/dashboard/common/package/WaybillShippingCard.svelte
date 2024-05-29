@@ -11,7 +11,6 @@
     import { computeStatus } from "$lib/client/helpers";
 
     export let item;
-    console.log("the items here", item);
 
     let hubs = [];
     let users = [];

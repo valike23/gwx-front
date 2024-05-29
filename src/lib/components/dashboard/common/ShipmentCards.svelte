@@ -25,7 +25,7 @@
             path: "/reports/packages",
             query: {
                 // status: "delivered,in-transit,picked, new,queued,pending,out-for-delivery",
-                date_min: dayjs().subtract(7, 'year').format("YYYY-MM-DD"),
+                //date_min: dayjs().subtract(7, 'year').format("YYYY-MM-DD"),
                 totals_by: 'status',
                 tag: "nis-application",
             }

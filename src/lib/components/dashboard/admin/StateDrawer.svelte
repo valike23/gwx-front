@@ -18,7 +18,6 @@
     const dispatch = createEventDispatcher();
 
     const  loadRegion = async ()=>{
-        console.log("the rcountry ID", $form.country_id);
         try {
             const res = await clientFetch({
                 path: `/zone/${$form.country_id}`
@@ -26,7 +25,6 @@
             const json = await res.json();
             if (!res.ok) throw json;
             const {data} = json
-            console.log('the country is working', data);
             regions = data;
             regions = regions;
         } catch (error) {
@@ -47,9 +45,7 @@
         }
 
         getCountries();
-        console.log("the regions here is", $form.country_id);
         if($form.country_id){ 
-            console.log("loading regions here");
             loadRegion();
         
         }

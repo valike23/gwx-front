@@ -22,7 +22,7 @@
         async onSubmit(values) {
             isLoading = true;
             setTimeout(() => {}, 5000);
-            console.log(values);
+    
             try {
                 const res = await clientFetch({
                     method: "POST",

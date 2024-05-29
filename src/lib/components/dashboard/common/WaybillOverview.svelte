@@ -13,7 +13,7 @@
         axiosFetch.get("/packages?status=draft&limit=5")
             .then(res => {
                 items = res.data.data;;
-                console.log("reciever", items);
+               
             })
     })
 

@@ -7,7 +7,6 @@
     import { failure, success } from "$lib/utils/toast";
     
     export let data;
-    console.log("the actual data is", data);
     let countries = [];
     let states = [];
     let hubs = [];
@@ -33,7 +32,6 @@
         }),
         async onSubmit(values) {
             isLoading = false;
-            console.log("the values for ", values);
 
             try {
                 let res = await clientFetch({
@@ -65,19 +63,16 @@
         }).toString();
         axiosFetch.get(`/countries/${country}/states`).then((res) => {
             states = res.data.data;
-            console.log("the states", states);
         });
     }
     function getHubs() {
         axiosFetch.get(`hubs/${$form.state?.id}/state`).then((res) => {
            hubs = res.data.results;
            hubs = hubs;
-            console.log('hubs: ',hubs)
         });
     }
 
     const  loadRegion = async ()=>{
-        console.log("the rcountry ID", $form.country.id);
         try {
             const res = await clientFetch({
                 path: `/zone/${$form.country.id}`
@@ -85,7 +80,6 @@
             const json = await res.json();
             if (!res.ok) throw json;
             const {data} = json
-            console.log('the country is working', data);
             regions = data;
             regions = regions;
         } catch (error) {

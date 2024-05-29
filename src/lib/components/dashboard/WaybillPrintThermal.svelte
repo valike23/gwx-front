@@ -6,7 +6,6 @@
 
     export let node; 
     export let items = [];
-    console.log('thermal print waybill: ',items)
 </script>
 
 <div bind:this={node} class="overflow-hidden bg-[#f8f8f8] flex flex-col items-center justify-center" {...$$restProps}>
