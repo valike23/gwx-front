@@ -13,6 +13,7 @@
         axiosFetch.get("/packages?status=draft&limit=5")
             .then(res => {
                 items = res.data.data;;
+                console.log("reciever", items);
             })
     })
 
@@ -45,7 +46,10 @@
                         <span>{item.waybill_number}</span>
                     </td>
                     <td>
-                        <span>{ item.name || "Item" }</span>
+                        {#if item.recipient}
+                        <span>{ item.recipient.name || "Item" }</span>
+                        {/if}
+                      
                     </td>
                     <td>
                         <span>{ item.quantity || 1 }</span>
