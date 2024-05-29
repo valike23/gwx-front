@@ -33,6 +33,7 @@
         }),
         async onSubmit(values) {
             isLoading = false;
+            console.log("the values for ", values);
 
             try {
                 let res = await clientFetch({
