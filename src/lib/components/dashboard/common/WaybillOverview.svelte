@@ -10,10 +10,13 @@
     let items = [];
 
     onMount(() => {
-        axiosFetch.get("/packages?status=draft&limit=5")
+        
+        axiosFetch.get("/packages?status=new&limit=5")
             .then(res => {
                 items = res.data.data;;
-               
+              
+            }).catch((err)=>{
+                console.log("the error here is", err)
             })
     })
 

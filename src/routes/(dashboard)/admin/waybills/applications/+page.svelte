@@ -3,6 +3,7 @@
     import printJS from "print-js";
     import html2pdf from "html2pdf.js";
     import dayjs from "dayjs";
+    import WaybillPrint from '$lib/components/dashboard/WaybillPrint.svelte';
     import {
         Breadcrumb,
         BreadcrumbItem,
@@ -47,23 +48,53 @@
         labelLayout;
     let ids = [];
     let assignIds = [];
+    let printIds = [];
     let recievedIds = [];
+    let printers = [];
+    let isPrint = false;
     let showDelivery = false;
+
+    const handlePrint =()=>{
+        if (!printIds.length) return;
+
+      
+
+        console.log('printers', printers);
+        console.log("items...", items);
+        showModal();
+        isPrint = true;
+        debounce(() => {
+            const lay = document.getElementById("waybill-print-layout");
+            const container = document.createElement("div");    
+            container.innerHTML = lay.innerHTML;    
+            console.log(container);
+            html2pdf(container, {
+                margin: 0,
+                filename: `bulk-waybills.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+            }).save()
+            isPrint = false;
+            getData();
+            closeModal();
+        }, 2000);
+    }
     const checkBadRecords = () => {
         if (ids.length) {
             ids.every((id) => {
                 let it = items.find((item) => {
                     return item.id == id;
                 });
-                if (it.status != "waybill-generated") {
-                    failure("you selected a bad record");
+                showDelivery = true;
+                // if (false) {
+                //     failure("you selected a bad record");
 
-                    showDelivery = false;
+                //     showDelivery = false;
 
-                    return;
-                } else {
-                    showDelivery = true;
-                }
+                //     return;
+                // } else {
+                //     showDelivery = true;
+                // }
             });
         }
     };
@@ -71,12 +102,17 @@
         console.log(ids);
         assignIds = [];
         recievedIds = [];
+        printIds= [];
         ids.forEach((id) => {
             const myItem = items.find((item) => {
                 return item.id == id;
             });
             if (myItem.status == "waybill-generated") assignIds.push(id);
-            if (myItem.status != "waybill-generated") recievedIds.push(id);
+            if (myItem.status == "canceled") assignIds.push(id);
+            if (myItem.status == "returned") assignIds.push(id);
+            if (myItem.status == "draft") recievedIds.push(id);
+            printIds.push(id);
+            printers.push(myItem);
         });
     }
     const waybills = writable([]);
@@ -124,6 +160,7 @@
             ids = [];
             recievedIds = [];
             assignIds = [];
+            printers = [];
         }
     }
 
@@ -203,6 +240,10 @@
                 closeModal();
                 getData();
             });
+    }
+
+    function printApplications(){
+
     }
 
     async function downloadAsCSV() {
@@ -372,7 +413,7 @@
     }
 
     async function sendToThermal() {
-        if (!ids.length) return;
+        if (!printIds.length) return;
 
         showModal();
 
@@ -508,6 +549,23 @@
                                 <span
                                     class="bg-slate-100 rounded-xl px-2 py-1 text-xs"
                                     >{recievedIds.length}</span
+                                >
+                            </div>
+                        </DropdownItem>
+                    {/if}
+                    {#if printIds.length}
+                        <DropdownItem
+                            disabled={!printIds.length}
+                            on:click={() => {
+                                if (!printIds.length) return;
+                                handlePrint();
+                            }}
+                        >
+                            <div class="flex items-center space-x-2">
+                                <span>Print</span>
+                                <span
+                                    class="bg-slate-100 rounded-xl px-2 py-1 text-xs"
+                                    >{printIds.length}</span
                                 >
                             </div>
                         </DropdownItem>
@@ -687,7 +745,9 @@
         on:data={onFilter}
     />
 </Drawer>
-
+{#if isPrint}
+<WaybillPrint items={printers} id="waybill-print-layout" class="hidden" />
+{/if}
 <Modal title="Upload Applications" bind:open={bulkModal} autoclose>
     <div>
         <Dropzone

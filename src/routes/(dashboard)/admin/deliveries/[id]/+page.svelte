@@ -10,13 +10,14 @@
     let editReasonModal = false;
     const data = $page.data.data;
     console.log('my data', data);
+    let isSuccess = false;
 
     const updateReason = async ()=>{
         try {
             const res = await clientFetch({
                 path: `/deliveries/${data.id}/edit-reason`,
                 method: "POST",
-                body: {reason: data.reason}
+                body: {reason: isSuccess? data.note : data.reason }
             });
             if (!res.ok) throw json;
             success("Reason updated successfully");
@@ -105,7 +106,7 @@
        {/if}
        {#if data.note}
        <Alert color="green">
-     
+        <p><Button  on:click={() =>{editReasonModal = true; isSuccess = true} } style="float: right"><UilEdit></UilEdit>Edit</Button></p>
         <p><strong>Rider's Note:</strong></p>
         {data.note}
       </Alert>
@@ -279,7 +280,11 @@
 <Modal title="Edit Reason" bind:open={editReasonModal} autoclose>
     <div class="mb-6">
         <Label for="large-input" class="block mb-2">Edit Reason</Label>
+        {#if isSuccess}
+        <Input bind:value={data.note} id="large-input" size="lg" placeholder="edit note" />
+        {:else}
         <Input bind:value={data.reason} id="large-input" size="lg" placeholder="edit reason" />
+        {/if}
       </div>
 
      <svelte:fragment slot="footer">

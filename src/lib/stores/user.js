@@ -38,9 +38,10 @@ export function getUser() {
 
 export function updateUser(data = {}) {
     if (!get(_user)) {
+        console.log('res3')
         return 
     }
-
+    console.log('res4')
     _user.update((val) => {
         data = Object.assign(val, data);
         return data;

@@ -15,8 +15,9 @@ export async function load({ parent, fetch }) {
 
     const res = await clientFetch({ path: "/auth/session" }, fetch);
     const json = await res.json();
-
+console.log("res1")
     if (res.ok) {
+        console.log("res2")
         data.session.user = updateUser(json.data, true);
     }
 

@@ -68,6 +68,7 @@
         if (!meta.total) return;
 
         showModal();
+       
 
         try {
             const res = await clientFetch({
@@ -94,7 +95,7 @@
                 a[0] = el.waybill_number;
 
                 // sender
-                a[1] = el.sender?.name;
+                a[1] = el.sender? el.sender?.name : '';
 
                 // status
                 a[2] = computeStatus(el.status).replaceAll("-", " ").toUpperCase();
@@ -107,10 +108,10 @@
                 a[4] = dd ? dayjs(dd).format('DD-MM-YYYY') : '';
 
                 // origin
-                a[5] = el.sender.state?.name || "";
+                a[5] = el.sender? el.sender.state?.name : "";
 
                 // destination
-                a[6] = el.recipient.state?.name || "";
+                a[6] = el.recipient? el.recipient.state?.name : "";
 
                 // address
                 a[7] = el.recipient.address || "";
@@ -136,6 +137,7 @@
             utils.book_append_sheet(wb, ws, "Sheet1");
             writeFile(wb, "Waybills.xlsx");
         } catch (error) {
+            console.log('the error here is',error);
             failure(error);
         } finally {
             closeModal();

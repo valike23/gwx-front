@@ -24,7 +24,7 @@
             password: yup.string().min(8).required().label("Password"),
         }),
         async onSubmit(values) {
-
+            console.log("step 3");
             isLoading = true;
 
             try {
@@ -33,7 +33,7 @@
                     path: "/auth/login",
                     body: values
                 });
-
+                console.log("step 2");
                 const json = await res.json();
                 if (!res.ok) throw json;
 
@@ -45,6 +45,7 @@
                 // get the session
                 res = await clientFetch({ path: "/auth/session" });
                 if (res.ok) {
+                    console.log("step 1");
                     updateUser((await res.json()).data, true);
                 }
 

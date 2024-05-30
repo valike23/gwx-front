@@ -54,7 +54,11 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 
         listenForMessages();
         const app = initializeApp(firebaseConfig);
-         messaging = getMessaging(app);
+        try{
+            messaging = getMessaging(app);
+        }
+        catch(err){console.warn(err)}
+        
         const analytics = getAnalytics(app);
     })
 

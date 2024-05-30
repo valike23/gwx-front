@@ -8,7 +8,7 @@ export async function load({ parent }) {
 
     let data = await parent();
 
-    if (!["admin", "superadmin", "manager"].includes(data.session?.user?.role)) {
+    if (!["admin", "superadmin", "manager","regionalmanager"].includes(data.session?.user?.role)) {
         throw redirect(307, roleRoutes[data.session?.user.role])
     }
 

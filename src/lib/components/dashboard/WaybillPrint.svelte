@@ -3,6 +3,8 @@
     import Barcode from 'svelte-barcode';
 
     export let items = [];
+
+    console.log("see the different items", items);
 </script>
 
 <div class="overflow-hidden flex flex-col items-center justify-center" {...$$restProps}>
