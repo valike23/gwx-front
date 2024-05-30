@@ -584,7 +584,7 @@
                         />
                     </th>
                     <th class="min-w-[140px]">ID</th>
-                    <th class="min-w-[200px]">Applicant</th>
+                    <th class="min-w-[200px]">Reciever</th>
                     <th class="min-w-[130px]">Phone</th>
                     <th class="min-w-[130px]">Creator</th>
                     <th class="min-w-[130px]">Address</th>

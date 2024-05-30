@@ -27,7 +27,6 @@
                 // status: "delivered,in-transit,picked, new,queued,pending,out-for-delivery",
                 //date_min: dayjs().subtract(7, 'year').format("YYYY-MM-DD"),
                 totals_by: 'status',
-                tag: "nis-application",
             }
         })
         .then(res => res.json())

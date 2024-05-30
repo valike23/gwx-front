@@ -8,13 +8,14 @@
     
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+  import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-messaging.js";
     import { listenForMessages } from "$lib/client/listener";
     import { getPreferences, setPreference } from "$lib/stores/app";
     import { failure } from "$lib/utils/toast";
     import { Button, Modal } from "flowbite-svelte";
     import { onMount } from "svelte";
     import { UilBell } from "svelte-unicons";
-
+    let messaging;
     let showModal = false;
     let isLoading = false;
 // Import the functions you need from the SDKs you need
@@ -53,6 +54,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 
         listenForMessages();
         const app = initializeApp(firebaseConfig);
+         messaging = getMessaging(app);
         const analytics = getAnalytics(app);
     })
 
