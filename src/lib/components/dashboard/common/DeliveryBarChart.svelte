@@ -6,6 +6,7 @@
     import { clientFetch } from "$lib/client/api";
 
     let data = { items: [] };
+    let dashboardInfo = [];
     let series = [
         {
             name: "Total",
@@ -132,7 +133,8 @@
         // }
     });
 
-    function getData() {
+    async function  getData () {
+      
 
         let urls = [
             new URLSearchParams({
@@ -164,6 +166,7 @@
                 data.current = arr[0].data;
                 data.last = arr[1].data;
                 data.updated_at = dayjs().toISOString();
+                console.log("graph data", data);
                 localStorage.setItem(
                     `gwx.packages.year.chart`,
                     JSON.stringify(data)
@@ -176,7 +179,8 @@
 
     function composeData() {
         // compose current data
-        for (let i = 0; i < (data.current || []).length; i++) {
+        try {
+            for (let i = 0; i < (data.current || []).length; i++) {
             const d = data.current[i];
             series[0].data[new Date(d.period).getMonth()].y =
                 d.total_packages || 0;
@@ -187,7 +191,11 @@
             const d = data.last[i];
             series[1].data[new Date(d.period).getMonth()].y =
                 d.total_deliveries|| 0;
+        } 
+        } catch (error) {
+            console.warn('error here', error);
         }
+       
     }
 </script>
 

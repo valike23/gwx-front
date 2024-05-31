@@ -5,6 +5,7 @@
     import Barcode from 'svelte-barcode';
 
     export let node; 
+    console.log("the node log", node);
     export let items = [];
 </script>
 

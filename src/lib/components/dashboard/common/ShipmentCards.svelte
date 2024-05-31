@@ -4,7 +4,7 @@
     import { clientFetch } from "$lib/client/api";
     import dayjs from "dayjs";
     import { getJSON } from "$lib/utils/helpers";
-
+    let dashboardInfo = [];
     let data = {
         items: [],
     }
@@ -20,7 +20,10 @@
         }
     })
 
-    function getData() {
+   async function getData() {
+        const resp = await clientFetch({path:'/reports/packages/total'});
+       const data = await resp.json();
+       if(data.ok) dashboardInfo = data.data;
         clientFetch({
             path: "/reports/packages",
             query: {
@@ -47,19 +50,19 @@
             <span slot="title">
                 Passport Applications
             </span>
-            <span slot="value">{ data.items.reduce((a, c) => a + c.total_packages, 0)}</span>
+            <span slot="value">{ dashboardInfo.reduce((a, c) => a + c.total_packages, 0)}</span>
         </StatCard>
         <StatCard class="bg-success" href="/admin/waybills/applications?status=waybill-generated">
             <span slot="title">
                 Waybill Generated
             </span>
-            <span slot="value">{ data.items.find(e => e.status == "waybill-generated")?.total_packages || 0}</span>
+            <span slot="value">{ dashboardInfo.find(e => e.status == "waybill-generated")?.total_packages || 0}</span>
         </StatCard>
         <StatCard class="bg-info" href="/admin/waybills/applications?status=out-for-delivery">
             <span slot="title">
                 In Transit
             </span>
-            <span slot="value">{ data.items.find(e => e.status == "out-for-delivery")?.total_packages || 0}</span>
+            <span slot="value">{ dashboardInfo.find(e => e.status == "out-for-delivery")?.total_packages || 0}</span>
         </StatCard>
 
         
@@ -67,14 +70,14 @@
             <span slot="title">
                 Delivered
             </span>
-            <span slot="value">{ data.items.find(e => e.status == "delivered")?.total_packages || 0}</span>
+            <span slot="value">{ dashboardInfo.find(e => e.status == "delivered")?.total_packages || 0}</span>
         </StatCard>
         
         <StatCard class="bg-error" href="/admin/waybills/applications?status=canceled">
             <span slot="title">
                 Returned
             </span>
-            <span slot="value">{ data.items.find(e => e.status == "canceled")?.total_packages || 0}</span>
+            <span slot="value">{ dashboardInfo.find(e => e.status == "canceled")?.total_packages || 0}</span>
         </StatCard>
     </div>
 </div>

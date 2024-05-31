@@ -4,6 +4,7 @@
     import html2pdf from "html2pdf.js";
     import dayjs from "dayjs";
     import WaybillPrint from '$lib/components/dashboard/WaybillPrint.svelte';
+    import WaybillPrintThermal from "$lib/components/dashboard/WaybillPrintThermal.svelte";
     import {
         Breadcrumb,
         BreadcrumbItem,
@@ -52,12 +53,15 @@
     let recievedIds = [];
     let printers = [];
     let isPrint = false;
+    let count = 1;
     let showDelivery = false;
 
-    const handlePrint =()=>{
+    const handlePrint = async ()=>{
         if (!printIds.length) return;
 
-      
+        showModal();
+
+
 
         console.log('printers', printers);
         console.log("items...", items);
@@ -111,8 +115,10 @@
             if (myItem.status == "canceled") assignIds.push(id);
             if (myItem.status == "returned") assignIds.push(id);
             if (myItem.status == "draft") recievedIds.push(id);
-            printIds.push(id);
+            if (myItem.status != "draft"){  printIds.push(id);
             printers.push(myItem);
+        }
+           
         });
     }
     const waybills = writable([]);
@@ -413,11 +419,15 @@
     }
 
     async function sendToThermal() {
+        
         if (!printIds.length) return;
-
+        console.log('the count here', count, printers);
+        count ++;
         showModal();
+        isPrint = true;
 
         try {
+            debounce(async() => {
             const el = document.createElement("div");
             el.innerHTML = labelLayout.innerHTML;
 
@@ -437,10 +447,13 @@
 
             // print the document
             printJS(doc);
+            isPrint = false;
+            }, 1000)
         } catch (error) {
             console.log(error);
             failure(error);
         } finally {
+            printers = [];
             closeModal();
         }
     }
@@ -465,9 +478,8 @@
                 pill
                 on:click={() => {
                     meta.status = "";
-                    goto('/admin/waybills/applications');
+                    goto("/admin/waybills/applications");
                     getData();
-                    
                 }}
                 >{meta.status}
             </Button>
@@ -558,7 +570,7 @@
                             disabled={!printIds.length}
                             on:click={() => {
                                 if (!printIds.length) return;
-                                handlePrint();
+                                sendToThermal();
                             }}
                         >
                             <div class="flex items-center space-x-2">
@@ -573,10 +585,7 @@
                 </Dropdown>
             </div>
             <div class="relative w-full md:max-w-xs">
-                <SearchBox
-                    placeholder="Search application"
-                    on:search={onSearch}
-                />
+                <SearchBox placeholder="Search" on:search={onSearch} />
             </div>
             <div class="tooltip tooltip-top" data-tip="Update Filter">
                 <Button
@@ -745,8 +754,11 @@
         on:data={onFilter}
     />
 </Drawer>
+
 {#if isPrint}
-<WaybillPrint items={printers} id="waybill-print-layout" class="hidden" />
+    <WaybillPrint items={printers} id="waybill-print-layout" class="hidden" />
+    
+<WaybillPrintThermal bind:node={labelLayout} items={printers} class="hidden" />
 {/if}
 <Modal title="Upload Applications" bind:open={bulkModal} autoclose>
     <div>
