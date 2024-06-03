@@ -810,6 +810,7 @@
     class="w-full"
 >
     <BulkDeliveryAssign
+    
         class="print:hidden"
         items={ids}
         on:close={() => (showDelivery = false)}

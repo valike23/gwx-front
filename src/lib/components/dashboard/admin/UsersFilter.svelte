@@ -15,7 +15,8 @@
         "admin,hub,regionalmanager,courier,rider": "All Users",
         "admin": "Admin",
         "regionalmanager": "Regional Manager",
-        "rider,courier": "Rider"
+        "rider,courier": "Rider",
+        "manager": "Hub Officer"
     };
     const statuses = {
         "": "All",

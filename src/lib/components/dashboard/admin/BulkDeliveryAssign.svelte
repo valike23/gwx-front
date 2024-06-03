@@ -93,8 +93,8 @@
     }
 </script>
 
-<div class="{$$props.class}">
-    <form on:submit={handleSubmit} class="min-h-[300px]">
+<div style="z-index:1000" class="{$$props.class}">
+    <form style="z-index:1000000" on:submit={handleSubmit} class="min-h-[300px]">
         <div
             class="mb-4"
             class:hidden={![$errors.hub.id, $errors.courier.id].filter(e => !!e).find(e => !!e)}>
@@ -116,7 +116,7 @@
                 </div>
                 <span><UilAngleDown /></span>
             </Button>
-            <Dropdown class="p-3 min-w-[300px]">
+            <Dropdown class="p-3 min-w-[300px]" style="max-height:150px; overflow-y:auto;" >
                 <div slot="header" class="py-2 px-4">
                     <Input
                         type="text"
@@ -161,7 +161,7 @@
                 </div>
                 <span><UilAngleDown /></span>
             </Button>
-            <Dropdown class="p-3 min-w-[300px]">
+            <Dropdown class="p-3 min-w-[300px]" style="max-height:150px; overflow-y:auto;" >
                 <div slot="header" class="py-2 px-4">
                     <Input
                         type="text"
