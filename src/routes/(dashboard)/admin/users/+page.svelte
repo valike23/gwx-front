@@ -25,7 +25,7 @@
     let meta = {
         page: 1,
         limit: 10,
-        role: "admin,hub,regionalmanager,courier,rider",
+        role: "admin,hub,regionalmanager,courier,rider,superadmin,manager",
         total: 0,
         status: ""
     }

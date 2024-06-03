@@ -16,7 +16,7 @@ export const roleRoutes = {
     "rider": "/courier",
     "courier": "/courier",
     "hub": "/hub",
-    "manager": "/hub",
+    "manager": "/admin",
     "regionalmanager": "/admin",
     "admin": "/admin",
     "superadmin": "/admin"
