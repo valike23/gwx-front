@@ -5,6 +5,7 @@
 
     export let showStatus = false;
     export let data;
+    console.log("rider data", data);
 
     function statusText(val) {
         switch (val) {
@@ -47,9 +48,9 @@
         <span><UilParcel size="16"/></span>
     </Avatar>
     <div class="flex flex-col">
-        <a href="/courier/deliveries/{data.id}" class="text-sm">{ data.package.name }</a>
+        <a href="/courier/deliveries/{data.id}" class="text-sm">{ data.package.recipient.name }</a>
         <div class="text-xs text-base-content/75 space-x-1">
-            <span>#{ data.package.waybill_number } - </span>
+            <span>#{ data.package.recipient.address } - </span>
             <span 
                 class="font-semibold {statusStyle(data.status)}"
                 class:hidden={!showStatus && !["pending", "en-route"].includes(data.status)}

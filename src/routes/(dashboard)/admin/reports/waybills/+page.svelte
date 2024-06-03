@@ -44,6 +44,7 @@
             const json = await res.json();
             if (!res.ok) throw json;
             items = json.data
+            console.log("the logs", items);
             meta = Object.assign({}, meta, json.meta);    
         } catch (error) {
             failure(error);
@@ -183,7 +184,6 @@
             <thead>
                 <tr>
                     <th>No</th>
-                    <th class="min-w-[100px]">Name</th>
                     <th class="min-w-[100px]">Sender</th>
                     <th class="min-w-[100px]">Recipient</th>
                     <th class="min-w-[100px]">Rider</th>
@@ -198,14 +198,14 @@
                     <td>
                         <span>{ item.waybill_number }</span>
                     </td>
-                    <td>
-                        <span>{ item.name || '' }</span>
-                    </td>
+                  
+                   
                     <td>
                       {#if item.sender}
                       <span>{ item.sender.name }</span>
                       {/if}
                     </td>
+                  
                     <td>
                         <span>{ item.recipient?.name }</span>
                     </td>

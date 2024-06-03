@@ -90,7 +90,7 @@
             items={Object.entries(statuses).map(e => ({value: e[0], name: e[1]}))}
         />
     </div>
-    <div 
+    <!-- <div 
         class="form-control"
         class:hidden={["customer"].includes(user.role)}>
         <Label for="role" class="mb-1 font-normal justify-between flex items-center">
@@ -148,7 +148,7 @@
                 </div>
             </Dropdown>
         </div>
-    </div>
+    </div> -->
     <div 
         class="form-control">
         <Label for="role" class="mb-1 font-normal justify-between flex items-center">
