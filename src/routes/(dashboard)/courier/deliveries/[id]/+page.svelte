@@ -12,6 +12,7 @@
     import PinView from "$lib/components/courier/PinView.svelte";
 
     let item = $page.data.data;
+    console.log("the item", item);
     let isLoading = false;
     let hideCompleteDrawer = true;
     let hideCancelDrawer = true;
@@ -197,7 +198,7 @@
 
         <div 
             class="mt-6 space-y-3"
-            class:hidden={["completed", "canceled", "pending"].includes(item.status)}>
+            class:hidden={["completed", "canceled", "pending", "returned"].includes(item.status)}>
             <button 
                 class="btn w-full btn-primary"
                 class:btn-disabled={isLoading}

@@ -41,13 +41,13 @@
 
         try {
             const res = await clientFetch({
-                path: `/deliveries/${id}/cancel`,
+                path: `/deliveries/${id}/return`,
                 method: "POST",
                 body
             });
             const json = await res.json();
             if (!res.ok) throw json;
-            success("Delivery canceled successfully");
+            success("Delivery returned successfully");
             dispatch('cancel');
         } catch (error) {
             failure(error);
