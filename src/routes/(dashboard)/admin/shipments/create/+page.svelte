@@ -202,8 +202,8 @@
                             <UilPackage size="15" />
                         </div>
                         <div class="flex-1 text-left text-sm">
-                            <div>{ item.name }</div>
-                            <div class="text-gray-400 text-xs">{ item.waybill_number }</div>
+                            <div>{ item.recipient.name }</div>
+                            <div class="text-gray-400 text-xs">{ item.recipient.address }</div>
                         </div>
                     </button>
                     {/each}
