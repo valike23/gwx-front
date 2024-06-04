@@ -17,10 +17,13 @@
     let customers = [];
     const statuses = {
         "": "All",
-        "new": "New",
+        "draft": "Draft",
+        "recieved": "Recieved",
+        "waybill-generated": "Waybill Generated",
         "out-for-delivery": "Out for delivery",
         "delivered": "Delivered",
         "canceled": "Canceled",
+        "returned": "Returned"
     }
 
     onMount(() => {

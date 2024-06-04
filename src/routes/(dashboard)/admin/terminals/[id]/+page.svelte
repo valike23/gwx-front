@@ -124,10 +124,7 @@
         <div class="flex-1">
             <div class="flex justify-between items-center">
                 <h3 class="font-medium px-6 py-4">Terminal Admins</h3>
-                <Button size="xs" class="gap-2" outline on:click={() => (hideDrawer = false)}>
-                    <span><UilPlus size="18" /></span>
-                    Add
-                </Button>
+               
             </div>
             
             <div>
