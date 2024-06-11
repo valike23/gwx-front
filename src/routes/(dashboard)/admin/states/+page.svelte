@@ -51,6 +51,7 @@
         axiosFetch.get("/countries")
         .then(res => {
             countries = res.data.data;
+            console.log("the countries", countries);
         }).finally(() => {
             let ng = countries.find(e => e.code == "NG");
             if (ng) {

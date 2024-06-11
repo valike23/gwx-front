@@ -20,7 +20,7 @@
     const  loadRegion = async ()=>{
         try {
             const res = await clientFetch({
-                path: `/zone/${$form.country_id}`
+                path: `/zone/${$form.country.id}`
             });
             const json = await res.json();
             if (!res.ok) throw json;
@@ -33,19 +33,19 @@
     }
 
     onMount(() => {
-        $form.country_id = $page.url.searchParams.get("country_id") || "";
+        $form.country.id= $page.url.searchParams.get("country_id") || "";
         if (data) {
             $form = Object.assign($form, {
                 code: data.code || "",
                 name: data.name || "",
                 region: data.region || "",
                 cities: data.cities || [],
-                country_id: data.country_id
+                country_id: data.country.id
             })
         }
 
         getCountries();
-        if($form.country_id){ 
+        if($form.country.has_regions){ 
             loadRegion();
         
         }
@@ -62,7 +62,7 @@
         validationSchema: yup.object().shape({
             code: yup.string().min(2).required().label("Code"),
             name: yup.string().min(2).required().label("Name"),
-            region: yup.string().min(2).required().label("Region"),
+            region: yup.string().min(2).label("Region"),
             country_id: yup.string().required().label("Country"),
             cities: yup.array().of(yup.string())
                 .test(
@@ -72,6 +72,7 @@
                 ).label("Cities"),
         }),
         async onSubmit(values) {
+            console.log("the values", values);
             if (!submit) {
                 return;
             };
@@ -167,15 +168,15 @@
             <Label for="country" class="mb-2 font-normal">Country</Label>
             <Select 
                 id="region"
-                bind:value={$form.country_id}
+                bind:value={$form.country}
                 on:change={loadRegion}
-                items={countries.map(e => ({value: e.id, name: e.name}))}
+                items={countries.map(e => ({value: e, name: e.name}))}
                 placeholder="Select country"
             />
-            {#if $errors.country_id }
+            {#if $errors.country.id }
             <Helper color="red" class="mt-2">
                 <strong>Oops! </strong>
-                <span>{ $errors.country_id }</span>
+                <span>{ $errors.country.id }</span>
             </Helper>
             {/if}
         </div>
@@ -184,6 +185,7 @@
             <Label for="region" class="mb-2 font-normal">Region</Label>
             <Select 
                 id="region"
+                disabled={$form.country.has_regions}
                 bind:value={$form.region}
                 items={regions.map(e => ({value: e.code, name: e.name}))}
                 placeholder="Select region"
