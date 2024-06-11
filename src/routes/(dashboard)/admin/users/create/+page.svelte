@@ -86,9 +86,10 @@
             console.log("values", values);
 
             if (!values.checked) {
-                delete values.password;
+               // delete values.password;
                 delete values.checked;
             }
+            console.log("user object is", values);
             let sendData = JSON.parse(JSON.stringify(values)) ;
             if(sendData.role == 'courier' || sendData.role == 'manager') delete(sendData.zone_id);
             if(sendData.role == 'regionalmanager')delete(sendData.hub_id);
