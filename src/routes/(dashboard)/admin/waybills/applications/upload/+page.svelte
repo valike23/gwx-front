@@ -276,6 +276,7 @@
     /**@type {File} */
     let value = [];
     const dropHandle = (event) => {
+        console.log('drop is handled here',event.dataTransfer.items);
         event.preventDefault();
         if (event.dataTransfer.items) {
             [...event.dataTransfer.items].forEach((item, i) => {
@@ -310,8 +311,10 @@
     async function submit() {
         if (!value || !value?.text) return;
         const content = await value.arrayBuffer();
+        console.log("the content", content);
         const wb = read(content);
         const data = utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+        console.log("the data here is", data);
         apps = data
             .map((e) => {
                 e = JSON.parse(JSON.stringify(Object.assign({}, tpl, e)));
