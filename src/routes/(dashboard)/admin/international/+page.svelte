@@ -71,6 +71,9 @@
 
     // Manifest, No of Items, Seal Tag, Status, Last scan, Orgin, Destination, Trans mode, Carrier, Days spent
 </script>
+<svelte:head>
+    <title>GWXpro:: International Passport Management</title>
+</svelte:head>
 
 <div class="gwx-breadcrumb">
     <Breadcrumb aria-label="GWX breadcrumb">
@@ -112,12 +115,10 @@
         <table class="table table-xs custom w-full">
             <thead>
                 <tr>
-                    <th class="min-w-[150px]">Manifest No</th>
+                    <th class="min-w-[150px]">No</th>
                     <th>No of Items</th>
-                    <th class="min-w-[100px]">Origin</th>
-                    <th class="min-w-[100px]">Destination</th>
-                    <th class="min-w-[100px]">Trans-Mode</th>
-                    <th class="min-w-[100px]">Status</th>
+                    <th class="min-w-[100px]">Delivered</th>
+                    <th class="min-w-[100px]">Station</th>
                     <th></th>
                 </tr>
             </thead>
@@ -136,12 +137,8 @@
                     <td>
                         <span>{ item.destination.name }</span>
                     </td>
-                    <td>
-                        <span class="capitalize">{ item.mode }</span>
-                    </td>
-                    <td>
-                        <span class="{statusStyle(item.status)} text-2xs px-2 py-1 rounded-md uppercase font-medium">{ item.status.replace("-", "") }</span>
-                    </td>
+               
+                 
                     <td>
                         <a href="/admin/shipments/{item.id}"ssssss class="bg-info/5 px-3 py-1 text-2xs text-base-content/50 rounded-md uppercase font-bold hover:bg-info/20 transition-all">Details</a>
                     </td>

@@ -51,6 +51,8 @@
     let assignIds = [];
     let printIds = [];
     let recievedIds = [];
+    let sendIds = [];
+
     let printers = [];
     let isPrint = false;
     let count = 1;
@@ -106,6 +108,7 @@
         console.log(ids);
         assignIds = [];
         recievedIds = [];
+        sendIds = [];
         printIds= [];
         ids.forEach((id) => {
             const myItem = items.find((item) => {
@@ -115,6 +118,7 @@
             if (myItem.status == "canceled") assignIds.push(id);
             if (myItem.status == "returned") assignIds.push(id);
             if (myItem.status == "draft") recievedIds.push(id);
+            if (myItem.status == "draft") sendIds.push(id);
             if (myItem.status != "draft"){  printIds.push(id);
             printers.push(myItem);
         }
@@ -165,6 +169,7 @@
             isLoading = false;
             ids = [];
             recievedIds = [];
+            sendIds = [];
             assignIds = [];
             printers = [];
         }
@@ -215,6 +220,47 @@
             update: items
                 .filter(
                     (e) => recievedIds.includes(e.id) && e.status == "draft",
+                )
+                .map((e) => ({
+                    id: e.id,
+                    status: "waybill-generated",
+                })),
+        };
+
+        showModal();
+
+        clientFetch({
+            path: "/packages/bulk",
+            method: "POST",
+            body,
+        })
+            .then((res) => res.json())
+            .then((json) => {
+                if (!json.data) {
+                    failure(json.data);
+                    return;
+                } else {
+                    getData();
+                }
+                success("Processing request");
+            })
+            .catch((e) => {
+                failure(e);
+            })
+            .finally(() => {
+                closeModal();
+                getData();
+            });
+    }
+
+    function processInternational() {
+        if (!sendIds.length) return;
+
+        const body = {
+            notify: true,
+            update: items
+                .filter(
+                    (e) => sendIds.includes(e.id) && e.status == "draft",
                 )
                 .map((e) => ({
                     id: e.id,
@@ -565,6 +611,23 @@
                             </div>
                         </DropdownItem>
                     {/if}
+                    {#if sendIds.length}
+                    <DropdownItem
+                        disabled={!sendIds.length}
+                        on:click={() => {
+                            if (!sendIds.length) return;
+                            processInternational();
+                        }}
+                    >
+                        <div class="flex items-center space-x-2">
+                            <span>Send</span>
+                            <span
+                                class="bg-slate-100 rounded-xl px-2 py-1 text-xs"
+                                >{sendIds.length}</span
+                            >
+                        </div>
+                    </DropdownItem>
+                {/if}
                     {#if printIds.length}
                         <DropdownItem
                             disabled={!printIds.length}
