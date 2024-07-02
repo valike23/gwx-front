@@ -671,8 +671,8 @@
                         <td>
                             <div class="flex space-x-2 items-center">
                                 <span
-                                    >{item.metadata?.application_id ||
-                                        item.id}</span
+                                    >{
+                                        item.nin}</span
                                 >
                                 <a
                                     href="/admin/waybills/{item.id}"
