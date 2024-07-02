@@ -56,6 +56,15 @@
             show: true,
             divide: ["manager"].includes(user.role)
         },
+        ,
+        {
+            name: "International",
+            icon: UilTruckLoading,
+            active: $page.url.pathname.startsWith("/admin/international"),
+            to: "/admin/international",
+            show: true,
+            divide: ["manager"].includes(user.role)
+        },
         {
             name: "Terminals",
             icon: UilDirections,

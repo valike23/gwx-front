@@ -6,12 +6,13 @@ export const ssr = false;
 
 /** @type {import('./$types').PageLoad} */
 export async function load({ params, fetch }) {
-
+console.log('the id is', params.id);
     const res = await clientFetch({
         path: "/hubs/" + params.id
     }, fetch);
 
     const json = await res.json();
+    console.log("the hub to be returned2", json);
 
     if (!res.ok) {
         throw error(res.status, networkError(json));

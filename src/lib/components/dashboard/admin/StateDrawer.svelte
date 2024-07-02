@@ -33,7 +33,7 @@
     }
 
     onMount(() => {
-        $form.country.id= $page.url.searchParams.get("country_id") || "";
+        $form.country= $page.url.searchParams.get("country_id") || "";
         if (data) {
             $form = Object.assign($form, {
                 code: data.code || "",
@@ -51,19 +51,54 @@
         }
     })
 
+    const handleUpload = async ()=>{
+        console.log("the values", $form);
+           
+
+            isLoading = true;
+            try {
+                let res = await clientFetch({
+                    method: data ? "PUT" : "POST",
+                    path: `/states${data ? '/' + data.id : ''}`,
+                    body: values
+                });
+
+                const json = await res.json();
+                if (!res.ok) throw json;
+
+                success("Operation sucessful");
+                handleReset();
+                dispatch('close', true);
+
+            } catch (error) {
+                failure(error);
+            } finally {
+                isLoading = false;
+                return;
+            }
+    }
+
     const { form, errors, handleReset, handleSubmit } = createForm({
+       
         initialValues: {
             name: "",
             code: "",
             region: "",
             cities: [],
-            country_id: "",
+            country: {},
         },
         validationSchema: yup.object().shape({
             code: yup.string().min(2).required().label("Code"),
             name: yup.string().min(2).required().label("Name"),
             region: yup.string().min(2).label("Region"),
-            country_id: yup.string().required().label("Country"),
+            country: yup
+                .object()
+                .shape({
+                    id: yup.string(),
+                    code: yup.string(),
+                    name: yup.string(),
+                })
+                .label("Country"),
             cities: yup.array().of(yup.string())
                 .test(
                     'unique',
@@ -131,13 +166,14 @@
         <h2> </h2>
         <CloseButton on:click={() => (dispatch('close'))}/>
     </div>
-    <form on:submit|preventDefault={handleSubmit} class="pt-6">
+    <form on:submit|preventDefault={handleUpload} class="pt-6">
         <div class="form-control">
             <Label for="code" class="mb-2 font-normal">Code</Label>
             <Input
                 type="text"
                 id="code"
                 bind:value={$form.code}
+                required
                 placeholder="Enter code"
                 olor="{$errors.code ? 'red' : 'base'}" 
             />
@@ -153,6 +189,7 @@
             <Input
                 type="text"
                 id="name"
+                required
                 bind:value={$form.name}
                 placeholder="Enter name"
                 olor="{$errors.name ? 'red' : 'base'}" 
@@ -168,6 +205,7 @@
             <Label for="country" class="mb-2 font-normal">Country</Label>
             <Select 
                 id="region"
+                required
                 bind:value={$form.country}
                 on:change={loadRegion}
                 items={countries.map(e => ({value: e, name: e.name}))}
@@ -185,7 +223,7 @@
             <Label for="region" class="mb-2 font-normal">Region</Label>
             <Select 
                 id="region"
-                disabled={$form.country.has_regions}
+                disabled={!$form.country.has_regions}
                 bind:value={$form.region}
                 items={regions.map(e => ({value: e.code, name: e.name}))}
                 placeholder="Select region"
@@ -222,10 +260,7 @@
         </div>
         
         <div class="fomr-control mt-4">
-            <Button type="button" size="lg" class="w-full" disabled={isLoading} on:click={() => {
-                submit = true;
-                handleSubmit();
-            }}>
+            <Button type="submit" size="lg" class="w-full" disabled={isLoading} >
                 {#if isLoading}
                 <Spinner class="mr-3" size="4" color="white" />
                 {/if}
@@ -233,4 +268,4 @@
             </Button>
         </div>
     </form>
-</div>
+</div>button
