@@ -255,23 +255,17 @@
 
     function processInternational() {
         if (!sendIds.length) return;
+        const package_ids = sendIds;
+        
 
         const body = {
-            notify: true,
-            update: items
-                .filter(
-                    (e) => sendIds.includes(e.id) && e.status == "draft",
-                )
-                .map((e) => ({
-                    id: e.id,
-                    status: "waybill-generated",
-                })),
+             package_ids
         };
 
         showModal();
 
         clientFetch({
-            path: "/packages/bulk",
+            path: "/shipments/diaspora",
             method: "POST",
             body,
         })
@@ -283,7 +277,7 @@
                 } else {
                     getData();
                 }
-                success("Processing request");
+                success("success exporting packages to international...");
             })
             .catch((e) => {
                 failure(e);

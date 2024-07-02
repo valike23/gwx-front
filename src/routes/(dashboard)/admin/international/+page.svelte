@@ -20,6 +20,10 @@
         getData();
     })
 
+    const downloadCSV =(packages)=>{
+        //handle printing here
+    }
+
     const statuses = {
         "": "All",
         "in-transit": "In Transit",
@@ -38,7 +42,7 @@
 
         try {
             const res = await clientFetch({
-                path: "/shipments",
+                path: "/shipments/diaspora",
                 query: query.toString()
             });
             const json = await res.json();
@@ -90,11 +94,11 @@
     <div class="flex flex-1 justify-between items-end mt-6">
         <div class="relative md:max-w-xs">
             <SearchBox 
-                placeholder="Search Manifest" 
+                placeholder="Search International" 
                 on:search={onSearch} />
         </div>
 
-        <div class="flex gap-x-3">
+        <!-- <div class="flex gap-x-3">
             <Select 
                 size="sm"
                 bind:value={meta.status}
@@ -103,11 +107,8 @@
                 placeholder="Select Status"
                 class="w-36"
             />
-            <Button size="sm" class="space-x-2 text-sm font-normal" href="/admin/shipments/create"  outline>
-                <span><UilPlus size="18" /></span>
-                <span>Generate Manifest</span>
-            </Button>
-        </div>
+           
+        </div> -->
     </div>
 
 
@@ -119,6 +120,7 @@
                     <th>No of Items</th>
                     <th class="min-w-[100px]">Delivered</th>
                     <th class="min-w-[100px]">Station</th>
+                    <th>Actions</th>
                     <th></th>
                 </tr>
             </thead>
@@ -137,10 +139,10 @@
                     <td>
                         <span>{ item.destination.name }</span>
                     </td>
-               
+               <td> <Button on:click={()=>{downloadCSV(item.packages)}}>Print Waybills</Button></td>
                  
                     <td>
-                        <a href="/admin/shipments/{item.id}"ssssss class="bg-info/5 px-3 py-1 text-2xs text-base-content/50 rounded-md uppercase font-bold hover:bg-info/20 transition-all">Details</a>
+                        <a href="/admin/shipments/{item.id}" class="bg-info/5 px-3 py-1 text-2xs text-base-content/50 rounded-md uppercase font-bold hover:bg-info/20 transition-all">Details</a>
                     </td>
                 </tr>
             {/each}

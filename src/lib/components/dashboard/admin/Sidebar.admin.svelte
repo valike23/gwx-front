@@ -2,7 +2,7 @@
     import { page } from '$app/stores';
     import { roles } from '$lib/data/roles';
     import { toggleDrawer } from '$lib/stores/app';
-    import { UilApps, UilArchive, UilChart, UilDirections, UilGlobe, UilPower, UilTruck, UilTruckLoading, UilUser } from "svelte-unicons";
+    import { UilApps, UilArchive, UilChart, UilDirections, UilGlobe, UilPlaneArrival, UilPower, UilTruck, UilTruckLoading, UilUser } from "svelte-unicons";
 
     $: user = $page.data.session.user;
     $: activeUrl = $page.url.pathname;
@@ -59,7 +59,7 @@
         ,
         {
             name: "International",
-            icon: UilTruckLoading,
+            icon: UilPlaneArrival,
             active: $page.url.pathname.startsWith("/admin/international"),
             to: "/admin/international",
             show: true,
