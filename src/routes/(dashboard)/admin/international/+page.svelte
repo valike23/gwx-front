@@ -142,7 +142,7 @@
 
         try {
             const res = await clientFetch({
-                path: "/packages",
+                path: "/packages/diaspora",
                 query: query.toString(),
             });
 
@@ -462,13 +462,13 @@
 <div class="gwx-breadcrumb print:hidden">
     <Breadcrumb aria-label="GWX breadcrumb">
         <BreadcrumbItem href="/admin" home>Dashboard</BreadcrumbItem>
-        <BreadcrumbItem>NIS Applications</BreadcrumbItem>
+        <BreadcrumbItem>NIS International</BreadcrumbItem>
     </Breadcrumb>
 </div>
 
 <div class="page print:hidden">
     <div class="flex items-center gap-x-3 mb-4">
-        <h2 class="text-lg font-semibold">NIS Applications</h2>
+        <h2 class="text-lg font-semibold">NIS International</h2>
         <div class="flex flex-1 justify-end"></div>
     </div>
     <div class="filter">
