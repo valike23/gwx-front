@@ -47,6 +47,7 @@
             });
             const json = await res.json();
             items = json.data;
+            console.log('item', items);
             meta = Object.assign(meta, json.meta);  
         } catch (error) {
             
@@ -119,7 +120,7 @@
                     <th class="min-w-[150px]">No</th>
                     <th>No of Items</th>
                     <th class="min-w-[100px]">Delivered</th>
-                    <th class="min-w-[100px]">Station</th>
+                    <th class="min-w-[100px]">Status</th>
                     <th>Actions</th>
                     <th></th>
                 </tr>
@@ -134,15 +135,15 @@
                         <span>{item.package_ids.length}</span>
                     </td>
                     <td>
-                        <span>{ item.origin.name }</span>
+                        <span>{item.status}</span>
                     </td>
                     <td>
-                        <span>{ item.destination.name }</span>
+                        <span>{ item.name }</span>
                     </td>
                <td> <Button on:click={()=>{downloadCSV(item.packages)}}>Print Waybills</Button></td>
                  
                     <td>
-                        <a href="/admin/shipments/{item.id}" class="bg-info/5 px-3 py-1 text-2xs text-base-content/50 rounded-md uppercase font-bold hover:bg-info/20 transition-all">Details</a>
+                        <a href="/admin/international/{item.id}" class="bg-info/5 px-3 py-1 text-2xs text-base-content/50 rounded-md uppercase font-bold hover:bg-info/20 transition-all">Details</a>
                     </td>
                 </tr>
             {/each}
