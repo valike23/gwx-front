@@ -11,9 +11,9 @@
     import { clientFetch } from "$lib/client/api";
     import { failure, success } from "$lib/utils/toast";
     import ManifestPrint from "$lib/components/dashboard/ManifestPrint.svelte";
-  import { onMount } from "svelte";
+    import { onMount } from "svelte";
 
-   let shipment = {};
+    let shipment = {};
 
     let hideDrawer = true;
     const modes = ["Road", "Air"];
@@ -61,10 +61,9 @@
         }
     })
 
-
     function statusStyle(val) {
         switch (val) {
-            case "created": 
+            case "created":
             case "queued": return "bg-slate-100";
             case "in-transit": return "bg-secondary/5 tex-secondary";
             case "delivered": return "bg-success/5 text-success";
@@ -73,15 +72,51 @@
             default: return "bg-slate-200";
         }
     }
-    const print =(id)=>{
 
+    const print = (fileUrl) => {
+        if (fileUrl) {
+            window.open(fileUrl, '_blank');
+        } else {
+            failure("No file URL available");
+        }
     }
-    const getData =async ()=>{
+
+    const upload = (id) => {
+        // Trigger the file input click event
+        document.getElementById('file-input-' + id).click();
+    }
+
+    const handleFileChange = async (event, id) => {
+        const file = event.target.files[0];
+        if (file && file.type === "application/pdf") {
+            try {
+                isLoading = true;
+                const formData = new FormData();
+                formData.append("file", file);
+
+                const res = await clientFetch({
+                    path: `/shipments/${id}/upload`,
+                    method: "POST",
+                    body: formData
+                });
+                const json = await res.json();
+                if (!res.ok) throw json;
+                success("File uploaded successfully");
+                window.location.reload();
+            } catch (error) {
+                failure(error);
+            } finally {
+                isLoading = false;
+            }
+        } else {
+            failure("Please select a PDF file");
+        }
+    }
+
+    const getData = async () => {
         const path = location.pathname.split('/');
         const id = path[path.length - 1];
         console.log(id);
-
-       
 
         try {
             const res = await clientFetch({
@@ -91,13 +126,13 @@
             shipment = json.data;
             console.log('item', shipment);
         } catch (error) {
-            
+
         } finally {
             isLoading = false;
         }
     }
 
-    onMount(()=>{
+    onMount(() => {
         getData()
     })
 </script>
@@ -113,19 +148,11 @@
 {#if !isLoading}
 <div class="page print:hidden">
     <div class="flex justify-end items-center gap-4">
-        <button 
-                class="btn btn-outline btn-primary btn-circle btn-sm" 
-                on:click={() => (print())}>
-                <UilPrint size="20" />
-            </button>
-        <!-- <Button 
-            class="gap-x-2" 
-            size="sm"
-            on:click={() => (hideDrawer = false)}
-            outline>
-            <span><UilEditAlt size="15" /></span>
-            Update Status
-        </Button> -->
+        <button
+            class="btn btn-outline btn-primary btn-circle btn-sm"
+            on:click={() => (print(shipment.file_url))}>
+            <UilPrint size="20" />
+        </button>
     </div>
     <div class="space-y-2">
         <h3 class="font-medium">Shipment ID: #{shipment.id}</h3>
@@ -150,18 +177,18 @@
     </div>
 
     <div class="mt-6 flex">
-        <div class="flex gap-x-2  text-xs items-center px-3 py-2 uppercase">
+        <div class="flex gap-x-2 text-xs items-center px-3 py-2 uppercase">
             <span class="text-xs font-medium">DATE:</span>
             <span>{ dayjs(shipment.created_at).format("DD/MM/YYYY hh:mm A") }</span>
         </div>
-        <div class="flex gap-x-2  text-xs items-center px-3 py-2 uppercase">
+        <div class="flex gap-x-2 text-xs items-center px-3 py-2 uppercase">
             <span class="text-xs font-medium">Last Modified:</span>
             <span>{ dayjs(shipment.updated_at).format("DD/MM/YYYY hh:mm A") }</span>
         </div>
     </div>
 
     <div class="mt-1 mb-4 grid grid-cols-4 divide-x border">
-        <div class="flex gap-x-2  text-xs items-center px-3 py-2 uppercase">
+        <div class="flex gap-x-2 text-xs items-center px-3 py-2 uppercase">
             <span class="font-medium">status:</span>
             <span>{ shipment.status }</span>
         </div>
@@ -169,10 +196,7 @@
             <span class="font-medium">MODE:</span>
             <span>{ shipment.mode }</span>
         </div>
-      
     </div>
-
-  
 
     <div class="overflow-x-auto w-full mt-4">
         <table class="table table-xs custom table-auto">
@@ -205,7 +229,6 @@
                             { item.quantity || 1 }
                         </span>
                     </td>
-                   
                     <td>
                         <span class="text-xs">{ dayjs(item.created_at).format('DD-MM-YYYY') }</span>
                     </td>
@@ -220,14 +243,31 @@
                         </button>
                         {#if item.file_url}
                         <button
-                        class="btn btn-xs text-blue bg-blue/5"
-                        on:click={() => {
-                            print( item.id)
-                        }}
-                    >
-                        <span>Print</span>
-                    </button>
+                            class="btn btn-xs text-blue bg-blue/5"
+                            on:click={() => {
+                                print(item.file_url)
+                            }}
+                        >
+                            <span>Print</span>
+                        </button>
+
+                        {:else}
+                        <button
+                            class="btn btn-xs text-yellow bg-yellow/5"
+                            on:click={() => {
+                                upload(item.id)
+                            }}
+                        >
+                            <span>Upload PDF</span>
+                        </button>
                         {/if}
+                        <input
+                            type="file"
+                            id="file-input-{item.id}"
+                            class="hidden"
+                            accept="application/pdf"
+                            on:change={(event) => handleFileChange(event, item.id)}
+                        />
                     </td>
                 </tr>
                 {/each}
@@ -240,8 +280,8 @@
 <!-- <ManifestPrint items={[shipment]} class="hidden print:block" />
 
 <Drawer
-    bind:hidden={hideDrawer} 
-    placement="right" 
+    bind:hidden={hideDrawer}
+    placement="right"
     transitionType="fly"
     {transitionParams}
     activateClickOutside={false}
@@ -254,10 +294,10 @@
         <form on:submit={handleSubmit}>
             <div class="form-control">
                 <Label for="name" class="mb-2 font-normal">Status</Label>
-                <Select 
+                <Select
                     size="sm"
                     bind:value={$form.status}
-                    items={Object.entries(statuses).map(e => ({value: e[0], name: e[1]}))}
+                    items={Object.entries(statuses).map(e => ({ value: e[0], name: e[1] }))}
                     placeholder="Select Status"
                     class="w-full"
                 />
@@ -270,10 +310,10 @@
             </div>
             <div class="form-control">
                 <Label for="name" class="mb-2 font-normal">Mode</Label>
-                <Select 
+                <Select
                     size="sm"
                     bind:value={$form.mode}
-                    items={modes.map(e => ({value: e.toLowerCase(), name: e}))}
+                    items={modes.map(e => ({ value: e.toLowerCase(), name: e }))}
                     placeholder="Select Mode"
                     class="w-full"
                 />
