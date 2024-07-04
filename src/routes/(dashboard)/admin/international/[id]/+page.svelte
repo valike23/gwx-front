@@ -73,8 +73,12 @@
         }
     }
 
-    const print = (id) => {
-
+    const print = (fileUrl) => {
+        if (fileUrl) {
+            window.open(fileUrl, '_blank');
+        } else {
+            failure("No file URL available");
+        }
     }
 
     const upload = (id) => {
@@ -146,7 +150,7 @@
     <div class="flex justify-end items-center gap-4">
         <button
             class="btn btn-outline btn-primary btn-circle btn-sm"
-            on:click={() => (print())}>
+            on:click={() => (print(shipment.file_url))}>
             <UilPrint size="20" />
         </button>
     </div>
@@ -241,19 +245,13 @@
                         <button
                             class="btn btn-xs text-blue bg-blue/5"
                             on:click={() => {
-                                print(item.id)
+                                print(item.file_url)
                             }}
                         >
                             <span>Print</span>
                         </button>
+
                         {:else}
-                        <input
-                            id={"file-input-" + item.id}
-                            type="file"
-                            accept="application/pdf"
-                            class="hidden"
-                            on:change={(event) => handleFileChange(event, item.id)}
-                        />
                         <button
                             class="btn btn-xs text-yellow bg-yellow/5"
                             on:click={() => {
@@ -263,6 +261,13 @@
                             <span>Upload PDF</span>
                         </button>
                         {/if}
+                        <input
+                            type="file"
+                            id="file-input-{item.id}"
+                            class="hidden"
+                            accept="application/pdf"
+                            on:change={(event) => handleFileChange(event, item.id)}
+                        />
                     </td>
                 </tr>
                 {/each}
