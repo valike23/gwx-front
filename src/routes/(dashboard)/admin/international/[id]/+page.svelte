@@ -7,9 +7,9 @@
     import dayjs from "dayjs";
     import { sineIn } from 'svelte/easing';
     import { Breadcrumb, BreadcrumbItem, Button, CloseButton, Drawer, Helper, Label, Select, Spinner } from "flowbite-svelte";
-    import { UilEditAlt, UilPrint } from "svelte-unicons";
+    import { UilEditAlt, UilPrint, UilCar, UilPackage } from "svelte-unicons";
     import { clientFetch } from "$lib/client/api";
-    import { failure, success } from "$lib/utils/toast";
+    import { failure, info, success } from "$lib/utils/toast";
     import ManifestPrint from "$lib/components/dashboard/ManifestPrint.svelte";
     import { onMount } from "svelte";
 
@@ -86,6 +86,34 @@
         document.getElementById('file-input-' + id).click();
     }
 
+    const recievePackages =()=>{
+        info("updating waybills...")
+        const body = {
+            update: shipment.package_ids,
+        };
+        clientFetch({
+            path: "/packages/generate",
+            method: "PUT",
+            body,
+        })
+            .then((res) => res.json())
+            .then((json) => {
+                if (!json.data) {
+                    failure(json.data);
+                    return;
+                } else {
+                    getData();
+                }
+                success("packages updated successfully");
+                location.reload();
+
+            })
+            .catch((e) => {
+                failure(e);
+            })
+            
+    }
+
     const handleFileChange = async (event, id) => {
         const file = event.target.files[0];
         if (file && file.type === "application/pdf") {
@@ -149,10 +177,26 @@
 <div class="page print:hidden">
     <div class="flex justify-end items-center gap-4">
         <button
-            class="btn btn-outline btn-primary btn-circle btn-sm"
-            on:click={() => (print(shipment.file_url))}>
-            <UilPrint size="20" />
-        </button>
+        class="btn btn-outline btn-primary btn-circle btn-sm"
+        on:click={() => (print(shipment.file_url))}>
+        <UilPrint size="20" />
+    </button>
+      {#if shipment.packages[0].status == 'draft' || shipment.packages[0].status == 'new'}
+      <button
+      title="Update to waybill generated"
+          class="btn btn-outline btn-primary btn-circle btn-sm"
+          on:click={() => (recievePackages())}>
+          <UilPackage size="20" />
+      </button>
+      {/if}
+      {#if shipment.packages[0].status == 'waybill-generated'}
+      <button
+      title="assign to rider"
+          class="btn btn-outline btn-primary btn-circle btn-sm"
+          on:click={() => (print(shipment.file_url))}>
+          <UilCar size="20" />
+      </button>
+      {/if}
     </div>
     <div class="space-y-2">
         <h3 class="font-medium">Shipment ID: #{shipment.id}</h3>
