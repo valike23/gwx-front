@@ -77,7 +77,7 @@
             icon: UilChart,
             show: true,
             divide: ["admin"].includes(user.role),
-            show: true,
+            show: ["admin"].includes(user.role),
             items: [
                 {
                     name: "Users",

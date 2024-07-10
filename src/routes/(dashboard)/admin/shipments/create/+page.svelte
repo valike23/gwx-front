@@ -44,7 +44,7 @@
         }),
         async onSubmit(values) {
 
-            console.log("Minime");
+            console.log("Minime", values);
             isLoading = true;
             try {
                 const res = await clientFetch({

@@ -52,7 +52,6 @@
     let printIds = [];
     let recievedIds = [];
     let sendIds = [];
-
     let printers = [];
     let isPrint = false;
     let count = 1;
@@ -658,16 +657,7 @@
             </div>
         </div>
         <div class="flex w-full gap-x-3 md:flex-1 md:justify-end items-center">
-            <Button
-                color="light"
-                size="sm"
-                class="space-x-1"
-                on:click={() => (bulkModal = true)}
-                outline
-            >
-                <span><UilFileCheckAlt size="18" /></span>
-                <span>Register</span>
-            </Button>
+           
             <Button
                 size="xs"
                 class="gap-2 w-[90px]"
