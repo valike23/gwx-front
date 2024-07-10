@@ -6,15 +6,17 @@
     import { formatCurrency } from "$lib/utils/helpers";
     import dayjs from "dayjs";
     import { sineIn } from 'svelte/easing';
-    import { Breadcrumb, BreadcrumbItem, Button, CloseButton, Drawer, Helper, Label, Select, Spinner } from "flowbite-svelte";
+    import { Breadcrumb, BreadcrumbItem, Button, CloseButton, Drawer, Helper, Label, Select, Spinner , Modal} from "flowbite-svelte";
     import { UilEditAlt, UilPrint, UilCar, UilPackage } from "svelte-unicons";
     import { clientFetch } from "$lib/client/api";
+    import BulkDeliveryAssign from "$lib/components/dashboard/admin/BulkDeliveryAssign.svelte";
     import { failure, info, success } from "$lib/utils/toast";
     import ManifestPrint from "$lib/components/dashboard/ManifestPrint.svelte";
     import { onMount } from "svelte";
+    import { debounce } from "$lib/utils/helpers";
+    let shipment = {package_ids:[]};
 
-    let shipment = {};
-
+    let showDelivery = false;
     let hideDrawer = true;
     const modes = ["Road", "Air"];
     let isLoading = true;
@@ -168,7 +170,7 @@
 <div class="gwx-breadcrumb print:hidden">
     <Breadcrumb aria-label="GWX breadcrumb">
         <BreadcrumbItem href="/admin" home>Dashboard</BreadcrumbItem>
-        <BreadcrumbItem href="/admin/shipments">Shipments</BreadcrumbItem>
+        <BreadcrumbItem href="/admin/international">International</BreadcrumbItem>
         <BreadcrumbItem>Shipment details</BreadcrumbItem>
     </Breadcrumb>
 </div>
@@ -193,7 +195,7 @@
       <button
       title="assign to rider"
           class="btn btn-outline btn-primary btn-circle btn-sm"
-          on:click={() => (print(shipment.file_url))}>
+          on:click={() => (showDelivery = true)}>
           <UilCar size="20" />
       </button>
       {/if}
@@ -379,3 +381,21 @@
         </form>
     </div>
 </Drawer> -->
+<Modal
+    title="Assign Delivery ({shipment.package_ids.length})"
+    bind:open={showDelivery}
+    autoclose={false}
+    size="xs"
+    class="w-full"
+>
+    <BulkDeliveryAssign
+    
+        class="print:hidden"
+        items={shipment.package_ids}
+        on:close={() => (showDelivery = false)}
+        on:done={() => {
+            showDelivery = false;
+            location.reload();
+        }}
+    />
+</Modal>

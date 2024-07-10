@@ -52,7 +52,6 @@
     let printIds = [];
     let recievedIds = [];
     let sendIds = [];
-
     let printers = [];
     let isPrint = false;
     let count = 1;
