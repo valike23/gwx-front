@@ -206,10 +206,10 @@
             <span>Status: </span>
             <span class="{statusStyle(shipment.status)} text-xs px-2 py-1 rounded-md uppercase font-medium">{ shipment.status.replace("-", " ") }</span>
         </div>
-        <div class="flex items-center gap-x-2 text-sm" style="display:none">
+        <!-- <div class="flex items-center gap-x-2 text-sm" style="display:none">
             <span>Transport Mode: </span>
             <span class="{statusStyle("")} text-xs px-2 py-1 rounded-md uppercase font-medium">{ shipment.mode }</span>
-        </div>
+        </div> -->
         <div class="flex items-center gap-x-2 text-sm" style="display:none">
             <div>
                 <span>Date created: </span>
@@ -238,10 +238,10 @@
             <span class="font-medium">status:</span>
             <span>{ shipment.status }</span>
         </div>
-        <div class="flex gap-x-2 text-xs items-center px-3 py-2 uppercase">
+        <!-- <div class="flex gap-x-2 text-xs items-center px-3 py-2 uppercase">
             <span class="font-medium">MODE:</span>
             <span>{ shipment.mode }</span>
-        </div>
+        </div> -->
     </div>
 
     <div class="overflow-x-auto w-full mt-4">
