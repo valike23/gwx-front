@@ -3,6 +3,7 @@
     import printJS from "print-js";
     import html2pdf from "html2pdf.js";
     import dayjs from "dayjs";
+    import {getUser} from "$lib/stores/user"
     import WaybillPrint from '$lib/components/dashboard/WaybillPrint.svelte';
     import WaybillPrintThermal from "$lib/components/dashboard/WaybillPrintThermal.svelte";
     import {
@@ -667,14 +668,25 @@
                 <span><UilTable size="17" /></span>
                 <span>Export</span>
             </Button>
-            <Button
-                size="sm"
-                class="space-x-2 text-sm font-normal"
-                href="/admin/waybills/applications/upload"
-            >
-                <span><UilPlus size="18" /></span>
-                <span>New</span>
-            </Button>
+          {#if getUser().role == 'superadmin'}
+          <Button
+          size="sm"
+          class="space-x-2 text-sm font-normal"
+          href="/admin/waybills/applications/upload"
+      >
+          <span><UilPlus size="18" /></span> <Button
+          color="light"
+          size="sm"
+          class="space-x-1"
+          on:click={() => (bulkModal = true)}
+          outline
+      >
+          <span><UilFileCheckAlt size="18" /></span>
+          <span>Register</span>
+      </Button>
+          <span>New</span>
+      </Button>
+          {/if}
         </div>
     </div>
 
