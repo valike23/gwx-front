@@ -77,7 +77,7 @@
             icon: UilChart,
             show: true,
             divide: ["admin"].includes(user.role),
-            show: ["admin"].includes(user.role),
+            show: ["admin","superadmin"].includes(user.role),
             items: [
                 {
                     name: "Users",
@@ -91,7 +91,7 @@
                     href: "/admin/customers",
                     show: true,
                     active: $page.url.pathname.startsWith("/admin/customers"),
-                    show: ["admin"].includes(user.role)
+                    show: ["admin", "superadmin"].includes(user.role)
                 }
             ]
         },
@@ -125,14 +125,14 @@
                     href: "/admin/reports/customers",
                     show: true,
                     active: activeUrl == ("/admin/reports/customers"),
-                    show: ["admin"].includes(user.role)
+                    show: ["admin", "superadmin"].includes(user.role)
                 },
                 {
                     name: "Audit Trail",
                     href: "/admin/reports/audit",
                     show: true,
                     active: activeUrl == ("/admin/reports/audit"),
-                    show: ["admin"].includes(user.role)
+                    show: ["admin", "superadmin"].includes(user.role)
                 }
             ]
         },
@@ -167,7 +167,7 @@
         {
             name: "Geo",
             icon: UilGlobe,
-            show: ["admin"].includes(user.role),
+            show: ["admin", "superadmin"].includes(user.role),
             items: [
                 {
                     name: "Countries",
