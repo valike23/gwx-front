@@ -120,6 +120,7 @@
                     <th class="min-w-[150px]">No</th>
                     <th>No of Items</th>
                     <th class="min-w-[100px]">Delivered</th>
+                    <th class="min-w-[100px]">UnDelivered</th>
                     <th class="min-w-[100px]">Status</th>
                     <th>Actions</th>
                     <th></th>
@@ -135,12 +136,15 @@
                         <span>{item.package_ids.length}</span>
                     </td>
                     <td>
-                        <span>{item.status}</span>
+                        <span>{item.delivered || 0}</span>
                     </td>
                     <td>
-                        <span>{ item.name }</span>
+                        <span>{item.package_ids.length - (item.undelivered || 0)}</span>
                     </td>
-               <td> <Button on:click={()=>{downloadCSV(item.packages)}}>Print Waybills</Button></td>
+                    <td>
+                        <span>{ item.status }</span>
+                    </td>
+               <td> <Button size="sm" on:click={()=>{downloadCSV(item.packages)}}>Print Waybills</Button></td>
                  
                     <td>
                         <a href="/admin/international/{item.id}" class="bg-info/5 px-3 py-1 text-2xs text-base-content/50 rounded-md uppercase font-bold hover:bg-info/20 transition-all">Details</a>
