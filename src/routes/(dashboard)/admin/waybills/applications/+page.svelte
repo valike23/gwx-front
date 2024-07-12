@@ -674,16 +674,7 @@
           class="space-x-2 text-sm font-normal"
           href="/admin/waybills/applications/upload"
       >
-          <span><UilPlus size="18" /></span> <Button
-          color="light"
-          size="sm"
-          class="space-x-1"
-          on:click={() => (bulkModal = true)}
-          outline
-      >
-          <span><UilFileCheckAlt size="18" /></span>
-          <span>Register</span>
-      </Button>
+          <span><UilPlus size="18" /></span> 
           <span>New</span>
       </Button>
           {/if}
