@@ -202,10 +202,10 @@
     </div>
     <div class="space-y-2">
         <h3 class="font-medium">Shipment ID: #{shipment.id}</h3>
-        <div class="flex items-center gap-x-2 text-sm" style="display:none">
+        <!-- <div class="flex items-center gap-x-2 text-sm" style="display:none">
             <span>Status: </span>
             <span class="{statusStyle(shipment.status)} text-xs px-2 py-1 rounded-md uppercase font-medium">{ shipment.status.replace("-", " ") }</span>
-        </div>
+        </div> -->
         <!-- <div class="flex items-center gap-x-2 text-sm" style="display:none">
             <span>Transport Mode: </span>
             <span class="{statusStyle("")} text-xs px-2 py-1 rounded-md uppercase font-medium">{ shipment.mode }</span>
@@ -268,7 +268,7 @@
                         <span>{ item.id }</span>
                     </td>
                     <td>
-                        <span>{ item.name || '' }</span>
+                        <span>{ item.recipient.name || '' }</span>
                     </td>
                     <td>
                         <span>
@@ -297,15 +297,15 @@
                             <span>Print</span>
                         </button>
 
-                        {:else}
+                        {:else if item.recipient.country.code == 'UK'}
                         <button
-                            class="btn btn-xs text-yellow bg-yellow/5"
-                            on:click={() => {
-                                upload(item.id)
-                            }}
-                        >
-                            <span>Upload PDF</span>
-                        </button>
+                        class="btn btn-xs text-yellow bg-yellow/5"
+                        on:click={() => {
+                            upload(item.id)
+                        }}
+                    >
+                        <span>Upload PDF</span>
+                    </button>
                         {/if}
                         <input
                             type="file"
