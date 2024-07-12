@@ -144,7 +144,7 @@
                     <td>
                         <span>{ item.status }</span>
                     </td>
-               <td> <Button size="sm" on:click={()=>{downloadCSV(item.packages)}}>Print Waybills</Button></td>
+               <td> <Button disabled size="sm" on:click={()=>{downloadCSV(item.packages)}}>Print Waybills</Button></td>
                  
                     <td>
                         <a href="/admin/international/{item.id}" class="bg-info/5 px-3 py-1 text-2xs text-base-content/50 rounded-md uppercase font-bold hover:bg-info/20 transition-all">Details</a>

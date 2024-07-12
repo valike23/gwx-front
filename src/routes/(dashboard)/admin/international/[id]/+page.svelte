@@ -256,7 +256,9 @@
                 <tr>
                     <th>NIN </th>
                     <th class="min-w-[100px]">Name</th>
-                    <th class="min-w-[90px]">Quantity</th>
+                    <th class="min-w-[90px]">Address</th>
+                    <th>Country</th>
+                    <th>Status</th>
                     <th class="min-w-[100px]">Date Created</th>
                     <th></th>
                 </tr>
@@ -272,8 +274,21 @@
                     </td>
                     <td>
                         <span>
-                            { item.quantity || 1 }
+                            { item.recipient.address }
                         </span>
+                    </td>
+                    <td>
+                        <span>
+                            {item.recipient.country.name}
+                        </span>
+                    </td>
+                    <td>
+                        <span
+                        class="{statusStyle(
+                            item.status,
+                        )} text-2xs px-2 py-1 rounded-md uppercase font-medium"
+                        >{(item.status)}</span
+                    >
                     </td>
                     <td>
                         <span class="text-xs">{ dayjs(item.created_at).format('DD-MM-YYYY') }</span>
