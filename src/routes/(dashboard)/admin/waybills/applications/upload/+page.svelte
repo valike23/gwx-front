@@ -210,7 +210,7 @@
         //     });
         apps.forEach((a,i)=>{
             apps[i].state = a.reciepentState;
-            apps[i].applicationId = a.applicationrecieId.toString();
+            apps[i].applicationId = a.applicationId.toString();
             apps[i].nin = a.nin.toString();
             apps[i].postalCode = a.postalCode.toString();
             apps[i].receiverPhone = a.receiverPhone.toString();
