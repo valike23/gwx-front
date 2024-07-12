@@ -117,8 +117,8 @@
             if (myItem.status == "waybill-generated") assignIds.push(id);
             if (myItem.status == "canceled") assignIds.push(id);
             if (myItem.status == "returned") assignIds.push(id);
-            if (myItem.status == "draft") recievedIds.push(id);
-            if (myItem.status == "draft") sendIds.push(id);
+            if (myItem.status == "draft" && !myItem.is_diaspora) recievedIds.push(id);
+            if (myItem.status == "draft" && myItem.is_diaspora) sendIds.push(id);
             if (myItem.status != "draft"){  printIds.push(id);
             printers.push(myItem);
         }
