@@ -70,7 +70,7 @@
             icon: UilDirections,
             active: $page.url.pathname.startsWith("/admin/terminals"),
             to: "/admin/terminals",
-            show: ["admin"].includes(user.role),
+            show: ["admin", "superadmin"].includes(user.role),
         },
         {
             name: "User Management",
