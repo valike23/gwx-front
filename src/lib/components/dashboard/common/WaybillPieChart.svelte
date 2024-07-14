@@ -65,7 +65,7 @@
                 top: -2,
             },
         },
-        labels: ["Picked Up", "In-Transit", "Delivered", "Exceptions"],
+        labels: ["Waybill Generated", "In-Transit", "Delivered", "Returned"],
         dataLabels: {
             enabled: false,
         },
@@ -106,7 +106,7 @@
     });
 
     function getData() {
-
+        t
         clientFetch({
             path: "/reports/deliveries",
             query: {

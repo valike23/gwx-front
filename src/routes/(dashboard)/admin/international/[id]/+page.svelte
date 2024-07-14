@@ -245,7 +245,7 @@
     </div>
 
     <div class="overflow-x-auto w-full mt-4">
-        <table class="table table-xs custom table-auto">
+        <table class="table table-xs custom table-auto table-responsive">
             <caption>
                 <div class="py-3 px-8 w-full text-start">
                     <h3 class="font-semibold">Passports</h3>
@@ -255,10 +255,13 @@
             <thead>
                 <tr>
                     <th>NIN </th>
-                    <th class="min-w-[100px]">Name</th>
-                    <th class="min-w-[90px]">Address</th>
-                    <th>Country</th>
-                    <th>Status</th>
+                    <th class="min-w-[90px]">Reciepent</th>
+                    <th class="min-w-[120px]">Address</th>
+                    <th>Postal Code</th>
+                    <th class="min-w-[100px]">Country</th>
+                    <th class="min-w-[100px]">State</th>
+                    <th>Email</th>
+                    <th class="min-w-[130px]">Status</th>
                     <th class="min-w-[100px]">Date Created</th>
                     <th></th>
                 </tr>
@@ -267,7 +270,7 @@
                 {#each shipment.packages as item (item.id)}
                 <tr>
                     <td>
-                        <span>{ item.id }</span>
+                        <span>{ item.nin }</span>
                     </td>
                     <td>
                         <span>{ item.recipient.name || '' }</span>
@@ -279,10 +282,25 @@
                     </td>
                     <td>
                         <span>
+                            {item.recipient.postal_code}
+                        </span>
+                    </td>
+                    <td>
+                        <span>
+                            {item.recipient.state.name}
+                        </span>
+                    </td>
+                    <td>
+                        <span>
                             {item.recipient.country.name}
                         </span>
                     </td>
                     <td>
+                        <span>
+                            {item.recipient.email}
+                        </span>
+                    </td>
+                    <td class="min-w-[90px]">
                         <span
                         class="{statusStyle(
                             item.status,
