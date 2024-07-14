@@ -77,7 +77,7 @@
             icon: UilChart,
             show: true,
             divide: ["admin"].includes(user.role),
-            show: ["admin","superadmin"].includes(user.role),
+            show: ["admin","superadmin", "regionalmanager"].includes(user.role),
             items: [
                 {
                     name: "Users",
