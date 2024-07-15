@@ -15,7 +15,7 @@
     import { onMount } from "svelte";
     import { debounce } from "$lib/utils/helpers";
     let shipment = {package_ids:[]};
-
+    const user = $page.data.session.user;
     let showDelivery = false;
     let hideDrawer = true;
     const modes = ["Road", "Air"];
@@ -334,7 +334,7 @@
                             <span>Print</span>
                         </button>
 
-                        {:else if item.recipient.country.code == 'USA'}
+                        {:else if item.recipient.country.code == 'USA' && user.role == 'superadmin'}
                         <button
                         class="btn btn-xs text-yellow bg-yellow/5"
                         on:click={() => {
