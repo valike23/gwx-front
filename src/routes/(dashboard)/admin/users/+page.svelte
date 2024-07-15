@@ -109,7 +109,7 @@
                 <span><UilSlidersVAlt size="18"/></span>
                 <span>Filter</span>
             </Button>
-            {#if ["admin"].includes(user.role)}
+            {#if ["admin", "superadmin"].includes(user.role)}
             <Button href="/admin/users/create" class="space-x-1 font-normal" size="sm" outline>
                 <span><UilPlus size="15" /></span>
                 <span>New User</span>
