@@ -52,9 +52,12 @@
                 });
                 const json = await res.json();
                 if (!res.ok) throw json;
-                hideDrawer = true;
+                if(res.ok){
+                    hideDrawer = true;
                 success("Shipment updated successfully");
                 window.location.reload();
+                }
+               
             } catch (error) {
                 failure(error);
             } finally {
@@ -105,9 +108,10 @@
                     return;
                 } else {
                     getData();
+                    success("Shipment updated successfully");
+                   // window.location.reload();
                 }
-                success("packages updated successfully");
-                location.reload();
+                
 
             })
             .catch((e) => {
@@ -263,7 +267,7 @@
                     <th>Email</th>
                     <th class="min-w-[130px]">Status</th>
                     <th class="min-w-[100px]">Date Created</th>
-                    <th></th>
+                    <th class="min-w-[150px]"></th>
                 </tr>
             </thead>
             <tbody>
@@ -330,7 +334,7 @@
                             <span>Print</span>
                         </button>
 
-                        {:else if item.recipient.country.code == 'US'}
+                        {:else if item.recipient.country.code == 'USA'}
                         <button
                         class="btn btn-xs text-yellow bg-yellow/5"
                         on:click={() => {
@@ -428,7 +432,7 @@
         on:close={() => (showDelivery = false)}
         on:done={() => {
             showDelivery = false;
-            location.reload();
+           // location.reload();
         }}
     />
 </Modal>
