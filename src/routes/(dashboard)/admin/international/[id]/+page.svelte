@@ -334,7 +334,7 @@
                             <span>Print</span>
                         </button>
 
-                        {:else if item.recipient.country.code == 'US'}
+                        {:else if item.recipient.country.code == 'USA'}
                         <button
                         class="btn btn-xs text-yellow bg-yellow/5"
                         on:click={() => {
