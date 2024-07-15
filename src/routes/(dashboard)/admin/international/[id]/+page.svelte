@@ -129,8 +129,8 @@
                 formData.append("file", file);
 
                 const res = await clientFetch({
-                    path: `/shipments/${id}/upload`,
-                    method: "POST",
+                    path: `/packages/file/${id}`,
+                    method: "PUT",
                     body: formData
                 });
                 const json = await res.json();
