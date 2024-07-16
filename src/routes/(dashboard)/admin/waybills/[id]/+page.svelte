@@ -279,14 +279,14 @@
 
     {#if $item.delivery && ["en-route", "pending"].includes($item.delivery.status)}
     <Alert color="red">
-        <div class="pb-2 text-sm">Would you like to cancel the ongoing delivery?</div>
+        <div class="pb-2 text-sm">Would you like to return the ongoing delivery?</div>
         <Button
             color="red"
             on:click={cancelDelivery}>
             {#if isLoading}
             <Spinner size={4} class="mr-3" />
             {/if}
-            Cancel Delivery
+            Return Delivery
         </Button>
     </Alert>
     {/if}
