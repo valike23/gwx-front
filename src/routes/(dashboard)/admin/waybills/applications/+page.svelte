@@ -114,7 +114,7 @@
         return item.id == r.id;
       });
       ids.splice(index, 1);
-      const aIndex = assignIds.findIndex((d)=>{return d== item.id});
+      const aIndex = assignIds.findIndex((d)=>{return d == item.id});
       assignIds = assignIds;
       if(aIndex !== -1) assignIds.splice(aIndex, 1);
       const rIndex = recievedIds.findIndex((d)=>{return d == item.id});
