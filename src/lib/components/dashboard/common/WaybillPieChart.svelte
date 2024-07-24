@@ -106,7 +106,7 @@
     });
 
     function getData() {
-        t
+        
         clientFetch({
             path: "/reports/deliveries",
             query: {

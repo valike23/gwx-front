@@ -172,10 +172,8 @@
             </caption>
             <thead>
                 <tr>
-                    <th>Waybill No.</th>
-                    <th class="min-w-[100px]">Name</th>
-                    <th class="min-w-[90px]">Quantity</th>
-                    <th class="min-w-[100px]">Value</th>
+                    <th>Application ID</th>
+                    <th class="min-w-[150px]">Reciever</th>
                     <th class="min-w-[100px]">Date Created</th>
                     <th></th>
                 </tr>
@@ -184,21 +182,13 @@
                 {#each shipment.packages as item (item.id)}
                 <tr>
                     <td>
-                        <span>{ item.waybill_number }</span>
+                        <span>{ item.application_id }</span>
                     </td>
                     <td>
-                        <span>{ item.name || '' }</span>
+                        <span>{ item.recipient.name || '' }</span>
                     </td>
-                    <td>
-                        <span>
-                            { item.quantity || 1 }
-                        </span>
-                    </td>
-                    <td>
-                        <span>
-                            { formatCurrency(item.value)}
-                        </span>
-                    </td>
+                    
+                   
                     <td>
                         <span class="text-xs">{ dayjs(item.created_at).format('DD-MM-YYYY') }</span>
                     </td>

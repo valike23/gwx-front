@@ -215,14 +215,14 @@
                         </span>
                     </td>
                     <td>
-                        <span><span>{ item.trials || "-" }</span></span>
+                        <span><span>{ item.trials || "0" }</span></span>
                     </td>
                     <td>
                         <span class="capitalize">{ computeStatus(item.status).replaceAll("-", " ") }</span>
                     </td>
                     <td>
                         <span>
-                            {dayjs(item.created_at).format('DD-MM-YYYY')}
+                            {dayjs(item.created_at).format('DD-MM-YYYY HH:MM')}
                         </span>
                     </td>
                 </tr>

@@ -32,7 +32,7 @@
 
 <Drawer 
     transitionType="fly" 
-    transitionParams = {{ x: -320, duration: 200, easing: sineIn }} 
+    transitionParams = {{ x: -320, duration: 199, easing: sineIn }} 
     bind:hidden={$drawerOpen} 
     id="sidebar1"
     class="p-0">
