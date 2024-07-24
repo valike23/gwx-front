@@ -21,7 +21,52 @@
     })
 
     const downloadCSV =(packages)=>{
-        //handle printing here
+      console.log(packages);
+    const header = [
+        "Manifest", 
+        "No of Items", 
+        "Seal Tag", 
+        "Status", 
+        "Last Scan", 
+        "Origin", 
+        "Destination", 
+        "Trans Mode", 
+        "Carrier", 
+        "Days Spent"
+    ];
+
+    // Convert packages to CSV rows
+    const rows = packages.map(pkg => [
+        pkg.manifest || "",
+        pkg.noOfItems || "",
+        pkg.sealTag || "",
+        pkg.status || "",
+        pkg.lastScan || "",
+        pkg.origin || "",
+        pkg.destination || "",
+        pkg.transMode || "",
+        pkg.carrier || "",
+        pkg.daysSpent || ""
+    ]);
+
+    
+    const csvContent = [header, ...rows]
+        .map(e => e.join(","))
+        .join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+
+    
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "packages.csv";
+    document.body.appendChild(a);
+    a.click();
+
+    
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
     }
 
     const statuses = {
@@ -121,7 +166,6 @@
                     <th>No of Items</th>
                     <th class="min-w-[100px]">Delivered</th>
                     <th class="min-w-[100px]">UnDelivered</th>
-                    <th class="min-w-[100px]">Status</th>
                     <th>Actions</th>
                     <th></th>
                 </tr>
@@ -144,7 +188,7 @@
                     <td>
                         <span>{ item.status }</span>
                     </td>
-               <td> <Button disabled size="sm" on:click={()=>{downloadCSV(item.packages)}}>Print Waybills</Button></td>
+               <td> <Button  size="sm" on:click={()=>{downloadCSV(item.packages)}}>Print Waybills</Button></td>
                  
                     <td>
                         <a href="/admin/international/{item.id}" class="bg-info/5 px-3 py-1 text-2xs text-base-content/50 rounded-md uppercase font-bold hover:bg-info/20 transition-all">Details</a>
