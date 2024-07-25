@@ -211,7 +211,7 @@
                     </td>
                     <td>
                         <span>
-                            { item.delivery ? getJSON(item.delivery.courier).name : '-' }
+                            { item.courier? item.courier.name : '-' }
                         </span>
                     </td>
                     <td>
