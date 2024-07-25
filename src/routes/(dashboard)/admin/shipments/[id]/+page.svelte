@@ -173,6 +173,7 @@
             <thead>
                 <tr>
                     <th>Application ID</th>
+                    <th>NIN</th>
                     <th class="min-w-[150px]">Reciever</th>
                     <th class="min-w-[100px]">Date Created</th>
                     <th></th>
@@ -183,6 +184,10 @@
                 <tr>
                     <td>
                         <span>{ item.application_id }</span>
+                    </td>
+
+                    <td>
+                        <span>{ item.nin }</span>
                     </td>
                     <td>
                         <span>{ item.recipient.name || '' }</span>
