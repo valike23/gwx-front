@@ -1,7 +1,7 @@
 <script>
     import { PaginationNav } from "svelte-paginate";
     import { Breadcrumb, BreadcrumbItem, Button, Dropdown, DropdownItem, Select } from 'flowbite-svelte';
-    import { UilAngleDown, UilCheck, UilPlus, UilSearch } from "svelte-unicons";
+    import { UilAngleDown, UilCheck, UilPlus, UilSearch, UilPrint } from "svelte-unicons";
     import SearchBox from "$lib/components/dashboard/SearchBox.svelte";
     import { clientFetch } from "$lib/client/api";
     import { onMount } from "svelte";
@@ -23,30 +23,24 @@
     const downloadCSV =(packages)=>{
       console.log(packages);
     const header = [
-        "Manifest", 
-        "No of Items", 
-        "Seal Tag", 
-        "Status", 
-        "Last Scan", 
-        "Origin", 
-        "Destination", 
-        "Trans Mode", 
-        "Carrier", 
-        "Days Spent"
+        "Contact", 
+        "Address", 
+        "City", 
+        "ZipCode", 
+        "State", 
+        "Country", 
+        "Phone", 
     ];
 
     // Convert packages to CSV rows
     const rows = packages.map(pkg => [
-        pkg.manifest || "",
-        pkg.noOfItems || "",
-        pkg.sealTag || "",
-        pkg.status || "",
-        pkg.lastScan || "",
-        pkg.origin || "",
-        pkg.destination || "",
-        pkg.transMode || "",
-        pkg.carrier || "",
-        pkg.daysSpent || ""
+        pkg.recipient.name || "",
+        pkg.recipient.address || "",
+        pkg.recipient.region.code || "",
+        pkg.recipient.zip_code || "",
+        pkg.recipient.state.code || "",
+        pkg.recipient.country.code || "",
+        pkg.recipient.phone || "",
     ]);
 
     
@@ -188,7 +182,7 @@
                     <td>
                         <span>{ item.status }</span>
                     </td>
-               <td> <Button  size="sm" on:click={()=>{downloadCSV(item.packages)}}>Print Waybills</Button></td>
+               <td> <Button  size="sm" on:click={()=>{downloadCSV(item.packages)}}><UilPrint></UilPrint></Button></td>
                  
                     <td>
                         <a href="/admin/international/{item.id}" class="bg-info/5 px-3 py-1 text-2xs text-base-content/50 rounded-md uppercase font-bold hover:bg-info/20 transition-all">Details</a>
