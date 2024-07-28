@@ -46,7 +46,7 @@
                     <div class="info-item">
                         <span class="title">Name</span>
                         <div class="content">
-                            <span class:fade={!data.package.name} >{ data.package.name || "Not set" }</span>
+                            <span class:fade={!data.package.recipient.name} >{ data.package.recipient.name || "Not set" }</span>
                         </div>
                     </div>
                     <div class="info-item">

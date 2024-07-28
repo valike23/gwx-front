@@ -6,6 +6,7 @@
     import { clientFetch } from "$lib/client/api";
     import { onMount } from "svelte";
     import GwxPagination from "$lib/components/dashboard/GWXPagination.svelte";
+  import dayjs from "dayjs";
 
     let isLoading = false;
     let items = [];
@@ -25,7 +26,7 @@
     const header = [
         "Contact", 
         "Address", 
-        "City", 
+        "Landmark", 
         "ZipCode", 
         "State", 
         "Country", 
@@ -36,8 +37,8 @@
     const rows = packages.map(pkg => [
         pkg.recipient.name || "",
         pkg.recipient.address || "",
-        pkg.recipient.region.code || "",
-        pkg.recipient.zip_code || "",
+        pkg.recipient.landmark || "",
+        pkg.recipient.postal_code || "",
         pkg.recipient.state.code || "",
         pkg.recipient.country.code || "",
         pkg.recipient.phone || "",
@@ -160,7 +161,8 @@
                     <th>No of Items</th>
                     <th class="min-w-[100px]">Delivered</th>
                     <th class="min-w-[100px]">UnDelivered</th>
-                    <th>Actions</th>
+                    <th>Created At</th>
+                    <th>download</th>
                     <th></th>
                 </tr>
             </thead>
@@ -180,9 +182,10 @@
                         <span>{item.package_ids.length - (item.undelivered || 0)}</span>
                     </td>
                     <td>
-                        <span>{ item.status }</span>
+                        <span>{dayjs(item.updated_at).format('DD-MM-YYYY HH:MM')}</span>
                     </td>
-               <td> <Button  size="sm" on:click={()=>{downloadCSV(item.packages)}}><UilPrint></UilPrint></Button></td>
+                    
+               <td> <Button  size="sm" on:click={()=>{downloadCSV(item.packages)}}><UilPrint size="17px"></UilPrint></Button></td>
                  
                     <td>
                         <a href="/admin/international/{item.id}" class="bg-info/5 px-3 py-1 text-2xs text-base-content/50 rounded-md uppercase font-bold hover:bg-info/20 transition-all">Details</a>
