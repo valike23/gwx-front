@@ -21,8 +21,8 @@
         "": "All",
         "draft": "Draft",
         "Waybill Generated": "waybill-generated",
+        "out-for-delivery": "Out for delivery",
         "delivered": "Delivered",
-        "recieved": "Recieved",
         "canceled": "Canceled",
         "returned": "returned"
     }

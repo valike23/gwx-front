@@ -443,7 +443,7 @@
         </div>
         
     </div>
-    <div class="bg-base-100 shadow-sm rounded-sm p-8">
+    <!-- <div class="bg-base-100 shadow-sm rounded-sm p-8">
         <div class="py-5">
             <div class="flex justify-between items-center">
                 <h3 class="mb-4 uppercase font-medium">Billing</h3>
@@ -490,7 +490,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     {#if $item.delivery && $item.delivery.status == "completed"}
     <div class="bg-base-100 shadow-sm rounded-sm p-8">
