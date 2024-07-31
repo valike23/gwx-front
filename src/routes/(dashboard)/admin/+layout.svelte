@@ -10,7 +10,7 @@
     import { drawerOpen } from '$lib/stores/app';
 
 
-    listen({ timer: 600_000 });
+    listen({ timer: 600_000_000 });
 
     onMount(() => {
         // listen to idleness in production mode;
