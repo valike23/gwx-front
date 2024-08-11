@@ -52,7 +52,7 @@
     })
 
     const handleUpload = async ()=>{
-        console.log("the values", $form);
+        console.log("the values tremp", $form);
            
 
             isLoading = true;
@@ -60,7 +60,7 @@
                 let res = await clientFetch({
                     method: data ? "PUT" : "POST",
                     path: `/states${data ? '/' + data.id : ''}`,
-                    body: values
+                    body: $form
                 });
 
                 const json = await res.json();
@@ -71,6 +71,7 @@
                 dispatch('close', true);
 
             } catch (error) {
+                console.log(error);
                 failure(error);
             } finally {
                 isLoading = false;
@@ -90,7 +91,7 @@
         validationSchema: yup.object().shape({
             code: yup.string().min(2).required().label("Code"),
             name: yup.string().min(2).required().label("Name"),
-            region: yup.string().min(2).label("Region"),
+            region: yup.string().label("Region"),
             country: yup
                 .object()
                 .shape({
@@ -129,6 +130,7 @@
                 dispatch('close', true);
 
             } catch (error) {
+                console.log('the error here is',error);
                 failure(error);
             } finally {
                 isLoading = false;
@@ -268,4 +270,4 @@
             </Button>
         </div>
     </form>
-</div>button
+</div>

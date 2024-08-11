@@ -71,8 +71,8 @@
         <div class="card bg-base-100 rounded-md shadow-sm p-4">
             <h4 class="text-sm">Delivery Details</h4>
             <div class="py-1 mt-2 text-sm">
-                <span>ID:</span>
-                <span>{ data.id }</span>
+                <span>NIN:</span>
+                <span>{ data.package.nin }</span>
             </div>
             <div class="py-1 text-sm">
                 <span>OTP:</span>
@@ -122,9 +122,9 @@
             <div class="grid grid-cols-2 mb-8">
                 <div>
                     <div class="info-item">
-                        <span class="title">Waybill Number</span>
+                        <span class="title">Application Number</span>
                         <div class="content">
-                            <span>{ data.package.waybill_number }</span>
+                            <span>{ data.package.application_id }</span>
                         </div>
                     </div>
                     <div class="info-item">
@@ -136,7 +136,7 @@
                     <div class="info-item">
                         <span class="title">Name</span>
                         <div class="content">
-                            <span class:fade={!data.package.name} >{ data.package.name || "Not set" }</span>
+                            <span class:fade={!data.package.recipient.name} >{ data.package.recipient.name || "Not set" }</span>
                         </div>
                     </div>
                     <div class="info-item">

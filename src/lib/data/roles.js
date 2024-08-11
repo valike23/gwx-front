@@ -5,7 +5,8 @@ export const roles = {
     "manager": "Hub Manager",
     "regionalmanager": "Regional Manager",
     "rider": "Courier",
-    "courier": "Courier"
+    "courier": "Courier",
+    "superadmin": "Super Admin"
 }
 
 export const roleRoutes = {

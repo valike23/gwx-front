@@ -149,6 +149,7 @@
                             color="none" 
                             class="space-x-1 text-primary bg-primary/5 uppercase text-2xs font-semibold"
                             on:click={() => {
+                            console.log(selectedState);
                                 selectedState = item;
                                 hideModal = false;
                             }}

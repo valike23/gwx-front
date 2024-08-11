@@ -152,12 +152,13 @@
         <table class="table table-xs custom w-full">
             <thead>
                 <tr>
-                    <th class="min-w-[100px]">ID</th>
-                    <th>Package</th>
-                    <th class="min-w-[100px]">Sender</th>
+                    <th class="min-w-[100px]">NIN</th>
                     <th class="min-w-[100px]">Recipient</th>
                     <th class="min-w-[100px]">Courier</th>
+                    <th class="min-w-[100px]">Reciepient Address</th>
                     <th class="min-w-[100px]">Origin Hub</th>
+                    <th class="min-w-[100px]">State</th>
+                    <th class="min-w-[100px]">Country</th>
                     <th class="min-w-[100px]">Status</th>
                     <th></th>
                 </tr>
@@ -166,17 +167,9 @@
             {#each items as item (item.id) }
                 <tr>
                     <td>
-                        <span>{item.id}</span>
+                        <span>{item.package.nin}</span>
                     </td>
-                    <td>
-                        <span>{item.package.name}</span>
-                    </td>
-                    <td>
-                        {#if item.package.sender}
-                        <span>{ item.package.sender.name }</span>
-                        {/if}
-                       
-                    </td>
+                   
                     <td>
                         <span>{ item.package.recipient.name }</span>
                     </td>
@@ -184,7 +177,16 @@
                         <span>{ item.courier.name }</span>
                     </td>
                     <td>
+                        <span>{ item.package.recipient.address }</span>
+                    </td>
+                    <td>
                         <span class="capitalize">{ item.hub.name }</span>
+                    </td>
+                    <td>
+                        <span >{ item.package.recipient.state.name }</span>
+                    </td>
+                    <td>
+                        <span>{ item.package.recipient.country.name  }</span>
                     </td>
                     <td>
                         <span class="{statusStyle(item.status)} text-2xs px-2 py-1 rounded-md uppercase font-medium">{ item.status.replace("-", " ") }</span>

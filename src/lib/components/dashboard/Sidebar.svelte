@@ -62,7 +62,7 @@
             active: $page.url.pathname.startsWith("/dashboard/customers"),
             to: "/dashboard/customers",
             divide: true,
-            show: user.role === "admin" || user.role === 'superadmin',
+            show: user.role === "admin" || user.role === 'superadmin' || user.role === 'regionalmanager',
         },
         {
             name: "Sign Out",

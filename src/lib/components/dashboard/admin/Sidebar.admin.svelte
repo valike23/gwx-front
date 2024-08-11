@@ -2,7 +2,7 @@
     import { page } from '$app/stores';
     import { roles } from '$lib/data/roles';
     import { toggleDrawer } from '$lib/stores/app';
-    import { UilApps, UilArchive, UilChart, UilDirections, UilGlobe, UilPower, UilTruck, UilTruckLoading, UilUser } from "svelte-unicons";
+    import { UilApps, UilArchive, UilChart, UilDirections, UilGlobe, UilPlaneArrival, UilPower, UilTruck, UilTruckLoading, UilUser } from "svelte-unicons";
 
     $: user = $page.data.session.user;
     $: activeUrl = $page.url.pathname;
@@ -56,19 +56,28 @@
             show: true,
             divide: ["manager"].includes(user.role)
         },
+        ,
+        {
+            name: "International",
+            icon: UilPlaneArrival,
+            active: $page.url.pathname.startsWith("/admin/international"),
+            to: "/admin/international",
+            show: true,
+            divide: ["manager"].includes(user.role)
+        },
         {
             name: "Terminals",
             icon: UilDirections,
             active: $page.url.pathname.startsWith("/admin/terminals"),
             to: "/admin/terminals",
-            show: ["admin"].includes(user.role),
+            show: ["admin", "superadmin"].includes(user.role),
         },
         {
             name: "User Management",
             icon: UilChart,
             show: true,
             divide: ["admin"].includes(user.role),
-            show: true,
+            show: ["admin","superadmin", "regionalmanager"].includes(user.role),
             items: [
                 {
                     name: "Users",
@@ -82,7 +91,7 @@
                     href: "/admin/customers",
                     show: true,
                     active: $page.url.pathname.startsWith("/admin/customers"),
-                    show: ["admin"].includes(user.role)
+                    show: ["admin", "superadmin"].includes(user.role)
                 }
             ]
         },
@@ -116,14 +125,14 @@
                     href: "/admin/reports/customers",
                     show: true,
                     active: activeUrl == ("/admin/reports/customers"),
-                    show: ["admin"].includes(user.role)
+                    show: ["admin", "superadmin"].includes(user.role)
                 },
                 {
                     name: "Audit Trail",
                     href: "/admin/reports/audit",
                     show: true,
                     active: activeUrl == ("/admin/reports/audit"),
-                    show: ["admin"].includes(user.role)
+                    show: ["admin", "superadmin"].includes(user.role)
                 }
             ]
         },
@@ -158,7 +167,7 @@
         {
             name: "Geo",
             icon: UilGlobe,
-            show: ["admin"].includes(user.role),
+            show: ["admin", "superadmin"].includes(user.role),
             items: [
                 {
                     name: "Countries",

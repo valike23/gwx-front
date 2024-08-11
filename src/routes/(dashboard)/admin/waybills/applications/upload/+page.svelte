@@ -164,36 +164,60 @@
             return;
         }
 
-        const items = apps
-            .filter((e) => e.checked)
-            .map((e) => {
-                return {
-                    name: e.application_id,
-                    quantity: 1,
-                    weight: 0.1,
-                    value: "1",
-                    pickup_at: "",
-                    status: "draft",
-                    sender: customer,
-                    customer_id: customer.id,
-                    hub: hub,
-                    tag: "nis-application",
-                    recipient: {
-                        name: [e.first_name, e.middle_name, e.last_name]
-                            .filter((e) => !!e)
-                            .join(" "),
-                        email: e.recipient_email,
-                        phone: e.mobile_number,
-                        alternate_phone: "",
-                        address: e.current_address_line1,
-                        state: states.find(
-                            (s) => s.name == e.current_address_state_name,
-                        ) || { name: e.current_address_state_name },
-                        country: countries.find((e) => e.code == "NG"),
-                    },
-                    metadata: e,
-                };
-            });
+        // const items = apps
+        //     .filter((e) => e.checked)
+        //     .map((e) => {
+        //         return   {
+        //             applicationId:  e.applicationId,
+        //             referenceId: e.referenceId,
+        //             receiverName: e.receiverName,
+        //             address: e.address,
+        //             postalCode: e.postalCode,
+        //             lga: e.lga,
+        //             city: e.city,
+        //       state      state: e.state,
+        //             country: e.country,
+        //             landmark: e.landmark,
+        //             receiverPhone: e.receiverPhone,
+        //             receiverEmail: e.receiverEmail,
+        //             alternativePhone: e.alternativePhone,
+        //             nin: e.nin,
+        //             productionCenter: e.productionCenter,
+        //             // name: e.applicationId,
+        //             // quantity: 1,
+        //             // weight: 0.1,
+        //             // value: "1",
+        //             // pickup_at: "",
+        //             // status: "draft",
+        //             // sender: customer,
+        //             // customer_id: customer.id,
+        //             // hub: hub,
+        //             // tag: "nis-application",
+        //             // recipient: {
+        //             //     name:e.receiverName,
+        //             //     email: e.receiverEmail,
+        //             //     postal: e.postalCode,
+        //             //     phone: e.receiverPhone,
+        //             //     alternate_phone: e.alternativePhone,
+        //             //     address: e.address,
+        //             //     state: states.find(
+        //             //         (s) => s.name == e.current_address_state_name,
+        //             //     ) || { name: e.current_address_state_name },
+        //             //     country: countries.find((e) => e.code == "NG"),
+        //            // },
+        //             metadata: e,
+        //         };
+        //     });
+        apps.forEach((a,i)=>{
+            apps[i].state = a.state;
+            apps[i].applicationId = a.applicationId.toString();
+            apps[i].nin = a.nin.toString();
+            apps[i].postalCode = a.postalCode.toString();
+            apps[i].receiverPhone = a.receiverPhone.toString();
+            apps[i].referenceId = a.referenceId.toString();
+            apps[i].productionCenter = a.productionState + ' ' + a.productionCenter
+        })
+        const items = apps;
         if (!items.length) {
             failure("You must select at least one application");
             return;
@@ -276,6 +300,7 @@
     /**@type {File} */
     let value = [];
     const dropHandle = (event) => {
+        console.log('drop is handled here',event.dataTransfer.items);
         event.preventDefault();
         if (event.dataTransfer.items) {
             [...event.dataTransfer.items].forEach((item, i) => {
@@ -308,22 +333,22 @@
     };
 
     async function submit() {
+        console.log("the union here is working");
         if (!value || !value?.text) return;
         const content = await value.arrayBuffer();
+        console.log("the content", content);
         const wb = read(content);
         const data = utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
-        apps = data
-            .map((e) => {
-                e = JSON.parse(JSON.stringify(Object.assign({}, tpl, e)));
-                e.current_address_state_name =
-                    binarySearch(
-                        states.map((e) => e.name),
-                        e.current_address_state_name,
-                    ) || e.current_address_state_name;  
-                e.checked = true;
-                return e;
-            })
-            .filter((e) => e.application_id?.length);
+        console.log("the data here is", data);
+        // apps = data
+        //     .map((e) => {
+        //         e = JSON.parse(JSON.stringify(Object.assign({}, tpl, e)));
+               
+        //         e.checked = true;
+        //         return e;
+        //     })
+        //     .filter((e) => e.applicationId?.length);
+        apps = data;
             console.log('the app', apps);
         // store.update(items => [
         //     ...items,
