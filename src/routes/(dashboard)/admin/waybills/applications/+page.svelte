@@ -31,6 +31,7 @@
     UilSlidersVAlt,
     UilTable,
     UilCancel,
+    UilPathfinder,
   } from "svelte-unicons";
   import { closeModal, showModal, toggleDrawer } from "$lib/stores/app";
   import { failure, info, success } from "$lib/utils/toast";
@@ -123,7 +124,11 @@
 
       const sIndex = sendIds.findIndex((d)=>{return d == item.id});
       sendIds = sendIds;
-      if(sIndex !== -1) sendIds.splice(rIndex, 1);
+      if(sIndex !== -1) sendIds.splice(sIndex, 1);
+
+      const pIndex = printIds.findIndex((d)=>{return d == item.id});
+      printIds = printIds;
+      if(pIndex !== -1) sendIds.splice(pIndex, 1);
     }
 
   
