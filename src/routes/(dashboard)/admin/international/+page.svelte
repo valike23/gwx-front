@@ -161,6 +161,7 @@
                     <th>No of Items</th>
                     <th class="min-w-[100px]">Delivered</th>
                     <th class="min-w-[100px]">UnDelivered</th>
+                    <th>State</th>
                     <th>Created At</th>
                     <th>download</th>
                     <th></th>
@@ -178,9 +179,14 @@
                     <td>
                         <span>{item.delivered || 0}</span>
                     </td>
+                  
                     <td>
                         <span>{item.package_ids.length - (item.undelivered || 0)}</span>
                     </td>
+                    <td>
+                        <span>{item.packages[0].recipient.state.name || 0}</span>
+                    </td>
+                   
                     <td>
                         <span>{dayjs(item.updated_at).format('DD-MM-YYYY HH:MM')}</span>
                     </td>

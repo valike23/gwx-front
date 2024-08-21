@@ -11,8 +11,8 @@
 
 <div bind:this={node} class="overflow-hidden bg-[#f8f8f8] flex flex-col items-center justify-center" {...$$restProps}>
     {#each items as item }
-    <div class="text-sm bg-base-100 flex flex-col p-8 divide-y divide-dashed" style="width:10cm;height:15cm;break-after: always;">
-        <div class="flex w-full pb-4">
+    <div class="text-sm bg-base-100 flex flex-col p-6 divide-y divide-dashed" style="width:10cm;height:15cm;">
+        <div class="flex w-full pb-2">
             <div class="w-[60px]">
                 <img src="/images/logo.png" alt="GWX logo" class="w-full object-cover"/>
             </div>
@@ -35,8 +35,8 @@
             </div>
         </div>
 
-        <div class="flex-1 grid grid-cols-2 gap-2 text-xs py-4">
-            <div class="space-y-1">
+        <div class="flex-1 grid grid-cols-2 gap-1 text-xs py-1">
+            <div class="space-y-0.5">
                 <div>
                     <span>FROM: </span>
                     <span class="font-semibold uppercase">Name: {item.sender.name }</span>
@@ -44,7 +44,7 @@
                 <div class="font-semibold uppercase">Phone: {formatPhoneNumber(item.sender.phone) }</div>
                 <div class="font-semibold uppercase">Address: { item.sender.address || "" }</div>
             </div>
-            <div class="space-y-1 text-right">
+            <div class="space-y-0.5 text-right">
                 <div>
                     <span>TO: </span>
                     <span class="font-semibold uppercase">Name: {item.recipient.name }</span>
@@ -54,7 +54,7 @@
             </div>
         </div>
 
-        <div class="py-2">
+        <div class="py-1">
             <table class="table border-separate">
                 <thead>
                     <tr class="uppercase">
@@ -79,11 +79,9 @@
             </table>
         </div>
 
-
-        <div class="flex pt-4 items-center justify-center">
+        <div class="flex pt-2 items-center justify-center">
             <div class="">
                 <h1 class="barcode">{item.waybill_number}</h1>
-               
             </div>
         </div>
     </div>
@@ -92,6 +90,6 @@
 
 <style>
     .barcode {
-        font-family: 'Libre Barcode 128';font-size: 22px; width: 2;height: 80,
+        font-family: 'Libre Barcode 128';font-size: 50px; width: 2;height: 80,
     }
 </style>

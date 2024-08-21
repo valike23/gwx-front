@@ -456,55 +456,50 @@
   }
 
   async function sendToThermal() {
-    if (!printIds.length) return;
-    console.log("the count here", count, printers);
-    count++;
-    showModal();
-    isPrint = true;
+  if (!printIds.length) return;
+  console.log("the count here", count, printers);
+  count++;
+  showModal();
+  isPrint = true;
 
-    try {
-      debounce(async () => {
-        const lay = document.getElementById("waybill-thermal-layout");
+  try {
+    debounce(async () => {
+      const lay = document.getElementById("waybill-thermal-layout");
       const container = document.createElement("div");
       container.innerHTML = lay.innerHTML;
       console.log(container);
 
-    //  const doc = html2pdf(container, {
-    //     margin: 0,
-    //     //filename: `bulk-waybills.pdf`,
-    //     image: { type: "jpeg", quality: 0.98 }, 
-    //     jsPDF: {
-    //           unit: "cm",
-    //           format: [10, 15],
-    //           orientation: "portrait",
-    //         },
-    //   }).output("bloburi");
-        const doc = await html2pdf()
-          .from(container)
-          .set({
-            margin: 0,
-            // filename: `${$item.waybill_number}.pdf`,
-            image: { type: "png", quality: 1 },
-            jsPDF: {
-              unit: "cm",
-              format: [10, 15],
-              orientation: "portrait",
-            },
-          })
-          .output("bloburi");
-console.log("the final doc", doc);
-        // print the document
-        printJS(doc);
-        isPrint = false;
-      }, 1000);
-    } catch (error) {
-      console.log(error);
-      failure(error);
-    } finally {
-      //printers = [];
-      closeModal();
-    }
+      const docBlob =  html2pdf(container, {
+        margin: 0,
+        filename: `bulk-waybills.pdf`,
+        image: { type: "png", quality: 1 },
+        jsPDF: {
+            unit: "cm",
+            format: [10, 15],
+            orientation: "portrait",
+          }
+      }).output();
+    
+
+      console.log("the final doc", docBlob);
+        // printJS({
+        //     printable: docBlob,
+        //     type: 'pdf',
+        //     showModal: true
+        //   });
+      
+
+      isPrint = false;
+    }, 1000);
+  } catch (error) {
+    console.log(error);
+    failure(error);
+  } finally {
+    closeModal();
   }
+}
+
+
 </script>
 
 <div class="gwx-breadcrumb print:hidden">
