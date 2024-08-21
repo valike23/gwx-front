@@ -128,7 +128,7 @@
 
       const pIndex = printIds.findIndex((d)=>{return d == item.id});
       printIds = printIds;
-      if(pIndex !== -1) sendIds.splice(pIndex, 1);
+      if(pIndex !== -1) printIds.splice(pIndex, 1);
     }
 
   
@@ -464,11 +464,23 @@
 
     try {
       debounce(async () => {
-        const el = document.createElement("div");
-        el.innerHTML = labelLayout.innerHTML;
+        const lay = document.getElementById("waybill-thermal-layout");
+      const container = document.createElement("div");
+      container.innerHTML = lay.innerHTML;
+      console.log(container);
 
+    //  const doc = html2pdf(container, {
+    //     margin: 0,
+    //     //filename: `bulk-waybills.pdf`,
+    //     image: { type: "jpeg", quality: 0.98 }, 
+    //     jsPDF: {
+    //           unit: "cm",
+    //           format: [10, 15],
+    //           orientation: "portrait",
+    //         },
+    //   }).output("bloburi");
         const doc = await html2pdf()
-          .from(el)
+          .from(container)
           .set({
             margin: 0,
             // filename: `${$item.waybill_number}.pdf`,
@@ -480,7 +492,7 @@
             },
           })
           .output("bloburi");
-
+console.log("the final doc", doc);
         // print the document
         printJS(doc);
         isPrint = false;
@@ -489,7 +501,7 @@
       console.log(error);
       failure(error);
     } finally {
-      printers = [];
+      //printers = [];
       closeModal();
     }
   }
@@ -790,6 +802,7 @@
   <WaybillPrint items={printers} id="waybill-print-layout" class="hidden" />
 
   <WaybillPrintThermal
+  id="waybill-thermal-layout"
     bind:node={labelLayout}
     items={printers}
     class="hidden"

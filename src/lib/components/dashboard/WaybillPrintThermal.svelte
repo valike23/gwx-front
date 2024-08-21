@@ -2,11 +2,11 @@
     import { formatPhoneNumber } from '$lib/client/helpers';
     import { getJSON, truncate } from '$lib/utils/helpers';
     import dayjs from 'dayjs';
-    import Barcode from 'svelte-barcode';
 
     export let node; 
     console.log("the node log", node);
     export let items = [];
+    console.log("thermal printer logs", items);
 </script>
 
 <div bind:this={node} class="overflow-hidden bg-[#f8f8f8] flex flex-col items-center justify-center" {...$$restProps}>
@@ -82,24 +82,16 @@
 
         <div class="flex pt-4 items-center justify-center">
             <div class="">
-                <Barcode
-                    value={item.waybill_number}
-                    elementTag='svg'
-                    options={{
-                        format: 'CODE128',
-                        width: 2,
-                        height: 80,
-                        text: '',
-                        textAlign: 'center',
-                        textPosition: 'bottom',
-                        textMargin: 2,
-                        fontSize: 12,
-                        background: '#ffffff',
-                        lineColor: '#000000',
-                    }}
-                />
+                <h1 class="barcode">{item.waybill_number}</h1>
+               
             </div>
         </div>
     </div>
     {/each}
 </div>
+
+<style>
+    .barcode {
+        font-family: 'Libre Barcode 128';font-size: 22px; width: 2;height: 80,
+    }
+</style>

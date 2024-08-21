@@ -25,22 +25,7 @@
                     </div>
                 </div>
                 <div class="scale-50">
-                    <Barcode
-                        value={item.waybill_number}
-                        elementTag='svg'
-                        options={{
-                            format: 'CODE128',
-                            width: 3,
-                            height: 150,
-                            text: '',
-                            textAlign: 'center',
-                            textPosition: 'bottom',
-                            textMargin: 2,
-                            fontSize: 20,
-                            background: '#ffffff',
-                            lineColor: '#000000',
-                        }}
-                    />
+                    <h1 class="barcode">{item.waybill_number}</h1>
                 </div>
                 <div>
                     <div class="divide-y divide-black/75 border border-black/70 mb-3">
@@ -179,6 +164,9 @@
 </div>
 
 <style lang="postcss">
+     .barcode {
+        font-family: 'Libre Barcode 128';font-size: 50px; width: 2;height: 80,
+    }
 .item {
     @apply py-3 px-4 text-2xs;
 }
