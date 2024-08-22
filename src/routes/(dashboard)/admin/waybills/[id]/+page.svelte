@@ -257,7 +257,7 @@
 <div class="gwx-breadcrumb print:hidden">
   <Breadcrumb aria-label="GWX breadcrumb">
     <BreadcrumbItem href="/admin" home>Dashboard</BreadcrumbItem>
-    <BreadcrumbItem href="/admin/applications">Applications</BreadcrumbItem>
+    <BreadcrumbItem href="/admin/waybills/applications">Applications</BreadcrumbItem>
     <BreadcrumbItem>Applications Details</BreadcrumbItem>
   </Breadcrumb>
 </div>
