@@ -275,6 +275,7 @@ export function formatPhoneNumber(phoneNumber) {
 }
 
 export function computeStatus (status) {
+  return status
   switch (status) {
     case "canceled": return "returned";
     default: return status;
