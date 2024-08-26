@@ -109,6 +109,7 @@
 
       
         if (item.status == "waybill-generated") assignIds.push(id);
+        console.log("show assigned", assignIds);
         if (item.status == "canceled") assignIds.push(id);
         if (item.status == "returned") assignIds.push(id);
         if (item.status == "draft" && !item.is_diaspora)
@@ -127,9 +128,11 @@
       const aIndex = assignIds.findIndex((d)=>{return d == item.id});
       assignIds = assignIds;
       if(aIndex !== -1) assignIds.splice(aIndex, 1);
+      console.log("show assigned", assignIds);
       const rIndex = recievedIds.findIndex((d)=>{return d == item.id});
       recievedIds = recievedIds;
       if(rIndex !== -1) recievedIds.splice(rIndex, 1);
+      console.log("show recieved", recievedIds);
 
       const sIndex = sendIds.findIndex((d)=>{return d == item.id});
       sendIds = sendIds;
@@ -159,12 +162,18 @@
         },
     
         async onSubmit(values) {
+          values.package_ids = assignIds;
+          const send = {
+            "create": {
+              ...values
+            }
+          }
             showModal()
             try {
                 const res = await clientFetch({
-                    path: "/deliveries",
+                    path: "/deliveries/bulk",
                     method: "POST",
-                    body: values
+                    body: send
                 });
                 const json = await res.json();
                 if (!res.ok) throw json;
