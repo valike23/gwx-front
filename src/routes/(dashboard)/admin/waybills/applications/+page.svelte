@@ -3,6 +3,8 @@
   import printJS from "print-js";
   import html2pdf from "html2pdf.js";
   import dayjs from "dayjs";
+
+  import { createForm } from "svelte-forms-lib";
   import { getUser } from "$lib/stores/user";
   import WaybillPrint from "$lib/components/dashboard/WaybillPrint.svelte";
   import WaybillPrintThermal from "$lib/components/dashboard/WaybillPrintThermal.svelte";
@@ -32,8 +34,12 @@
     UilTable,
     UilCancel,
     UilPathfinder,
+    UilSearch
   } from "svelte-unicons";
+    import { AddCircle, Compass, InformationCircle } from 'svelte-ionicons'
   import { closeModal, showModal, toggleDrawer } from "$lib/stores/app";
+
+  import { Label, Input, Helper, Avatar, Alert } from "flowbite-svelte";
   import { failure, info, success } from "$lib/utils/toast";
   import { sineIn } from "svelte/easing";
   import ApplicationsFilter from "$lib/components/dashboard/admin/ApplicationsFilter.svelte";
@@ -48,8 +54,11 @@
   let bulkModal = false;
   let hideFilter = true;
   let items = [],
+   formModal = false,
     labelLayout;
   let ids = [];
+  let hubs = [];
+  let users = [];
   let mainIds = [];
   let assignIds = [];
   let printIds = [];
@@ -86,8 +95,8 @@
     }, 2000);
   };
   const checkBadRecords = () => {
-    if (ids.length) {
-    }
+    console.log("checking assigned records")
+   formModal = true;
   };
   const toggleIds = (item) => {
     console.log(item);
@@ -140,6 +149,38 @@
     total: 0,
     status: "delivered",
   };
+  let item = {};
+  const { form, errors, handleSubmit, handleReset } = createForm({
+  
+        initialValues: {
+            package_ids: [],
+            hub: { id: "" },
+            courier: { id: "" }
+        },
+    
+        async onSubmit(values) {
+            showModal()
+            try {
+                const res = await clientFetch({
+                    path: "/deliveries",
+                    method: "POST",
+                    body: values
+                });
+                const json = await res.json();
+                if (!res.ok) throw json;
+                handleReset();
+                success("Delivery created successfully");
+                formModal = false;
+
+                // reload page
+                location.reload();
+            } catch (error) {
+                failure(error);
+            } finally {
+                closeModal();
+            }
+        }
+    })
 
   onMount(() => {
     meta.status = $page.url.searchParams.get("status") || "";
@@ -286,6 +327,37 @@
         getData();
       });
   }
+
+
+  function getHubs(e) {
+        clientFetch({
+            path: "/hubs",
+            query: {
+                limit: 5,
+                search: e?.target?.value
+            }
+        })
+        .then(res => res.json())
+        .then(json => {
+            hubs = json.data || [];
+        })
+    }
+
+    function getUsers(e) {
+        clientFetch({
+            path: "/users",
+            query: {
+                limit: 5,
+                role: "courier,rider",
+                search: e?.target?.value,
+                full: true
+            }
+        })
+        .then(res => res.json())
+        .then(json => {
+            users = json.data || [];
+        })
+    }
 
   function printApplications() {}
 
@@ -792,6 +864,123 @@
     on:data={onFilter}
   />
 </Drawer>
+
+<Modal
+    bind:open={formModal}
+    size="xs"
+    autoclose={false}
+    class="w-full">
+    <form on:submit={handleSubmit} class="min-h-[300px]">
+        <h3 class="font-medium text-md mb-8">Assign Delivery </h3>
+        <div
+            class="mb-4"
+            class:hidden={![$errors.hub.id, $errors.courier.id].filter(e => !!e).find(e => !!e)}>
+            <Alert color="red">
+                <InformationCircle slot="icon" size="23" />
+                <span class="font-medium">Default alert!</span>
+                { [$errors.hub.id, $errors.courier.id].filter(e => !!e).find(e => !!e) }
+             </Alert>
+        </div>
+        <div class="w-full form-control">
+            <Label class="mb-2">Delivery Origin Hub:</Label>
+            <Button 
+                color="light"
+                outline 
+                class="flex gap-3 border w-full {$errors.courier.id ? 'border-red-400' : 'none'}">
+                <div class="flex-1 text-start">
+                    <div class="font-normal text-sm">{ $form.hub?.name || "Select a hub"}</div>
+                    <div class="text-xs text-gray-400">{ $form.hub?.code || "Not set" }</div>
+                </div>
+                <span><UilAngleDown /></span>
+            </Button>
+            <Dropdown class="p-3 min-w-[300px]">
+                <div slot="header" class="py-2 px-4">
+                    <Input
+                        type="text"
+                        placeholder="Search hubs..."
+                        on:keyup={(e) => (debounce(() => getHubs(e), 400))}
+                        class="w-full"
+                    >
+                        <span slot="left" class="text-primary"><UilSearch size="20" /></span>
+                    </Input>
+                </div>
+                {#each hubs as item }
+                <DropdownItem
+                    on:click={() => {
+                        $form.hub = item;
+                        hubs = [];
+                    }}
+                    class="flex">
+                    <div class="font-normal">
+                        <div class="text-gray-400 text-2xs">{ item.code || "" }</div>
+                        <h4>{ item.name }</h4>
+                    </div>
+                </DropdownItem>
+                {/each}
+            </Dropdown>
+            {#if $errors.hub.id}
+            <Helper class="mt-2" color="red">
+                <span class="font-medium">Oh, snapp! </span>
+                { $errors.hub.id }
+            </Helper>
+            {/if}
+        </div>
+        <div class="w-full form-control">
+            <Label class="mb-2">Courier:</Label>
+            <Button
+                color="light"
+                outline 
+                class="flex gap-3 border w-full {$errors.courier.id ? 'border-red-400' : 'none'}">
+                <Avatar size="sm" />
+                <div class="flex-1 text-start">
+                    <div class="font-normal text-sm">{ $form.courier?.name || "Select a rider"}</div>
+                    <div class="text-xs text-gray-400">{ $form.courier?.email || "Not set" }</div>
+                </div>
+                <span><UilAngleDown /></span>
+            </Button>
+            <Dropdown class="p-3 min-w-[300px]">
+                <div slot="header" class="py-2 px-4">
+                    <Input
+                        type="text"
+                        placeholder="Search hubs..."
+                        on:keyup={(e) => (debounce(() => getUsers(e), 400))}
+                        class="w-full"
+                    >
+                        <span slot="left" class="text-primary"><UilSearch size="20" /></span>
+                    </Input>
+                </div>
+                {#each users as item }
+                <DropdownItem
+                    on:click={() => {
+                        $form.courier = item;
+                        users = [];
+                    }}
+                    class="flex">
+                    <div class="font-normal">
+                        <div class="text-gray-400 text-2xs">{ item.email || "" }</div>
+                        <h4>{ item.name }</h4>
+                    </div>
+                </DropdownItem>
+                {/each}
+            </Dropdown>
+            {#if $errors.hub.id}
+            <Helper class="mt-2" color="red">
+                <span class="font-medium">Oh, snapp! </span>
+                { $errors.hub.id }
+            </Helper>
+            {/if}
+        </div>
+        <div class="form-control w-full flex flex-row gap-2 justify-end items-center pt-8">
+            <Button 
+                color="alternative" 
+                class="bg-slate-100"
+                on:click={() => (formModal = false)}>
+                Cancel
+            </Button>
+            <Button type="submit">Submit</Button>
+        </div>
+    </form>
+</Modal>
 
 {#if isPrint}
   <WaybillPrint items={printers} id="waybill-print-layout" class="hidden" />

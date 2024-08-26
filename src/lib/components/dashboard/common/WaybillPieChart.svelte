@@ -4,10 +4,12 @@
     import { onMount } from "svelte";
     import { formatK, formatNumber, getJSON } from "$lib/utils/helpers";
     import { clientFetch } from "$lib/client/api";
+   
 
     let data = {
         items: [],
     };
+    let pie = {};
 
     let series = [0, 0, 0, 0];
     const options = {
@@ -95,13 +97,26 @@
         },
     };
 
-    onMount(() => {
+    onMount( async() => {
+        try {
+            const res = await clientFetch({
+                path: `/reports/packages/count?status=returned,canceled,delivered,waybill-generated,out-for-delivery`,
+                method: "GET"
+            });
+            const resData = await res.json();
+            pie = resData.ok ? resData.data : {};
+            console.log("piechart response", pie);
+            if(pie) composeData();
+        } catch (error) {
+            
+        }
+        
         data = Object.assign(data, getJSON(localStorage.getItem(`gwx.deliveries.chart`)));
 
-        composeData();
+       
 
         if (!data.updated_at || (dayjs(data.updated_at).diff(null, 'minute') < 10)) {
-            getData();
+           // getData();
         }
     });
 
@@ -129,19 +144,23 @@
 
     function composeData() {
         // compose current data "Picked Up", "In-Transit", "Delivered", "Exceptions"
-        for (let i = 0; i < data.items.length; i++) {
-            const p = data.items[i];
+        series[0] = pie.waybill-generated;
+        series[1] = pie.waybill-generated;
+        series[2] = pie.waybill-generated;
+        series[3] = pie.waybill-generated;
+        // for (let i = 0; i < data.items.length; i++) {
+        //     const p = data.items[i];
 
-            switch (p.status) {
-                case "pending": series[0] += p.total_deliveries; break;
-                case "completed": series[2] += p.total_deliveries; break;
-                case "en-route": series[1] += p.total_deliveries; break;
-                case "canceled":
-                case "returned": series[3] += p.total_deliveries; break;
-                default:
-                    break;
-            }
-        }
+        //     switch (p.status) {
+        //         case "pending": series[0] += 0; break;
+        //         case "completed": series[2] += pie.waybill-generated; break;
+        //         case "en-route": series[1] += p.total_deliveries; break;
+        //         case "canceled":
+        //         case "returned": series[3] += p.total_deliveries; break;
+        //         default:
+        //             break;
+        //     }
+        // }
     }
 </script>
 

@@ -11,9 +11,9 @@
 
 <div bind:this={node} class="overflow-hidden bg-[#f8f8f8] flex flex-col items-center justify-center" {...$$restProps}>
     {#each items as item }
-    <div class="text-sm bg-base-100 flex flex-col p-6 divide-y divide-dashed" style="width:10cm;height:14.9cm;">
+    <div class="text-sm bg-base-100 flex flex-col p-4 divide-y divide-dashed mb-16 mt-4" style="width:9cm;height:13.5cm;">
         <div class="flex w-full pb-0">
-            <div class="w-[60px]">
+            <div class="w-[50px]">
                 <img src="/images/logo.png" alt="GWX logo" class="w-full object-cover"/>
             </div>
             <div class="flex-1"/>
@@ -35,7 +35,7 @@
             </div>
         </div>
 
-        <div class="flex-1 grid grid-cols-2 gap-1 text-xs py-1">
+        <div class="flex-1 grid grid-cols-2 gap-1 text-xs py-1 mt-5">
             <div class="space-y-0.5">
                 <div>
                     <span>FROM: </span>
@@ -53,8 +53,16 @@
             </div>
         </div>
 
+        <!-- Spacer div to push the last item to the bottom -->
+        <div class="flex-1"></div>
+        <div class="flex-1"></div>
+        <div class="flex-1"></div>
+        <div class="flex-1"></div>
+        <div class="flex-1"></div>
+        <div class="flex-1"></div>
+        <div class="mt-5"></div>
         <div class="py-0">
-            <table class="table border-separate">
+            <table class="table border-separate text-xs">
                 <thead>
                     <tr class="uppercase">
                         <th>Description</th>
@@ -64,7 +72,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="text-xs">
+                    <tr>
                         <td>{truncate(item.description || "", 15)}</td>
                         <td>
                             {#if item.delivery}
@@ -78,9 +86,12 @@
             </table>
         </div>
 
-        <div class="flex pt-0 items-center justify-center">
-            <div class="">
-                <h1 class="barcode">{item.waybill_number}</h1>
+        <!-- Last item, pushed to the bottom of the page -->
+        <div class="mt-auto">
+            <div class="flex pt-0 items-center justify-center">
+                <div>
+                    <h1 class="barcode">{item.waybill_number}</h1>
+                </div>
             </div>
         </div>
     </div>
@@ -89,6 +100,8 @@
 
 <style>
     .barcode {
-        font-family: 'Libre Barcode 128';font-size: 50px; width: 2;height: 80,
+        font-family: 'Libre Barcode 128';
+        font-size: 45px;
+        height: 70px;
     }
 </style>
