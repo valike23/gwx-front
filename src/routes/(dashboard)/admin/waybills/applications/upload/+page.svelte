@@ -215,7 +215,8 @@
             apps[i].postalCode = a.postalCode.toString();
             apps[i].receiverPhone = a.receiverPhone.toString();
             apps[i].referenceId = a.referenceId.toString();
-            apps[i].productionCenter = a.productionState + ' ' + a.productionCenter
+            apps[i].productionCenter = a.productionCenter + ', ' + a.productionState
+            
         })
         const items = apps;
         if (!items.length) {
