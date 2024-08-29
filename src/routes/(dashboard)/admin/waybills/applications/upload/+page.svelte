@@ -50,6 +50,7 @@
     const tpl = {
         application_id: "",
         ref_num: "",
+        state: "",
         first_name: "",
         middle_name: "",
         last_name: "",
@@ -70,6 +71,7 @@
         {
             checked: false,
             application_id: "",
+            state: '',
             ref_num: "",
             first_name: "",
             middle_name: "",
@@ -92,6 +94,7 @@
             checked: yup.bool().default(true),
             application_id: yup.string().required(),
             ref_num: yup.string(),
+            state: yup.string(),
             first_name: yup.string().optional().default(" "),
             middle_name: yup.string().optional(),
             last_name: yup.string().default(" "),
@@ -209,7 +212,9 @@
         //         };
         //     });
         apps.forEach((a,i)=>{
+            console.log("a statr show", a);
             apps[i].state = a.state;
+            app[i].alternativePhone = a.alternativePhone.toString();
             apps[i].applicationId = a.applicationId.toString();
             apps[i].nin = a.nin.toString();
             apps[i].postalCode = a.postalCode.toString();
@@ -219,6 +224,7 @@
             
         })
         const items = apps;
+        console.log("the items here", items);   
         if (!items.length) {
             failure("You must select at least one application");
             return;
