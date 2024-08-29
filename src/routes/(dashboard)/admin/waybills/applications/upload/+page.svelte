@@ -52,6 +52,7 @@
         ref_num: "",
         state: "",
         first_name: "",
+        alternativePhone: "",
         middle_name: "",
         last_name: "",
         mobile_number: "",
@@ -71,6 +72,7 @@
         {
             checked: false,
             application_id: "",
+            alternativePhone: '',
             state: '',
             ref_num: "",
             first_name: "",
@@ -214,7 +216,7 @@
         apps.forEach((a,i)=>{
             console.log("a statr show", a);
             apps[i].state = a.state;
-            app[i].alternativePhone = a.alternativePhone.toString();
+            apps[i].alternativePhone =  a.alternativePhone.toString();
             apps[i].applicationId = a.applicationId.toString();
             apps[i].nin = a.nin.toString();
             apps[i].postalCode = a.postalCode.toString();
